@@ -1,0 +1,6 @@
+{
+  "tagWidth": 4,
+  "semi": false,
+  "singleQuote": true,
+  "arrowParens": "avoid"
+}

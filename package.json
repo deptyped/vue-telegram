@@ -1,0 +1,69 @@
+{
+  "name": "vue-tg",
+  "version": "0.0.1",
+  "description": "Telegram integration for Vue",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.umd.js",
+      "import": "./dist/index.es.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./*": "./*"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:demo": "vite build --config demo/vite.config.ts",
+    "deploy:demo": "npm run build:demo",
+    "preview": "vite preview",
+    "lint": "eslint \"**/*.{vue,ts,js}\"",
+    "fix": "eslint --fix \"**/*.{vue,ts,js}\"",
+    "release": "npm run build && npm pack",
+    "test": "vitest",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "author": "deptyped <deptyped@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "vue3",
+    "composable",
+    "telegram",
+    "vite"
+  ],
+  "homepage": "https://github.com/deptyped/vue-telegram#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deptyped/vue-telegram.git"
+  },
+  "bugs": "https://github.com/deptyped/vue-telegram/issues",
+  "devDependencies": {
+    "@antfu/eslint-config": "0.38.5",
+    "@types/node": "^20.0.0",
+    "@types/telegram-web-app": "^6.7.0",
+    "@vitejs/plugin-vue": "4.2.1",
+    "@vue/test-utils": "2.3.2",
+    "eslint": "8.39.0",
+    "happy-dom": "9.10.9",
+    "markdown-table": "^3.0.3",
+    "rimraf": "5.0.0",
+    "typedoc": "^0.24.6",
+    "typedoc-plugin-markdown": "^3.15.3",
+    "typescript": "5.0.4",
+    "vite": "4.3.5",
+    "vite-plugin-dts": "2.3.0",
+    "vitest": "0.31.0",
+    "vue-component-meta": "^1.6.4"
+  },
+  "dependencies": {
+    "vue": "^3"
+  }
+}

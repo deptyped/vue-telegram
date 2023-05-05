@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["src/composables/index.ts"],
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "cleanOutputDir": true,
+  "disableSources": true,
+}
