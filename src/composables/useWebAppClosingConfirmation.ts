@@ -11,8 +11,8 @@ const enableClosingConfirmation: typeof Telegram.WebApp.enableClosingConfirmatio
   updateStatus()
 }
 
-const disableClosingConfirmation: typeof Telegram.WebApp.enableClosingConfirmation = (...params) => {
-  Telegram.WebApp.enableClosingConfirmation(...params)
+const disableClosingConfirmation: typeof Telegram.WebApp.disableClosingConfirmation = (...params) => {
+  Telegram.WebApp.disableClosingConfirmation(...params)
   updateStatus()
 }
 
