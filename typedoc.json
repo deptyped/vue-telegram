@@ -3,5 +3,5 @@
   "plugin": ["typedoc-plugin-markdown"],
   "readme": "none",
   "cleanOutputDir": true,
-  "disableSources": true,
+  "disableSources": true
 }

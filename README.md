@@ -32,9 +32,9 @@ npm i vue-tg
 Register on Vue instance _(optional)_:
 
 ```ts
-import VueTelegram from "vue-tg";
+import VueTelegram from 'vue-tg'
 
-Vue.use(VueTelegram);
+Vue.use(VueTelegram)
 ```
 
 After that, you can use global aliases for components
@@ -68,7 +68,7 @@ import { Alert } from "vue-tg"
 - [Confirm](#confirm)
 - [MainButton](#mainbutton)
 - [Popup](#popup)
-- [ScanQrPopup](#scanqrpopup)
+- [ScanQr](#scanqrpopup)
 
 ### Composables
 
@@ -88,7 +88,7 @@ import { Alert } from "vue-tg"
 
 ---
 
-## Mapping between Telegram WebApp SDK and Vue-Telegram
+## Mapping between Telegram Web Apps SDK and Vue-Telegram
 
 | Field                        | Composable                                                    |
 | ---------------------------- | ------------------------------------------------------------- |
@@ -134,13 +134,13 @@ import { Alert } from "vue-tg"
 ### Usage Example
 
 ```ts
-import { useWebAppTheme } from "vue-tg";
+import { useWebAppTheme } from 'vue-tg'
 
-const { onThemeChanged } = useWebAppTheme();
+const { onThemeChanged } = useWebAppTheme()
 
 onThemeChanged(() => {
   // handle theme update
-});
+})
 ```
 
 ### Mapping
@@ -318,13 +318,13 @@ function handlePopupClose(buttonId: string) {
 | ----- | -------------------------- | -------------------------------------- |
 | close | (buttonId: string) => void | Emits when the opened popup is closed. |
 
-### ScanQrPopup
+### ScanQr
 
 A component that shows a native popup for scanning a QR code when is rendered.
 
 ```html
 <script lang="ts" setup>
-import { ScanQrPopup } from "vue-tg"
+import { ScanQr } from "vue-tg"
 
 function handleScanResult(data: string) {
   // ...
@@ -332,7 +332,7 @@ function handleScanResult(data: string) {
 </script>
 
 <template>
-  <ScanQrPopup @result="handleScanResult" />
+  <ScanQr @result="handleScanResult" />
 </template>
 ```
 
@@ -353,7 +353,7 @@ function handleScanResult(data: string) {
 ### useWebApp
 
 ```ts
-import { useWebApp } from "vue-tg";
+import { useWebApp } from 'vue-tg'
 ```
 
 ▸ **useWebApp**(): `Object`
@@ -379,7 +379,7 @@ import { useWebApp } from "vue-tg";
 ### useWebAppBackButton
 
 ```ts
-import { useWebAppBackButton } from "vue-tg";
+import { useWebAppBackButton } from 'vue-tg'
 ```
 
 ▸ **useWebAppBackButton**(): `Object`
@@ -396,7 +396,7 @@ import { useWebAppBackButton } from "vue-tg";
 ### useWebAppClipboard
 
 ```ts
-import { useWebAppClipboard } from "vue-tg";
+import { useWebAppClipboard } from 'vue-tg'
 ```
 
 ▸ **useWebAppClipboard**(): `Object`
@@ -411,7 +411,7 @@ import { useWebAppClipboard } from "vue-tg";
 ### useWebAppClosingConfirmation
 
 ```ts
-import { useWebAppClosingConfirmation } from "vue-tg";
+import { useWebAppClosingConfirmation } from 'vue-tg'
 ```
 
 ▸ **useWebAppClosingConfirmation**(): `Object`
@@ -427,7 +427,7 @@ import { useWebAppClosingConfirmation } from "vue-tg";
 ### useWebAppHapticFeedback
 
 ```ts
-import { useWebAppHapticFeedback } from "vue-tg";
+import { useWebAppHapticFeedback } from 'vue-tg'
 ```
 
 ▸ **useWebAppHapticFeedback**(): `Object`
@@ -443,7 +443,7 @@ import { useWebAppHapticFeedback } from "vue-tg";
 ### useWebAppMainButton
 
 ```ts
-import { useWebAppMainButton } from "vue-tg";
+import { useWebAppMainButton } from 'vue-tg'
 ```
 
 ▸ **useWebAppMainButton**(): `Object`
@@ -471,7 +471,7 @@ import { useWebAppMainButton } from "vue-tg";
 ### useWebAppNavigation
 
 ```ts
-import { useWebAppNavigation } from "vue-tg";
+import { useWebAppNavigation } from 'vue-tg'
 ```
 
 ▸ **useWebAppNavigation**(): `Object`
@@ -489,7 +489,7 @@ import { useWebAppNavigation } from "vue-tg";
 ### useWebAppPopup
 
 ```ts
-import { useWebAppPopup } from "vue-tg";
+import { useWebAppPopup } from 'vue-tg'
 ```
 
 ▸ **useWebAppPopup**(): `Object`
@@ -506,7 +506,7 @@ import { useWebAppPopup } from "vue-tg";
 ### useWebAppQrScanner
 
 ```ts
-import { useWebAppQrScanner } from "vue-tg";
+import { useWebAppQrScanner } from 'vue-tg'
 ```
 
 ▸ **useWebAppQrScanner**(): `Object`
@@ -527,7 +527,7 @@ Use `canSendData` from [useWebApp](#usewebapp) to check that sending data in a
 service message (using `execute`) is available.
 
 ```ts
-import { useWebAppSendData } from "vue-tg";
+import { useWebAppSendData } from 'vue-tg'
 ```
 
 ▸ **useWebAppSendData**<`D`\>(`data`, `options`): `Object`
@@ -552,7 +552,7 @@ import { useWebAppSendData } from "vue-tg";
 ### useWebAppSettingsButton
 
 ```ts
-import { useWebAppSettingsButton } from "vue-tg";
+import { useWebAppSettingsButton } from 'vue-tg'
 ```
 
 ▸ **useWebAppSettingsButton**(): `Object`
@@ -566,7 +566,7 @@ import { useWebAppSettingsButton } from "vue-tg";
 ### useWebAppTheme
 
 ```ts
-import { useWebAppTheme } from "vue-tg";
+import { useWebAppTheme } from 'vue-tg'
 ```
 
 ▸ **useWebAppTheme**(): `Object`
@@ -586,7 +586,7 @@ import { useWebAppTheme } from "vue-tg";
 ### useWebAppViewport
 
 ```ts
-import { useWebAppViewport } from "vue-tg";
+import { useWebAppViewport } from 'vue-tg'
 ```
 
 ▸ **useWebAppViewport**(): `Object`
