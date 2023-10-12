@@ -76,11 +76,13 @@ import { Alert } from "vue-tg"
 - [useWebAppBackButton](#usewebappbackbutton)
 - [useWebAppClipboard](#usewebappclipboard)
 - [useWebAppClosingConfirmation](#usewebappclosingconfirmation)
+- [useWebAppCloudStorage](#usewebappcloudstorage)
 - [useWebAppHapticFeedback](#usewebapphapticfeedback)
 - [useWebAppMainButton](#usewebappmainbutton)
 - [useWebAppNavigation](#usewebappnavigation)
 - [useWebAppPopup](#usewebapppopup)
 - [useWebAppQrScanner](#usewebappqrscanner)
+- [useWebAppRequests](#usewebapprequests)
 - [useWebAppSendData](#usewebappsenddata)
 - [useWebAppSettingsButton](#usewebappsettingsbutton)
 - [useWebAppTheme](#usewebapptheme)
@@ -125,6 +127,8 @@ import { Alert } from "vue-tg"
 | showScanQrPopup              | [useWebAppQrScanner](#usewebappqrscanner)                     |
 | closeScanQrPopup             | [useWebAppQrScanner](#usewebappqrscanner)                     |
 | readTextFromClipboard        | [useWebAppClipboard](#usewebappclipboard)                     |
+| requestWriteAccess           | [useWebAppRequests](#usewebapprequests)                       |
+| requestContact               | [useWebAppRequests](#usewebapprequests)                       |
 | ready                        | [useWebApp](#usewebapp)                                       |
 | expand                       | [useWebAppViewport](#usewebappviewport)                       |
 | close                        | [useWebApp](#usewebapp)                                       |
@@ -156,6 +160,8 @@ onThemeChanged(() => {
 | popupClosed           | [useWebAppPopup.onPopupClosed](#usewebapppopup)                             |
 | qrTextReceived        | [useWebAppQrScanner.onQrTextReceived](#usewebappqrscanner)                  |
 | clipboardTextReceived | [useWebAppClipboard.onClipboardTextReceived](#usewebappclipboard)           |
+| writeAccessRequested  | [useWebAppRequests.onWriteAccessRequested](#usewebapprequests)              |
+| clipboardTextReceived | [useWebAppRequests.onClipboardTextReceived](#usewebapprequests)             |
 
 ## Components
 
@@ -403,10 +409,10 @@ import { useWebAppClipboard } from 'vue-tg'
 
 #### Returns
 
-| Name                      | Type                                                                                |
-| :------------------------ | :---------------------------------------------------------------------------------- |
-| `onClipboardTextReceived` | (`eventHandler`: (`eventData`: { `data`: `null` \| `string` }) => `void`) => `void` |
-| `readTextFromClipboard`   | (`callback?`: (`data`: `null` \| `string`) => `void`) => `void`                     |
+| Name                      | Type                                                                                                      |
+| :------------------------ | :-------------------------------------------------------------------------------------------------------- |
+| `onClipboardTextReceived` | (`eventHandler`: [`OnClipboardTextReceivedCallback`](#onclipboardtextreceivedcallback)) => `void` |
+| `readTextFromClipboard`   | (`callback?`: (`data`: `null` \| `string`) => `void`) => `void`                                           |
 
 ### useWebAppClosingConfirmation
 
@@ -423,6 +429,27 @@ import { useWebAppClosingConfirmation } from 'vue-tg'
 | `disableClosingConfirmation`   | () => `void`      |
 | `enableClosingConfirmation`    | () => `void`      |
 | `isClosingConfirmationEnabled` | `Ref`<`boolean`\> |
+
+### useWebAppCloudStorage
+
+```ts
+import { useWebAppCloudStorage } from 'vue-tg'
+```
+
+▸ **useWebAppCloudStorage**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name                 | Type                                                                 |
+| :------------------- | :------------------------------------------------------------------- |
+| `getStorageItem`     | (`key`: `string`) => `Promise`<`null` \| `string`\>                  |
+| `getStorageItems`    | (`keys`: `string`[]) => `Promise`<`Record`<`string`, `string`\>\>    |
+| `getStorageKeys`     | () => `Promise`<`string`[]\>                                         |
+| `removeStorageItem`  | (`key`: `string`) => `Promise`<`null` \| `true`\>                    |
+| `removeStorageItems` | (`keys`: `string`[]) => `Promise`<`null` \| `true`\>                 |
+| `setStorageItem`     | (`key`: `string`, `value`: `string`) => `Promise`<`null` \| `true`\> |
 
 ### useWebAppHapticFeedback
 
@@ -478,13 +505,13 @@ import { useWebAppNavigation } from 'vue-tg'
 
 #### Returns
 
-| Name                | Type                                                                                                                                        |
-| :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `onInvoiceClosed`   | (`eventHandler`: (`eventData`: { `status`: `"paid"` \| `"cancelled"` \| `"failed"` \| `"pending"` ; `url`: `string` }) => `void`) => `void` |
-| `openInvoice`       | (`url`: `string`, `callback`: (`url`: `string`, `status`: `"paid"` \| `"cancelled"` \| `"failed"` \| `"pending"`) => `void`) => `void`      |
-| `openLink`          | (`url`: `string`, `options?`: { `try_instant_view?`: `boolean` }) => `void`                                                                 |
-| `openTelegramLink`  | (`url`: `string`) => `void`                                                                                                                 |
-| `switchInlineQuery` | (`query`: `string`, `choose_chat_types?`: (`"users"` \| `"bots"` \| `"groups"` \| `"channels"`)[]) => `void`                                |
+| Name                | Type                                                                                                                                   |
+| :------------------ | :------------------------------------------------------------------------------------------------------------------------------------- |
+| `onInvoiceClosed`   | (`eventHandler`: [`OnInvoiceClosedCallback`](#oninvoiceclosedcallback)) => `void`                                              |
+| `openInvoice`       | (`url`: `string`, `callback`: (`url`: `string`, `status`: `"paid"` \| `"cancelled"` \| `"failed"` \| `"pending"`) => `void`) => `void` |
+| `openLink`          | (`url`: `string`, `options?`: { `try_instant_view?`: `boolean` }) => `void`                                                            |
+| `openTelegramLink`  | (`url`: `string`) => `void`                                                                                                            |
+| `switchInlineQuery` | (`query`: `string`, `choose_chat_types?`: (`"users"` \| `"bots"` \| `"groups"` \| `"channels"`)[]) => `void`                           |
 
 ### useWebAppPopup
 
@@ -496,12 +523,12 @@ import { useWebAppPopup } from 'vue-tg'
 
 #### Returns
 
-| Name            | Type                                                                                     |
-| :-------------- | :--------------------------------------------------------------------------------------- |
-| `onPopupClosed` | (`eventHandler`: (`eventData`: { `button_id`: `null` \| `string` }) => `void`) => `void` |
-| `showAlert`     | (`message`: `string`, `callback?`: () => `void`) => `void`                               |
-| `showConfirm`   | (`message`: `string`, `callback?`: (`ok?`: `boolean`) => `void`) => `void`               |
-| `showPopup`     | (`params`: `PopupParams`, `callback?`: (`button_id`: `string`) => `void`) => `void`      |
+| Name            | Type                                                                                  |
+| :-------------- | :------------------------------------------------------------------------------------ |
+| `onPopupClosed` | (`eventHandler`: [`OnPopupClosedCallback`](#onpopupclosedcallback)) => `void` |
+| `showAlert`     | (`message`: `string`, `callback?`: () => `void`) => `void`                            |
+| `showConfirm`   | (`message`: `string`, `callback?`: (`ok?`: `boolean`) => `void`) => `void`            |
+| `showPopup`     | (`params`: `PopupParams`, `callback?`: (`button_id`: `string`) => `void`) => `void`   |
 
 ### useWebAppQrScanner
 
@@ -516,8 +543,27 @@ import { useWebAppQrScanner } from 'vue-tg'
 | Name               | Type                                                                                                                                             |
 | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `closeScanQrPopup` | () => `void`                                                                                                                                     |
-| `onQrTextReceived` | (`eventHandler`: (`eventData`: { `data`: `string` }) => `void`) => `void`                                                                        |
+| `onQrTextReceived` | (`eventHandler`: [`OnQrTextReceivedCallback`](#onqrtextreceivedcallback)) => `void`                                                      |
 | `showScanQrPopup`  | (`params`: [ScanQrPopupParams ↗](https://core.telegram.org/bots/webapps#scanqrpopupparams), `callback?`: (`data`: `string`) => `void`) => `void` |
+
+### useWebAppRequests
+
+```ts
+import { useWebAppRequests } from 'vue-tg'
+```
+
+▸ **useWebAppRequests**(): `Object`
+
+#### Returns
+
+`Object`
+
+| Name                     | Type                                                                                            |
+| :----------------------- | :---------------------------------------------------------------------------------------------- |
+| `onContactRequested`     | (`eventHandler`: [`OnContactRequestedCallback`](#oncontactrequestedcallback)) => `void`         |
+| `onWriteAccessRequested` | (`eventHandler`: [`OnWriteAccessRequestedCallback`](#onwriteaccessrequestedcallback)) => `void` |
+| `requestContact`         | (`callback?`: (`success`: `boolean`) => `void`) => `void`                                       |
+| `requestWriteAccess`     | (`callback?`: (`success`: `boolean`) => `void`) => `void`                                       |
 
 ### useWebAppSendData
 
@@ -593,10 +639,152 @@ import { useWebAppViewport } from 'vue-tg'
 
 #### Returns
 
-| Name                   | Type                                                                                |
-| :--------------------- | :---------------------------------------------------------------------------------- |
-| `expand`               | () => `void`                                                                        |
-| `isExpanded`           | `Ref`<`boolean`\>                                                                   |
-| `onViewportChanged`    | (`eventHandler`: (`eventData`: { `isStateStable`: `boolean` }) => `void`) => `void` |
-| `viewportHeight`       | `Ref`<`number`\>                                                                    |
-| `viewportStableHeight` | `Ref`<`number`\>                                                                    |
+| Name                   | Type                                                                                          |
+| :--------------------- | :-------------------------------------------------------------------------------------------- |
+| `expand`               | () => `void`                                                                                  |
+| `isExpanded`           | `Ref`<`boolean`\>                                                                             |
+| `onViewportChanged`    | (`eventHandler`: [`OnViewportChangedCallback`](#onviewportchangedcallback)) => `void` |
+| `viewportHeight`       | `Ref`<`number`\>                                                                              |
+| `viewportStableHeight` | `Ref`<`number`\>                                                                              |
+
+## Type Aliases
+
+### OnClipboardTextReceivedCallback
+
+Ƭ **OnClipboardTextReceivedCallback**: (`eventData`: { `data`: `string` \|
+`null` }) => `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name             | Type               |
+| :--------------- | :----------------- |
+| `eventData`      | `Object`           |
+| `eventData.data` | `string` \| `null` |
+
+##### Returns
+
+`void`
+
+### OnContactRequestedCallback
+
+Ƭ **OnContactRequestedCallback**: (`eventData`: { `status`: `"sent"` \|
+`"cancelled"` }) => `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name               | Type                      |
+| :----------------- | :------------------------ |
+| `eventData`        | `Object`                  |
+| `eventData.status` | `"sent"` \| `"cancelled"` |
+
+##### Returns
+
+`void`
+
+### OnInvoiceClosedCallback
+
+Ƭ **OnInvoiceClosedCallback**: (`eventData`: { `status`: `"paid"` \|
+`"cancelled"` \| `"failed"` \| `"pending"` ; `url`: `string` }) => `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name               | Type                                                   |
+| :----------------- | :----------------------------------------------------- |
+| `eventData`        | `Object`                                               |
+| `eventData.status` | `"paid"` \| `"cancelled"` \| `"failed"` \| `"pending"` |
+| `eventData.url`    | `string`                                               |
+
+##### Returns
+
+`void`
+
+### OnPopupClosedCallback
+
+Ƭ **OnPopupClosedCallback**: (`eventData`: { `button_id`: `string` \| `null` })
+=> `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name                  | Type               |
+| :-------------------- | :----------------- |
+| `eventData`           | `Object`           |
+| `eventData.button_id` | `string` \| `null` |
+
+##### Returns
+
+`void`
+
+### OnQrTextReceivedCallback
+
+Ƭ **OnQrTextReceivedCallback**: (`eventData`: { `data`: `string` }) => `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name             | Type     |
+| :--------------- | :------- |
+| `eventData`      | `Object` |
+| `eventData.data` | `string` |
+
+##### Returns
+
+`void`
+
+### OnViewportChangedCallback
+
+Ƭ **OnViewportChangedCallback**: (`eventData`: { `isStateStable`: `boolean` })
+=> `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name                      | Type      |
+| :------------------------ | :-------- |
+| `eventData`               | `Object`  |
+| `eventData.isStateStable` | `boolean` |
+
+##### Returns
+
+`void`
+
+### OnWriteAccessRequestedCallback
+
+Ƭ **OnWriteAccessRequestedCallback**: (`eventData`: { `status`: `"allowed"` \|
+`"cancelled"` }) => `void`
+
+#### Type declaration
+
+▸ (`eventData`): `void`
+
+##### Parameters
+
+| Name               | Type                         |
+| :----------------- | :--------------------------- |
+| `eventData`        | `Object`                     |
+| `eventData.status` | `"allowed"` \| `"cancelled"` |
+
+##### Returns
+
+`void`
