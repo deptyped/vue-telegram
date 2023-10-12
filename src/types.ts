@@ -7,3 +7,5 @@ export type OnInvoiceClosedCallback = (eventData: { url: string; status: 'paid' 
 export type OnPopupClosedCallback = (eventData: { button_id: string | null }) => void
 export type OnQrTextReceivedCallback = (eventData: { data: string }) => void
 export type OnClipboardTextReceivedCallback = (eventData: { data: string | null }) => void
+export type OnWriteAccessRequestedCallback = (eventData: { status: 'allowed' | 'cancelled' }) => void
+export type OnContactRequestedCallback = (eventData: { status: 'sent' | 'cancelled' }) => void
