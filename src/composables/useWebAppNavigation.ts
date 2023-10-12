@@ -1,4 +1,5 @@
 import { useWebApp } from './useWebApp'
+import type { OnInvoiceClosedCallback } from '~/types'
 
 const {
   switchInlineQuery,
@@ -10,12 +11,7 @@ const {
 export function useWebAppNavigation() {
   const { onEvent } = useWebApp()
 
-  const onInvoiceClosed = (eventHandler: (
-    eventData: {
-      url: string
-      status: 'paid' | 'cancelled' | 'failed' | 'pending'
-    }) => void,
-  ) =>
+  const onInvoiceClosed = (eventHandler: OnInvoiceClosedCallback) =>
     onEvent('invoiceClosed', eventHandler)
 
   return {

@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { useWebApp } from './useWebApp'
+import type { OnBackButtonClickedCallback } from '~/types'
 
 const isBackButtonVisible = ref(Telegram.WebApp.BackButton.isVisible)
 
@@ -20,7 +21,7 @@ function hideBackButton(...params: Parameters<typeof Telegram.WebApp.BackButton.
 export function useWebAppBackButton() {
   const { onEvent } = useWebApp()
 
-  const onBackButtonClicked = (eventHandler: () => void) =>
+  const onBackButtonClicked = (eventHandler: OnBackButtonClickedCallback) =>
     onEvent('backButtonClicked', eventHandler)
 
   return {

@@ -5,9 +5,9 @@ type SetItemResult = Parameters<NonNullable<NonNullable<Parameters<typeof CloudS
 function setStorageItem(key: string, value: string) {
   return new Promise<SetItemResult>((resolve, reject) => {
     CloudStorage.setItem(key, value, (error, ok) => {
-      if (error) {
+      if (error)
         reject(error)
-      }
+
       resolve(ok)
     })
   })
@@ -18,9 +18,9 @@ type GetItemResult = Parameters<NonNullable<NonNullable<Parameters<typeof CloudS
 function getStorageItem(key: string) {
   return new Promise<GetItemResult>((resolve, reject) => {
     CloudStorage.getItem(key, (error, value) => {
-      if (error) {
+      if (error)
         reject(error)
-      }
+
       resolve(value)
     })
   })
@@ -31,9 +31,9 @@ type GetItemsResult = NonNullable<Parameters<NonNullable<NonNullable<Parameters<
 function getStorageItems(keys: string[]) {
   return new Promise<GetItemsResult>((resolve, reject) => {
     CloudStorage.getItems(keys, (error, values) => {
-      if (error) {
+      if (error)
         reject(error)
-      }
+
       resolve(values as GetItemsResult)
     })
   })
@@ -44,9 +44,9 @@ type RemoveItemResult = Parameters<NonNullable<NonNullable<Parameters<typeof Clo
 function removeStorageItem(key: string) {
   return new Promise<RemoveItemResult>((resolve, reject) => {
     CloudStorage.removeItem(key, (error, ok) => {
-      if (error) {
+      if (error)
         reject(error)
-      }
+
       resolve(ok)
     })
   })
@@ -57,9 +57,9 @@ type RemoveItemsResult = Parameters<NonNullable<NonNullable<Parameters<typeof Cl
 function removeStorageItems(keys: string[]) {
   return new Promise<RemoveItemsResult>((resolve, reject) => {
     CloudStorage.removeItems(keys, (error, ok) => {
-      if (error) {
+      if (error)
         reject(error)
-      }
+
       resolve(ok)
     })
   })
@@ -70,9 +70,9 @@ type GetKeysResult = NonNullable<Parameters<NonNullable<NonNullable<Parameters<t
 function getStorageKeys() {
   return new Promise<GetKeysResult>((resolve, reject) => {
     CloudStorage.getKeys((error, values) => {
-      if (error) {
+      if (error)
         reject(error)
-      }
+
       resolve(values as GetKeysResult)
     })
   })

@@ -1,4 +1,5 @@
 import { useWebApp } from './useWebApp'
+import type { OnQrTextReceivedCallback } from '~/types'
 
 const {
   showScanQrPopup,
@@ -8,7 +9,7 @@ const {
 export function useWebAppQrScanner() {
   const { onEvent } = useWebApp()
 
-  const onQrTextReceived = (eventHandler: (eventData: { data: string }) => void) =>
+  const onQrTextReceived = (eventHandler: OnQrTextReceivedCallback) =>
     onEvent('qrTextReceived', eventHandler)
 
   return {

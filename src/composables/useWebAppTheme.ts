@@ -13,12 +13,12 @@ function updateState() {
   backgroundColor.value = Telegram.WebApp.backgroundColor
 }
 
-const setHeaderColor: typeof Telegram.WebApp.setHeaderColor = (...params) => {
+function setHeaderColor(...params: Parameters<typeof Telegram.WebApp.setHeaderColor>) {
   Telegram.WebApp.setHeaderColor(...params)
   updateState()
 }
 
-const setBackgroundColor: typeof Telegram.WebApp.setBackgroundColor = (...params) => {
+function setBackgroundColor(...params: Parameters<typeof Telegram.WebApp.setBackgroundColor>) {
   Telegram.WebApp.setBackgroundColor(...params)
   updateState()
 }

@@ -1,4 +1,5 @@
 import { useWebApp } from './useWebApp'
+import type { OnPopupClosedCallback } from '~/types'
 
 const {
   showPopup,
@@ -9,7 +10,7 @@ const {
 export function useWebAppPopup() {
   const { onEvent } = useWebApp()
 
-  const onPopupClosed = (eventHandler: (eventData: { button_id: string | null }) => void) =>
+  const onPopupClosed = (eventHandler: OnPopupClosedCallback) =>
     onEvent('popupClosed', eventHandler)
 
   return {

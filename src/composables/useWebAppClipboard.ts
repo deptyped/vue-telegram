@@ -1,4 +1,5 @@
 import { useWebApp } from './useWebApp'
+import type { OnClipboardTextReceivedCallback } from '~/types'
 
 const {
   readTextFromClipboard,
@@ -7,7 +8,7 @@ const {
 export function useWebAppClipboard() {
   const { onEvent } = useWebApp()
 
-  const onClipboardTextReceived = (eventHandler: (eventData: { data: string | null }) => void) =>
+  const onClipboardTextReceived = (eventHandler: OnClipboardTextReceivedCallback) =>
     onEvent('clipboardTextReceived', eventHandler)
 
   return {
