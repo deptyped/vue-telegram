@@ -1,8 +1,7 @@
 ## `vue-tg` - Telegram integration for Vue
 
 A package for integration of
-[Telegram Web Apps](https://core.telegram.org/bots/webapps#initializing-web-apps)
-feature with Vue.
+[Telegram Mini Apps](https://core.telegram.org/bots/webapps) feature with Vue.
 
 ### Usage Example
 
@@ -57,8 +56,8 @@ import { Alert } from "vue-tg"
 
 ## Table of contents
 
-- [Official Telegram Web Apps Docs ↗](https://core.telegram.org/bots/webapps#initializing-web-apps)
-- [Mapping between Telegram Web Apps SDK and Vue-Telegram](#mapping-between-telegram-webapp-sdk-and-vue-telegram)
+- [Official Telegram Mini App Docs ↗](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+- [Mapping between Telegram Web App Script and Vue-TG](#mapping-between-telegram-web-app-script-and-vue-tg)
 - [Event Handler Aliases](#event-handler-aliases)
 
 ### Components
@@ -90,7 +89,7 @@ import { Alert } from "vue-tg"
 
 ---
 
-## Mapping between Telegram Web Apps SDK and Vue-Telegram
+## Mapping between Telegram Web App Script and Vue-TG
 
 | Field                        | Composable                                                    |
 | ---------------------------- | ------------------------------------------------------------- |
@@ -161,7 +160,7 @@ onThemeChanged(() => {
 | qrTextReceived        | [useWebAppQrScanner.onQrTextReceived](#usewebappqrscanner)                  |
 | clipboardTextReceived | [useWebAppClipboard.onClipboardTextReceived](#usewebappclipboard)           |
 | writeAccessRequested  | [useWebAppRequests.onWriteAccessRequested](#usewebapprequests)              |
-| clipboardTextReceived | [useWebAppRequests.onClipboardTextReceived](#usewebapprequests)             |
+| contactRequested      | [useWebAppRequests.onContactRequested](#usewebapprequests)                  |
 
 ## Components
 
@@ -366,21 +365,21 @@ import { useWebApp } from 'vue-tg'
 
 #### Returns
 
-| Name                   | Type                                                                                                    |
-| :--------------------- | :------------------------------------------------------------------------------------------------------ |
-| `close`                | () => `void`                                                                                            |
-| `initData`             | `string`                                                                                                |
-| `initDataUnsafe`       | [WebAppInitData ↗](https://core.telegram.org/bots/webapps#webappinitdata)                               |
-| `isVersionAtLeast`     | (`version`: `string`) => `boolean`                                                                      |
-| `onEvent`              | [Events Available for Web Apps ↗](https://core.telegram.org/bots/webapps#events-available-for-web-apps) |
-| `platform`             | `string`                                                                                                |
-| `ready`                | () => `void`                                                                                            |
-| `sendData`             | (`data`: `string`) => `void`                                                                            |
-| `version`              | `string`                                                                                                |
-| `isReady` 🔋           | `Ref`<`boolean`\>                                                                                       |
-| `isPlatform` 🔋        | (`name`: `string`) => `boolean`                                                                         |
-| `isPlatformUnknown` 🔋 | `boolean`                                                                                               |
-| `canSendData` 🔋       | `boolean`                                                                                               |
+| Name                   | Type                                                                                                      |
+| :--------------------- | :-------------------------------------------------------------------------------------------------------- |
+| `close`                | () => `void`                                                                                              |
+| `initData`             | `string`                                                                                                  |
+| `initDataUnsafe`       | [WebAppInitData ↗](https://core.telegram.org/bots/webapps#webappinitdata)                                 |
+| `isVersionAtLeast`     | (`version`: `string`) => `boolean`                                                                        |
+| `onEvent`              | [Events Available for Mini Apps ↗](https://core.telegram.org/bots/webapps#events-available-for-mini-apps) |
+| `platform`             | `string`                                                                                                  |
+| `ready`                | () => `void`                                                                                              |
+| `sendData`             | (`data`: `string`) => `void`                                                                              |
+| `version`              | `string`                                                                                                  |
+| `isReady` 🔋           | `Ref`<`boolean`\>                                                                                         |
+| `isPlatform` 🔋        | (`name`: `string`) => `boolean`                                                                           |
+| `isPlatformUnknown` 🔋 | `boolean`                                                                                                 |
+| `canSendData` 🔋       | `boolean`                                                                                                 |
 
 ### useWebAppBackButton
 
@@ -409,10 +408,10 @@ import { useWebAppClipboard } from 'vue-tg'
 
 #### Returns
 
-| Name                      | Type                                                                                                      |
-| :------------------------ | :-------------------------------------------------------------------------------------------------------- |
+| Name                      | Type                                                                                              |
+| :------------------------ | :------------------------------------------------------------------------------------------------ |
 | `onClipboardTextReceived` | (`eventHandler`: [`OnClipboardTextReceivedCallback`](#onclipboardtextreceivedcallback)) => `void` |
-| `readTextFromClipboard`   | (`callback?`: (`data`: `null` \| `string`) => `void`) => `void`                                           |
+| `readTextFromClipboard`   | (`callback?`: (`data`: `null` \| `string`) => `void`) => `void`                                   |
 
 ### useWebAppClosingConfirmation
 
@@ -507,7 +506,7 @@ import { useWebAppNavigation } from 'vue-tg'
 
 | Name                | Type                                                                                                                                   |
 | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------- |
-| `onInvoiceClosed`   | (`eventHandler`: [`OnInvoiceClosedCallback`](#oninvoiceclosedcallback)) => `void`                                              |
+| `onInvoiceClosed`   | (`eventHandler`: [`OnInvoiceClosedCallback`](#oninvoiceclosedcallback)) => `void`                                                      |
 | `openInvoice`       | (`url`: `string`, `callback`: (`url`: `string`, `status`: `"paid"` \| `"cancelled"` \| `"failed"` \| `"pending"`) => `void`) => `void` |
 | `openLink`          | (`url`: `string`, `options?`: { `try_instant_view?`: `boolean` }) => `void`                                                            |
 | `openTelegramLink`  | (`url`: `string`) => `void`                                                                                                            |
@@ -523,12 +522,12 @@ import { useWebAppPopup } from 'vue-tg'
 
 #### Returns
 
-| Name            | Type                                                                                  |
-| :-------------- | :------------------------------------------------------------------------------------ |
-| `onPopupClosed` | (`eventHandler`: [`OnPopupClosedCallback`](#onpopupclosedcallback)) => `void` |
-| `showAlert`     | (`message`: `string`, `callback?`: () => `void`) => `void`                            |
-| `showConfirm`   | (`message`: `string`, `callback?`: (`ok?`: `boolean`) => `void`) => `void`            |
-| `showPopup`     | (`params`: `PopupParams`, `callback?`: (`button_id`: `string`) => `void`) => `void`   |
+| Name            | Type                                                                                |
+| :-------------- | :---------------------------------------------------------------------------------- |
+| `onPopupClosed` | (`eventHandler`: [`OnPopupClosedCallback`](#onpopupclosedcallback)) => `void`       |
+| `showAlert`     | (`message`: `string`, `callback?`: () => `void`) => `void`                          |
+| `showConfirm`   | (`message`: `string`, `callback?`: (`ok?`: `boolean`) => `void`) => `void`          |
+| `showPopup`     | (`params`: `PopupParams`, `callback?`: (`button_id`: `string`) => `void`) => `void` |
 
 ### useWebAppQrScanner
 
@@ -543,7 +542,7 @@ import { useWebAppQrScanner } from 'vue-tg'
 | Name               | Type                                                                                                                                             |
 | :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `closeScanQrPopup` | () => `void`                                                                                                                                     |
-| `onQrTextReceived` | (`eventHandler`: [`OnQrTextReceivedCallback`](#onqrtextreceivedcallback)) => `void`                                                      |
+| `onQrTextReceived` | (`eventHandler`: [`OnQrTextReceivedCallback`](#onqrtextreceivedcallback)) => `void`                                                              |
 | `showScanQrPopup`  | (`params`: [ScanQrPopupParams ↗](https://core.telegram.org/bots/webapps#scanqrpopupparams), `callback?`: (`data`: `string`) => `void`) => `void` |
 
 ### useWebAppRequests
@@ -639,13 +638,13 @@ import { useWebAppViewport } from 'vue-tg'
 
 #### Returns
 
-| Name                   | Type                                                                                          |
-| :--------------------- | :-------------------------------------------------------------------------------------------- |
-| `expand`               | () => `void`                                                                                  |
-| `isExpanded`           | `Ref`<`boolean`\>                                                                             |
+| Name                   | Type                                                                                  |
+| :--------------------- | :------------------------------------------------------------------------------------ |
+| `expand`               | () => `void`                                                                          |
+| `isExpanded`           | `Ref`<`boolean`\>                                                                     |
 | `onViewportChanged`    | (`eventHandler`: [`OnViewportChangedCallback`](#onviewportchangedcallback)) => `void` |
-| `viewportHeight`       | `Ref`<`number`\>                                                                              |
-| `viewportStableHeight` | `Ref`<`number`\>                                                                              |
+| `viewportHeight`       | `Ref`<`number`\>                                                                      |
+| `viewportStableHeight` | `Ref`<`number`\>                                                                      |
 
 ## Type Aliases
 
