@@ -22,13 +22,19 @@ const { showAlert } = useWebAppPopup()
 
 ### Installation
 
-Install package via npm:
+To connect your Mini App to the Telegram client, place the script `telegram-web-app.js` in the `<head>` tag before any other scripts, using this code:
+
+```html
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+```
+
+After that, install package:
 
 ```bash
 npm i vue-tg
 ```
 
-Register on Vue instance _(optional)_:
+_(Optional)_ Register on Vue instance:
 
 ```ts
 import VueTelegram from 'vue-tg'
@@ -67,7 +73,7 @@ import { Alert } from "vue-tg"
 - [Confirm](#confirm)
 - [MainButton](#mainbutton)
 - [Popup](#popup)
-- [ScanQr](#scanqrpopup)
+- [ScanQr](#scanqr)
 
 ### Composables
 
