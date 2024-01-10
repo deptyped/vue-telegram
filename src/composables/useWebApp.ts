@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, readonly, ref } from 'vue'
 
 const {
   initData,
@@ -39,7 +39,7 @@ export function useWebApp() {
     sendData,
     ready,
     close,
-    isReady,
+    isReady: readonly(isReady),
     isPlatform,
     isPlatformUnknown,
     canSendData,

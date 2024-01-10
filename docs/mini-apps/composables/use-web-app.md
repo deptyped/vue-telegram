@@ -19,7 +19,7 @@ import { useWebApp } from 'vue-tg'
 | `ready`                                                | `() => void`                                                                                |
 | `sendData`                                             | `(data: string) => void`                                                                    |
 | `version`                                              | `string`                                                                                    |
-| `isReady` <Badge type="tip" text="custom" />           | `Ref<boolean>`                                                                              |
+| `isReady` <Badge type="tip" text="custom" />           | `Readonly<Ref<boolean>>`                                                                    |
 | `isPlatform` <Badge type="tip" text="custom" />        | `(name: string) => boolean`                                                                 |
 | `isPlatformUnknown` <Badge type="tip" text="custom" /> | `boolean`                                                                                   |
 | `canSendData` <Badge type="tip" text="custom" />       | `boolean`                                                                                   |

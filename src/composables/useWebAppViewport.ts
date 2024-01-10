@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { readonly, ref } from 'vue'
 import { useWebApp } from './useWebApp'
 import type { OnViewportChangedCallback } from '~/types'
 
@@ -26,9 +26,9 @@ export function useWebAppViewport() {
   onViewportChanged(updateState)
 
   return {
-    isExpanded,
-    viewportHeight,
-    viewportStableHeight,
+    isExpanded: readonly(isExpanded),
+    viewportHeight: readonly(viewportHeight),
+    viewportStableHeight: readonly(viewportStableHeight),
     expand,
     onViewportChanged,
   }

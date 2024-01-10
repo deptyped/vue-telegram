@@ -11,7 +11,7 @@ import { useWebAppViewport } from 'vue-tg'
 | Name                   | Type                                                                                 |
 | :--------------------- | :----------------------------------------------------------------------------------- |
 | `expand`               | `() => void`                                                                         |
-| `isExpanded`           | `Ref<boolean>`                                                                       |
+| `isExpanded`           | `Readonly<Ref<boolean>>`                                                             |
 | `onViewportChanged`    | `(eventHandler:`[`OnViewportChangedCallback`](#onviewportchangedcallback)`) => void` |
-| `viewportHeight`       | `Ref<number>`                                                                        |
-| `viewportStableHeight` | `Ref<number>`                                                                        |
+| `viewportHeight`       | `Readonly<Ref<number>>`                                                              |
+| `viewportStableHeight` | `Readonly<Ref<number>>`                                                              |

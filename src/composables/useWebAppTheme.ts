@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, readonly, ref } from 'vue'
 import { useWebApp } from './useWebApp'
 
 const colorScheme = ref(Telegram.WebApp.colorScheme)
@@ -32,8 +32,8 @@ export function useWebAppTheme() {
   onThemeChanged(updateState)
 
   return {
-    colorScheme,
-    themeParams,
+    colorScheme: readonly(colorScheme),
+    themeParams: readonly(themeParams),
     headerColor,
     backgroundColor,
     setHeaderColor,
