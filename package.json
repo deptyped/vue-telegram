@@ -43,7 +43,10 @@
     "fix": "eslint --fix \"**/*.{vue,ts,js}\"",
     "release": "npm run build && npm pack",
     "test": "vitest",
-    "typecheck": "vue-tsc --noEmit"
+    "typecheck": "vue-tsc --noEmit",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "vue": "^3"
@@ -63,6 +66,7 @@
     "typescript": "5.2.2",
     "vite": "4.4.11",
     "vite-plugin-dts": "3.6.0",
+    "vitepress": "1.0.0-rc.34",
     "vitest": "0.34.6",
     "vue-component-meta": "^1.8.18"
   }
