@@ -1,5 +1,6 @@
 ---
 outline: deep
+next: 'test'
 ---
 
 # Installation
@@ -15,6 +16,10 @@ After that, install package:
 ```bash
 npm i vue-tg
 ```
+
+Done!
+
+[Mini Apps Documentation](/mini-apps)
 
 ## Global Aliases _(Optional)_
 

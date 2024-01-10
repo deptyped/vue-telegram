@@ -5,6 +5,13 @@ export default defineConfig({
   title: "vue-tg",
   description: "Vue-Telegram Documentation",
   themeConfig: {
+    search: {
+      provider: 'local',
+      options: {
+        detailedView: true,
+      }
+    },
+
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       {
