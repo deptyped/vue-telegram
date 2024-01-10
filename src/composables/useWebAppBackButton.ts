@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useWebApp } from './useWebApp'
 import type { OnBackButtonClickedCallback } from '~/types'
 
@@ -25,7 +25,14 @@ export function useWebAppBackButton() {
     onEvent('backButtonClicked', eventHandler)
 
   return {
-    isBackButtonVisible,
+    isBackButtonVisible: computed({
+      get() {
+        return isBackButtonVisible.value
+      },
+      set(isVisible) {
+        isVisible ? showBackButton() : hideBackButton()
+      },
+    }),
     onBackButtonClicked,
     showBackButton,
     hideBackButton,

@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useWebApp } from './useWebApp'
 import type { OnMainButtonClickedCallback } from '~/types'
 
@@ -65,12 +65,58 @@ export function useWebAppMainButton() {
     onEvent('mainButtonClicked', eventHandler)
 
   return {
-    mainButtonText,
-    mainButtonColor,
-    mainButtonTextColor,
-    isMainButtonVisible,
-    isMainButtonActive,
-    isMainButtonProgressVisible,
+    mainButtonText: computed({
+      get() {
+        return mainButtonText.value
+      },
+      set(text) {
+        setMainButtonText(text)
+      },
+    }),
+    mainButtonColor: computed({
+      get() {
+        return mainButtonColor.value
+      },
+      set(color) {
+        setMainButtonParams({
+          color,
+        })
+      },
+    }),
+    mainButtonTextColor: computed({
+      get() {
+        return mainButtonTextColor.value
+      },
+      set(color) {
+        setMainButtonParams({
+          text_color: color,
+        })
+      },
+    }),
+    isMainButtonVisible: computed({
+      get() {
+        return isMainButtonVisible.value
+      },
+      set(isVisible) {
+        isVisible ? showMainButton() : hideMainButton()
+      },
+    }),
+    isMainButtonActive: computed({
+      get() {
+        return isMainButtonActive.value
+      },
+      set(isActive) {
+        isActive ? enableMainButton() : disableMainButton()
+      },
+    }),
+    isMainButtonProgressVisible: computed({
+      get() {
+        return isMainButtonProgressVisible.value
+      },
+      set(isProgressVisible) {
+        isProgressVisible ? showMainButtonProgress() : hideMainButtonProgress()
+      },
+    }),
     setMainButtonText,
     onMainButtonClicked,
     showMainButton,

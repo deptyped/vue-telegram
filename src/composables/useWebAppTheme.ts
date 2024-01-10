@@ -34,8 +34,22 @@ export function useWebAppTheme() {
   return {
     colorScheme: readonly(colorScheme),
     themeParams: readonly(themeParams),
-    headerColor,
-    backgroundColor,
+    headerColor: computed({
+      get() {
+        return headerColor.value
+      },
+      set(newValue) {
+        setHeaderColor(newValue)
+      },
+    }),
+    backgroundColor: computed({
+      get() {
+        return backgroundColor.value
+      },
+      set(newValue) {
+        setBackgroundColor(newValue)
+      },
+    }),
     setHeaderColor,
     setBackgroundColor,
     onThemeChanged,

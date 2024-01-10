@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const isClosingConfirmationEnabled = ref(Telegram.WebApp.isClosingConfirmationEnabled)
 
@@ -18,7 +18,14 @@ function disableClosingConfirmation(...params: Parameters<typeof Telegram.WebApp
 
 export function useWebAppClosingConfirmation() {
   return {
-    isClosingConfirmationEnabled,
+    isClosingConfirmationEnabled: computed({
+      get() {
+        return isClosingConfirmationEnabled.value
+      },
+      set(isEnabled) {
+        isEnabled ? enableClosingConfirmation() : disableClosingConfirmation()
+      },
+    }),
     enableClosingConfirmation,
     disableClosingConfirmation,
   }
