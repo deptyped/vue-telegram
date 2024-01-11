@@ -14,6 +14,6 @@ import { useWebAppTheme } from 'vue-tg'
 | `colorScheme`        | `Readonly<Ref<"light" \| "dark">>`                                                     |
 | `headerColor`        | `Ref<string>`                                                                          |
 | `onThemeChanged`     | `(eventHandler: () => void) => void`                                                   |
-| `setBackgroundColor` | `(color: string) => void`                                                              |
-| `setHeaderColor`     | `(color: "bg_color" \| "secondary_bg_color") => void`                                  |
+| `setBackgroundColor` | `(color: string \| "bg_color" \| "secondary_bg_color") => void`                        |
+| `setHeaderColor`     | `(color: string \| "bg_color" \| "secondary_bg_color") => void`                        |
 | `themeParams`        | `Readonly<Ref<`[ThemeParams ↗](https://core.telegram.org/bots/webapps#themeparams)`>>` |
