@@ -6,6 +6,7 @@ import Confirm from './components/Confirm.vue'
 import MainButton from './components/MainButton.vue'
 import Popup from './components/Popup.vue'
 import ScanQr from './components/ScanQr.vue'
+import SettingsButton from './components/SettingsButton.vue'
 
 export {
   Alert,
@@ -14,6 +15,7 @@ export {
   MainButton,
   Popup,
   ScanQr,
+  SettingsButton,
 }
 
 export * from './composables'
@@ -26,6 +28,7 @@ const plugin = {
     Vue.component('TgMainButton', MainButton)
     Vue.component('TgPopup', Popup)
     Vue.component('TgScanQr', ScanQr)
+    Vue.component('TgSettingsButton', SettingsButton)
   },
 }
 
@@ -37,6 +40,7 @@ declare module '@vue/runtime-core' {
     TgMainButton: typeof MainButton
     TgPopup: typeof Popup
     TgScanQr: typeof ScanQr
+    TgSettingsButton: typeof SettingsButton
   }
 }
 
