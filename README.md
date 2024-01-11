@@ -33,7 +33,9 @@ After that, install package:
 npm i vue-tg
 ```
 
-_(Optional)_ Register on Vue instance:
+#### Global Aliases _(Optional)_
+
+Register on Vue instance:
 
 ```ts
 import VueTelegram from 'vue-tg'

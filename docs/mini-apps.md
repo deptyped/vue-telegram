@@ -80,19 +80,19 @@ onThemeChanged(() => {
 
 #### Mapping
 
-| Event name            | Handler                                                                     |
-| --------------------- | --------------------------------------------------------------------------- |
-| themeChanged          | [useWebAppTheme.onThemeChanged](#usewebapptheme)                            |
-| viewportChanged       | [useWebAppViewport.onViewportChanged](#usewebappviewport)                   |
-| mainButtonClicked     | [useWebAppMainButton.onMainButtonClicked](#usewebappmainbutton)             |
-| backButtonClicked     | [useWebAppBackButton.onBackButtonClicked](#usewebappbackbutton)             |
-| settingsButtonClicked | [useWebAppSettingsButton.onSettingsButtonClicked](#usewebappsettingsbutton) |
-| invoiceClosed         | [useWebAppNavigation.onInvoiceClosed](#usewebappnavigation)                 |
-| popupClosed           | [useWebAppPopup.onPopupClosed](#usewebapppopup)                             |
-| qrTextReceived        | [useWebAppQrScanner.onQrTextReceived](#usewebappqrscanner)                  |
-| clipboardTextReceived | [useWebAppClipboard.onClipboardTextReceived](#usewebappclipboard)           |
-| writeAccessRequested  | [useWebAppRequests.onWriteAccessRequested](#usewebapprequests)              |
-| contactRequested      | [useWebAppRequests.onContactRequested](#usewebapprequests)                  |
+| Event name            | Handler                                                                       |
+| --------------------- | ----------------------------------------------------------------------------- |
+| themeChanged          | [useWebAppTheme → onThemeChanged](#usewebapptheme)                            |
+| viewportChanged       | [useWebAppViewport → onViewportChanged](#usewebappviewport)                   |
+| mainButtonClicked     | [useWebAppMainButton → onMainButtonClicked](#usewebappmainbutton)             |
+| backButtonClicked     | [useWebAppBackButton → onBackButtonClicked](#usewebappbackbutton)             |
+| settingsButtonClicked | [useWebAppSettingsButton → onSettingsButtonClicked](#usewebappsettingsbutton) |
+| invoiceClosed         | [useWebAppNavigation → onInvoiceClosed](#usewebappnavigation)                 |
+| popupClosed           | [useWebAppPopup → onPopupClosed](#usewebapppopup)                             |
+| qrTextReceived        | [useWebAppQrScanner → onQrTextReceived](#usewebappqrscanner)                  |
+| clipboardTextReceived | [useWebAppClipboard → onClipboardTextReceived](#usewebappclipboard)           |
+| writeAccessRequested  | [useWebAppRequests → onWriteAccessRequested](#usewebapprequests)              |
+| contactRequested      | [useWebAppRequests → onContactRequested](#usewebapprequests)                  |
 
 <!--@include: @/mini-apps/composables/use-web-app.md-->
 
