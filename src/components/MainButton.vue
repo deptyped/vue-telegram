@@ -79,7 +79,3 @@ onUnmounted(() => {
   hideMainButton()
 })
 </script>
-
-<template>
-  <div />
-</template>

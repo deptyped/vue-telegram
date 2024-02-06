@@ -23,7 +23,3 @@ onUnmounted(() =>
   closeScanQrPopup(),
 )
 </script>
-
-<template>
-  <div />
-</template>
