@@ -71,7 +71,9 @@ After that, you can use global aliases for components
 
 - [Alert](https://vue-tg.pages.dev/mini-apps.html#alert)
 - [BackButton](https://vue-tg.pages.dev/mini-apps.html#backbutton)
+- [ClosingConfirmation](https://vue-tg.pages.dev/mini-apps.html#closingconfirmation)
 - [Confirm](https://vue-tg.pages.dev/mini-apps.html#confirm)
+- [ExpandedViewport](https://vue-tg.pages.dev/mini-apps.html#expandedviewport)
 - [MainButton](https://vue-tg.pages.dev/mini-apps.html#mainbutton)
 - [Popup](https://vue-tg.pages.dev/mini-apps.html#popup)
 - [ScanQr](https://vue-tg.pages.dev/mini-apps.html#scanqr)
