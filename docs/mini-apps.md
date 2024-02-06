@@ -15,6 +15,8 @@ outline: [2, 3]
 
 <!--@include: @/mini-apps/components/confirm.md-->
 
+<!--@include: @/mini-apps/components/expanded-viewport.md-->
+
 <!--@include: @/mini-apps/components/main-button.md-->
 
 <!--@include: @/mini-apps/components/popup.md-->
