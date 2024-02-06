@@ -11,6 +11,8 @@ outline: [2, 3]
 
 <!--@include: @/mini-apps/components/back-button.md-->
 
+<!--@include: @/mini-apps/components/closing-confirmation.md-->
+
 <!--@include: @/mini-apps/components/confirm.md-->
 
 <!--@include: @/mini-apps/components/main-button.md-->
