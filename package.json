@@ -49,12 +49,12 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
+    "@types/telegram-web-app": "^7.0.0",
     "vue": "^3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "0.43.1",
     "@types/node": "^20.8.3",
-    "@types/telegram-web-app": "^6.9.1",
     "@vitejs/plugin-vue": "4.4.0",
     "@vue/test-utils": "2.4.1",
     "eslint": "8.51.0",

@@ -10,4 +10,7 @@ import { useWebAppSettingsButton } from 'vue-tg'
 
 | Name                      | Type                                 |
 | :------------------------ | :----------------------------------- |
+| `hideSettingsButton`      | `() => void`                         |
+| `isSettingsButtonVisible` | `Ref<boolean>`                       |
 | `onSettingsButtonClicked` | `(eventHandler: () => void) => void` |
+| `showSettingsButton`      | `() => void`                         |

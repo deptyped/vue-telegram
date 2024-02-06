@@ -75,6 +75,7 @@ After that, you can use global aliases for components
 - [MainButton](https://vue-tg.pages.dev/mini-apps.html#mainbutton)
 - [Popup](https://vue-tg.pages.dev/mini-apps.html#popup)
 - [ScanQr](https://vue-tg.pages.dev/mini-apps.html#scanqr)
+- [SettingsButton](https://vue-tg.pages.dev/mini-apps.html#settingsbutton)
 
 ### Composables
 

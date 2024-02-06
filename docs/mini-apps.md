@@ -19,6 +19,8 @@ outline: [2, 3]
 
 <!--@include: @/mini-apps/components/scan-qr.md-->
 
+<!--@include: @/mini-apps/components/settings-button.md-->
+
 ## Composables
 
 ### Field Mapping
