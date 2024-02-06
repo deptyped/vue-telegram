@@ -2,9 +2,9 @@
 
 A component that expands the Mini App to the maximum available height when is rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { ExpandedViewport } from 'vue-tg'
+import { ExpandedViewport } from 'vue-tg'
 </script>
 
 <template>

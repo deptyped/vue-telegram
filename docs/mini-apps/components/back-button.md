@@ -2,13 +2,13 @@
 
 A component that enables the back button when is rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { BackButton } from 'vue-tg'
+import { BackButton } from 'vue-tg'
 
-  function handleBackButton() {
-    // ...
-  }
+function handleBackButton() {
+  // ...
+}
 </script>
 
 <template>

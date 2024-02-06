@@ -3,13 +3,13 @@
 A component that shows message in a simple alert with a 'Close' button when is
 rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { Alert } from 'vue-tg'
+import { Alert } from 'vue-tg'
 
-  function handleAlertClose() {
-    // ...
-  }
+function handleAlertClose() {
+  // ...
+}
 </script>
 
 <template>

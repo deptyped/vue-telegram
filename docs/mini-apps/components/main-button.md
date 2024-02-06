@@ -2,13 +2,13 @@
 
 A component that enables the main button when is rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { MainButton } from 'vue-tg'
+import { MainButton } from 'vue-tg'
 
-  function handleMainButton() {
-    // ...
-  }
+function handleMainButton() {
+  // ...
+}
 </script>
 
 <template>

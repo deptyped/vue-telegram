@@ -2,13 +2,13 @@
 
 A component that enables the settings button when is rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { SettingsButton } from 'vue-tg'
+import { SettingsButton } from 'vue-tg'
 
-  function handleSettingsButton() {
-    // ...
-  }
+function handleSettingsButton() {
+  // ...
+}
 </script>
 
 <template>

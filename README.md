@@ -7,11 +7,11 @@ A package for integration of
 
 ### Usage Example
 
-```html
+```vue
 <script lang="ts" setup>
-  import { MainButton, useWebAppPopup } from 'vue-tg'
+import { MainButton, useWebAppPopup } from 'vue-tg'
 
-  const { showAlert } = useWebAppPopup()
+const { showAlert } = useWebAppPopup()
 </script>
 
 <template>
@@ -45,9 +45,9 @@ Vue.use(VueTelegram)
 
 After that, you can use global aliases for components
 
-```html
+```vue
 <script lang="ts" setup>
-  import { Alert } from 'vue-tg'
+import { Alert } from 'vue-tg'
 </script>
 
 <template>

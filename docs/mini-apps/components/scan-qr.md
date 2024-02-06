@@ -2,13 +2,13 @@
 
 A component that shows a native popup for scanning a QR code when is rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { ScanQr } from 'vue-tg'
+import { ScanQr } from 'vue-tg'
 
-  function handleScanResult(data: string) {
-    // ...
-  }
+function handleScanResult(data: string) {
+  // ...
+}
 </script>
 
 <template>

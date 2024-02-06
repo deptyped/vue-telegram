@@ -33,11 +33,11 @@ Vue.use(VueTelegram)
 
 After that, you can use global aliases for components:
 
-```html
+```vue
 <!-- Without alias -->
 
 <script lang="ts" setup>
-  import { Alert } from 'vue-tg'
+import { Alert } from 'vue-tg'
 </script>
 
 <template>

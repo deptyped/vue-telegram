@@ -2,13 +2,13 @@
 
 A component that shows a native popup when is rendered.
 
-```html
+```vue
 <script lang="ts" setup>
-  import { Popup } from 'vue-tg'
+import { Popup } from 'vue-tg'
 
-  function handlePopupClose(buttonId: string) {
-    // ...
-  }
+function handlePopupClose(buttonId: string) {
+  // ...
+}
 </script>
 
 <template>
