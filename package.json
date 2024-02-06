@@ -53,21 +53,21 @@
     "vue": "^3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "0.43.1",
-    "@types/node": "^20.8.3",
-    "@vitejs/plugin-vue": "4.4.0",
-    "@vue/test-utils": "2.4.1",
-    "eslint": "8.51.0",
-    "happy-dom": "12.9.0",
+    "@antfu/eslint-config": "2.6.4",
+    "@types/node": "^20.11.16",
+    "@vitejs/plugin-vue": "5.0.3",
+    "@vue/test-utils": "2.4.4",
+    "eslint": "8.56.0",
+    "happy-dom": "13.3.8",
     "markdown-table": "^3.0.3",
     "rimraf": "5.0.5",
-    "typedoc": "^0.25.2",
-    "typedoc-plugin-markdown": "^3.16.0",
-    "typescript": "5.2.2",
-    "vite": "4.4.11",
-    "vite-plugin-dts": "3.6.0",
-    "vitepress": "1.0.0-rc.34",
-    "vitest": "0.34.6",
-    "vue-component-meta": "^1.8.18"
+    "typedoc": "^0.25.7",
+    "typedoc-plugin-markdown": "^3.17.1",
+    "typescript": "5.3.3",
+    "vite": "5.0.12",
+    "vite-plugin-dts": "3.7.2",
+    "vitepress": "1.0.0-rc.40",
+    "vitest": "1.2.2",
+    "vue-component-meta": "^1.8.27"
   }
 }
