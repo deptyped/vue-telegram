@@ -1,16 +1,13 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue'
-import { useWebAppClosingConfirmation } from '..'
+import { onMounted, onUnmounted } from "vue"
+import { useWebAppClosingConfirmation } from ".."
 
-const { enableClosingConfirmation, disableClosingConfirmation } = useWebAppClosingConfirmation()
+const { enableClosingConfirmation, disableClosingConfirmation } =
+  useWebAppClosingConfirmation()
 
-onMounted(() =>
-  enableClosingConfirmation(),
-)
+onMounted(() => enableClosingConfirmation())
 
-onUnmounted(() =>
-  disableClosingConfirmation(),
-)
+onUnmounted(() => disableClosingConfirmation())
 </script>
 
 <template></template>

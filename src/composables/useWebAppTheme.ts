@@ -1,5 +1,5 @@
-import { computed, readonly, ref } from 'vue'
-import { useWebApp } from './useWebApp'
+import { computed, readonly, ref } from "vue"
+import { useWebApp } from "./useWebApp"
 
 const colorScheme = ref(Telegram.WebApp.colorScheme)
 const themeParams = ref(Telegram.WebApp.themeParams)
@@ -13,12 +13,16 @@ function updateState() {
   backgroundColor.value = Telegram.WebApp.backgroundColor
 }
 
-function setHeaderColor(...params: Parameters<typeof Telegram.WebApp.setHeaderColor>) {
+function setHeaderColor(
+  ...params: Parameters<typeof Telegram.WebApp.setHeaderColor>
+) {
   Telegram.WebApp.setHeaderColor(...params)
   updateState()
 }
 
-function setBackgroundColor(...params: Parameters<typeof Telegram.WebApp.setBackgroundColor>) {
+function setBackgroundColor(
+  ...params: Parameters<typeof Telegram.WebApp.setBackgroundColor>
+) {
   Telegram.WebApp.setBackgroundColor(...params)
   updateState()
 }
@@ -27,7 +31,7 @@ export function useWebAppTheme() {
   const { onEvent } = useWebApp()
 
   const onThemeChanged = (eventHandler: () => void) =>
-    onEvent('themeChanged', eventHandler)
+    onEvent("themeChanged", eventHandler)
 
   onThemeChanged(updateState)
 

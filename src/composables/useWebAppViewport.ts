@@ -1,6 +1,6 @@
-import { readonly, ref } from 'vue'
-import { useWebApp } from './useWebApp'
-import type { OnViewportChangedCallback } from '~/types'
+import { readonly, ref } from "vue"
+import { useWebApp } from "./useWebApp"
+import type { OnViewportChangedCallback } from "~/types"
 
 const isExpanded = ref(Telegram.WebApp.isExpanded)
 const viewportHeight = ref(Telegram.WebApp.viewportHeight)
@@ -21,7 +21,7 @@ export function useWebAppViewport() {
   const { onEvent } = useWebApp()
 
   const onViewportChanged = (eventHandler: OnViewportChangedCallback) =>
-    onEvent('viewportChanged', eventHandler)
+    onEvent("viewportChanged", eventHandler)
 
   onViewportChanged(updateState)
 

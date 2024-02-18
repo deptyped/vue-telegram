@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch } from 'vue'
-import { useWebAppMainButton } from '..'
+import { onMounted, onUnmounted, watch } from "vue"
+import { useWebAppMainButton } from ".."
 
 const props = defineProps({
   text: { type: String },
@@ -11,7 +11,7 @@ const props = defineProps({
   progress: { type: Boolean, default: false },
 })
 const emit = defineEmits<{
-  (eventName: 'click'): void
+  (eventName: "click"): void
 }>()
 
 const {
@@ -22,48 +22,62 @@ const {
   hideMainButtonProgress,
 } = useWebAppMainButton()
 
-watch(() => props.text, (text) => {
-  setMainButtonParams({
-    text,
-  })
-})
+watch(
+  () => props.text,
+  text => {
+    setMainButtonParams({
+      text,
+    })
+  },
+)
 
-watch(() => props.color, (color) => {
-  setMainButtonParams({
-    color,
-  })
-})
+watch(
+  () => props.color,
+  color => {
+    setMainButtonParams({
+      color,
+    })
+  },
+)
 
-watch(() => props.textColor, (textColor) => {
-  setMainButtonParams({
-    text_color: textColor,
-  })
-})
+watch(
+  () => props.textColor,
+  textColor => {
+    setMainButtonParams({
+      text_color: textColor,
+    })
+  },
+)
 
-watch(() => props.visible, (isVisible) => {
-  setMainButtonParams({
-    is_visible: isVisible,
-  })
-})
+watch(
+  () => props.visible,
+  isVisible => {
+    setMainButtonParams({
+      is_visible: isVisible,
+    })
+  },
+)
 
-watch(() => props.disabled, (isDisabled) => {
-  setMainButtonParams({
-    is_active: !isDisabled,
-  })
-})
+watch(
+  () => props.disabled,
+  isDisabled => {
+    setMainButtonParams({
+      is_active: !isDisabled,
+    })
+  },
+)
 
-watch(() => props.progress, (inProgress) => {
-  inProgress
-    ? showMainButtonProgress()
-    : hideMainButtonProgress()
-})
+watch(
+  () => props.progress,
+  inProgress => {
+    inProgress ? showMainButtonProgress() : hideMainButtonProgress()
+  },
+)
 
-onMainButtonClicked(() => emit('click'))
+onMainButtonClicked(() => emit("click"))
 
 onMounted(() => {
-  props.progress
-    ? showMainButtonProgress()
-    : hideMainButtonProgress()
+  props.progress ? showMainButtonProgress() : hideMainButtonProgress()
 
   setMainButtonParams({
     text: props.text,

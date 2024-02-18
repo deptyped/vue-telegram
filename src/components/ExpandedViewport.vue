@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-import { useWebAppViewport } from '..'
+import { onMounted } from "vue"
+import { useWebAppViewport } from ".."
 
 const props = defineProps({
   force: { type: Boolean, default: false },
@@ -12,9 +12,7 @@ onViewportChanged(({ isStateStable }) => {
   props.force && isStateStable && expand()
 })
 
-onMounted(() =>
-  expand(),
-)
+onMounted(() => expand())
 </script>
 
 <template></template>

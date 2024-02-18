@@ -1,12 +1,7 @@
-import { ref } from 'vue'
-import { useWebApp } from './useWebApp'
+import { ref } from "vue"
+import { useWebApp } from "./useWebApp"
 
-const {
-  initData,
-  initDataUnsafe,
-  sendData,
-  close,
-} = useWebApp()
+const { initData, initDataUnsafe, sendData, close } = useWebApp()
 
 export function useWebAppSendData<D>(
   data: D,
@@ -16,7 +11,7 @@ export function useWebAppSendData<D>(
 ) {
   const serialize = options.serialize ?? JSON.stringify
 
-  const error = ref('')
+  const error = ref("")
   const setError = (errorMessage: string) => {
     error.value = errorMessage
     console.error(errorMessage)
@@ -30,7 +25,13 @@ export function useWebAppSendData<D>(
     execute: () => {
       sendData(serialize(data))
 
-      setTimeout(() => setError('Telegram.WebApp.sendData is only available for custom keyboards.'), 1_000)
+      setTimeout(
+        () =>
+          setError(
+            "Telegram.WebApp.sendData is only available for custom keyboards.",
+          ),
+        1_000,
+      )
     },
     executeHttp: async (
       callbackUrl: string,
@@ -40,7 +41,7 @@ export function useWebAppSendData<D>(
       isLoading.value = true
       try {
         const response = await fetch(callbackUrl, {
-          method: 'POST',
+          method: "POST",
           body: JSON.stringify({
             initData,
             initDataUnsafe,
@@ -48,18 +49,14 @@ export function useWebAppSendData<D>(
           }),
         })
 
-        if (!response.ok)
-          setError(`${response.status} ${response.statusText}`)
+        if (!response.ok) setError(`${response.status} ${response.statusText}`)
 
-        if (response.ok && closeAfter)
-          close()
+        if (response.ok && closeAfter) close()
 
         return response
-      }
-      catch (err) {
+      } catch (err) {
         setError(String(err))
-      }
-      finally {
+      } finally {
         isLoading.value = false
       }
     },
