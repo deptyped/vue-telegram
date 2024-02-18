@@ -9,6 +9,7 @@ import MainButton from "./components/MainButton.vue"
 import Popup from "./components/Popup.vue"
 import ScanQr from "./components/ScanQr.vue"
 import SettingsButton from "./components/SettingsButton.vue"
+import ShareWidget from "./widgets/ShareWidget.vue"
 
 export {
   Alert,
@@ -20,6 +21,7 @@ export {
   Popup,
   ScanQr,
   SettingsButton,
+  ShareWidget,
 }
 
 export * from "./composables"
@@ -35,6 +37,7 @@ const plugin = {
     Vue.component("TgPopup", Popup)
     Vue.component("TgScanQr", ScanQr)
     Vue.component("TgSettingsButton", SettingsButton)
+    Vue.component("TgShareWidget", ShareWidget)
   },
 }
 
@@ -49,6 +52,7 @@ declare module "@vue/runtime-core" {
     TgPopup: typeof Popup
     TgScanQr: typeof ScanQr
     TgSettingsButton: typeof SettingsButton
+    TgShareWidget: typeof ShareWidget
   }
 }
 
