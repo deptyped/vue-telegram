@@ -15,6 +15,10 @@ const props = defineProps({
     type: String as PropType<"large" | "medium" | "small">,
     default: null,
   },
+  cornerRadius: {
+    type: String,
+    default: null,
+  },
   userPhoto: {
     type: Boolean,
     default: null,
@@ -47,6 +51,7 @@ onMounted(() => {
       src="https://telegram.org/js/telegram-widget.js?22"
       :data-telegram-login="botUsername"
       :data-size="size"
+      :data-radius="cornerRadius"
       :data-userpic="userPhoto"
       :data-request-access="requestWrite ? 'write' : null"
       :data-onauth="redirectUrl ? null : 'onTelegramAuth(user)'"
