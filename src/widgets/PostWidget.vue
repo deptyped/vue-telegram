@@ -2,10 +2,6 @@
 import { computed } from "vue"
 
 const props = defineProps({
-  tag: {
-    type: String,
-    default: "div",
-  },
   url: {
     type: String,
     required: true,
@@ -29,6 +25,10 @@ const props = defineProps({
   dark: {
     type: Boolean,
     default: null,
+  },
+  tag: {
+    type: String,
+    default: "div",
   },
 })
 const key = computed(() => JSON.stringify(props))

@@ -1,11 +1,7 @@
 <script lang="ts" setup>
-import { computed } from "vue"
+import { PropType, computed } from "vue"
 
 const props = defineProps({
-  tag: {
-    type: String,
-    default: "div",
-  },
   url: {
     type: String,
     required: true,
@@ -15,15 +11,16 @@ const props = defineProps({
     default: null,
   },
   size: {
-    type: String,
-    default: "medium",
-    validator(value) {
-      return ["medium", "large"].includes(value as string)
-    },
+    type: String as PropType<"large" | "medium">,
+    default: null,
   },
   noLabel: {
     type: Boolean,
     default: false,
+  },
+  tag: {
+    type: String,
+    default: "div",
   },
 })
 const key = computed(() => JSON.stringify(props))
