@@ -21,7 +21,7 @@ const props = defineProps({
       return ["medium", "large"].includes(value as string)
     },
   },
-  noText: {
+  noLabel: {
     type: Boolean,
     default: false,
   },
@@ -38,7 +38,7 @@ const key = computed(() => JSON.stringify(props))
       :data-telegram-share-url="url"
       :data-size="size"
       :data-comment="comment.length ? comment : null"
-      :data-text="noText ? 'notext' : null"
+      :data-text="noLabel ? 'notext' : null"
     >
     </component>
   </component>
