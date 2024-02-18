@@ -26,3 +26,5 @@ onUnmounted(() =>
   hideBackButton(),
 )
 </script>
+
+<template></template>

@@ -12,3 +12,5 @@ onUnmounted(() =>
   disableClosingConfirmation(),
 )
 </script>
+
+<template></template>

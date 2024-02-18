@@ -16,3 +16,5 @@ onMounted(() =>
   expand(),
 )
 </script>
+
+<template></template>

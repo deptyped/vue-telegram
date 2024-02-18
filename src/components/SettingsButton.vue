@@ -26,3 +26,5 @@ onUnmounted(() =>
   hideSettingsButton(),
 )
 </script>
+
+<template></template>
