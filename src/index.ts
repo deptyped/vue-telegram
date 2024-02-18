@@ -11,6 +11,7 @@ import ScanQr from "./components/ScanQr.vue"
 import SettingsButton from "./components/SettingsButton.vue"
 import ShareWidget from "./widgets/ShareWidget.vue"
 import PostWidget from "./widgets/PostWidget.vue"
+import LoginWidget from "./widgets/LoginWidget.vue"
 
 export {
   Alert,
@@ -24,7 +25,10 @@ export {
   SettingsButton,
   ShareWidget,
   PostWidget,
+  LoginWidget,
 }
+
+export type { LoginWidgetUser } from "./types"
 
 export * from "./composables"
 
@@ -41,6 +45,7 @@ const plugin = {
     Vue.component("TgSettingsButton", SettingsButton)
     Vue.component("TgShareWidget", ShareWidget)
     Vue.component("TgPostWidget", PostWidget)
+    Vue.component("TgLoginWidget", LoginWidget)
   },
 }
 
@@ -57,6 +62,7 @@ declare module "@vue/runtime-core" {
     TgSettingsButton: typeof SettingsButton
     TgShareWidget: typeof ShareWidget
     TgPostWidget: typeof PostWidget
+    TgLoginWidget: typeof LoginWidget
   }
 }
 

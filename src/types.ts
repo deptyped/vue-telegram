@@ -1,3 +1,7 @@
+/**
+ * Mini Apps
+ */
+
 export type OnThemeChangedCallback = () => void
 export type OnViewportChangedCallback = (eventData: {
   isStateStable: boolean
@@ -22,3 +26,13 @@ export type OnWriteAccessRequestedCallback = (eventData: {
 export type OnContactRequestedCallback = (eventData: {
   status: "sent" | "cancelled"
 }) => void
+
+/**
+ * Widgets
+ */
+
+export type LoginWidgetUser = Pick<
+  WebAppUser,
+  "id" | "first_name" | "last_name" | "username" | "photo_url"
+> &
+  Pick<WebAppInitData, "auth_date" | "hash">
