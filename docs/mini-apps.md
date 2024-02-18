@@ -5,6 +5,8 @@ outline: [2, 3]
 
 # Mini Apps Integration
 
+[Official Telegram Mini Apps Documentation](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+
 ## Components
 
 <!--@include: @/mini-apps/components/alert.md-->
@@ -52,7 +54,7 @@ outline: [2, 3]
 | enableClosingConfirmation    | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | disableClosingConfirmation   | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | onEvent                      | [useWebApp](#usewebapp)                                       |
-| offEvent                     | Handled automagically 🪄                                      |
+| offEvent                     | Handled automagically 🪄                                       |
 | sendData                     | [useWebApp](#usewebapp)                                       |
 | switchInlineQuery            | [useWebAppNavigation](#usewebappnavigation)                   |
 | openLink                     | [useWebAppNavigation](#usewebappnavigation)                   |

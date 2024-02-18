@@ -12,4 +12,7 @@ hero:
     - theme: alt
       text: Telegram Mini Apps
       link: /mini-apps
+    - theme: alt
+      text: Telegram Widgets
+      link: /widgets
 ---

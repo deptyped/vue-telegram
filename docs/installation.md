@@ -21,6 +21,8 @@ Done!
 
 [Mini Apps Documentation](/mini-apps)
 
+[Widgets Documentation](/widgets)
+
 ## Global Aliases _(Optional)_
 
 Register on Vue instance:
