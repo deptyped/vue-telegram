@@ -12,7 +12,7 @@ const props = defineProps({
   },
   comment: {
     type: String,
-    default: "",
+    default: null,
   },
   size: {
     type: String,
@@ -37,7 +37,7 @@ const key = computed(() => JSON.stringify(props))
       src="https://telegram.org/js/telegram-widget.js?22"
       :data-telegram-share-url="url"
       :data-size="size"
-      :data-comment="comment.length ? comment : null"
+      :data-comment="comment"
       :data-text="noLabel ? 'notext' : null"
     >
     </component>
