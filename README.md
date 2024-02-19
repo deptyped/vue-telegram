@@ -1,6 +1,6 @@
 ## `vue-tg` - Telegram integration for Vue
 
-Vue package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
+A package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
 
 [Documentation »](https://vue-tg.pages.dev)
 
@@ -69,10 +69,10 @@ import { Alert } from 'vue-tg'
 
 #### Components
 
-- [DiscussionWidget](https://vue-tg.pages.dev/widgets.html#discussion-widget)
-- [LoginWidget](https://vue-tg.pages.dev/widgets.htmll#login-widget)
-- [PostWidget](https://vue-tg.pages.dev/widgets.html#post-widget)
 - [ShareWidget](https://vue-tg.pages.dev/widgets.html#share-widget)
+- [PostWidget](https://vue-tg.pages.dev/widgets.html#post-widget)
+- [LoginWidget](https://vue-tg.pages.dev/widgets.htmll#login-widget)
+- [DiscussionWidget](https://vue-tg.pages.dev/widgets.html#discussion-widget)
 
 ### Mini Apps
 
