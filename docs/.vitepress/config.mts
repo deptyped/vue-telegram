@@ -21,6 +21,10 @@ export default defineConfig({
       {
         text: 'Mini Apps',
         link: "/mini-apps",
+      },
+      {
+        text: 'Widgets',
+        link: "/widgets",
       }
     ],
 

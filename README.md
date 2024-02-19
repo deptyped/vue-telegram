@@ -1,7 +1,6 @@
 ## `vue-tg` - Telegram integration for Vue
 
-A package for integration of
-[Telegram Mini Apps](https://core.telegram.org/bots/webapps) feature with Vue.
+A package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
 
 [Documentation »](https://vue-tg.pages.dev)
 
@@ -63,11 +62,26 @@ import { Alert } from 'vue-tg'
 
 ## Documentation
 
-- [Official Telegram Mini App Docs ↗](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+### Widgets
+
+- [Official Telegram Widgets Documentation](https://core.telegram.org/widgets)
+- [Widgets Documentation](https://vue-tg.pages.dev/widgets.html)
+
+#### Components
+
+- [ShareWidget](https://vue-tg.pages.dev/widgets.html#share-widget)
+- [PostWidget](https://vue-tg.pages.dev/widgets.html#post-widget)
+- [LoginWidget](https://vue-tg.pages.dev/widgets.htmll#login-widget)
+- [DiscussionWidget](https://vue-tg.pages.dev/widgets.html#discussion-widget)
+
+### Mini Apps
+
+- [Official Telegram Mini Apps Documentation](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+- [Mini Apps Documentation](https://vue-tg.pages.dev/mini-apps.html)
 - [Field Mapping](https://vue-tg.pages.dev/mini-apps.html#field-mapping)
 - [Event Handling](https://vue-tg.pages.dev/mini-apps.html#event-handling)
 
-### Components
+#### Components
 
 - [Alert](https://vue-tg.pages.dev/mini-apps.html#alert)
 - [BackButton](https://vue-tg.pages.dev/mini-apps.html#backbutton)
@@ -79,7 +93,7 @@ import { Alert } from 'vue-tg'
 - [ScanQr](https://vue-tg.pages.dev/mini-apps.html#scanqr)
 - [SettingsButton](https://vue-tg.pages.dev/mini-apps.html#settingsbutton)
 
-### Composables
+#### Composables
 
 - [useWebApp](https://vue-tg.pages.dev/mini-apps.html#usewebapp)
 - [useWebAppBackButton](https://vue-tg.pages.dev/mini-apps.html#usewebappbackbutton)

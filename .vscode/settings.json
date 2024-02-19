@@ -10,5 +10,8 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[markdown]": {
+    "editor.formatOnSave": true,
+  },
   "typescript.tsdk": "node_modules/typescript/lib"
 }

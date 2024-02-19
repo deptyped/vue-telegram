@@ -9,6 +9,10 @@ import MainButton from "./components/MainButton.vue"
 import Popup from "./components/Popup.vue"
 import ScanQr from "./components/ScanQr.vue"
 import SettingsButton from "./components/SettingsButton.vue"
+import ShareWidget from "./widgets/ShareWidget.vue"
+import PostWidget from "./widgets/PostWidget.vue"
+import LoginWidget from "./widgets/LoginWidget.vue"
+import DiscussionWidget from "./widgets/DiscussionWidget.vue"
 
 export {
   Alert,
@@ -20,7 +24,13 @@ export {
   Popup,
   ScanQr,
   SettingsButton,
+  ShareWidget,
+  PostWidget,
+  LoginWidget,
+  DiscussionWidget,
 }
+
+export type { LoginWidgetUser } from "./types"
 
 export * from "./composables"
 
@@ -35,6 +45,10 @@ const plugin = {
     Vue.component("TgPopup", Popup)
     Vue.component("TgScanQr", ScanQr)
     Vue.component("TgSettingsButton", SettingsButton)
+    Vue.component("TgShareWidget", ShareWidget)
+    Vue.component("TgPostWidget", PostWidget)
+    Vue.component("TgLoginWidget", LoginWidget)
+    Vue.component("TgDiscussionWidget", DiscussionWidget)
   },
 }
 
@@ -49,6 +63,10 @@ declare module "@vue/runtime-core" {
     TgPopup: typeof Popup
     TgScanQr: typeof ScanQr
     TgSettingsButton: typeof SettingsButton
+    TgShareWidget: typeof ShareWidget
+    TgPostWidget: typeof PostWidget
+    TgLoginWidget: typeof LoginWidget
+    TgDiscussionWidget: typeof DiscussionWidget
   }
 }
 
