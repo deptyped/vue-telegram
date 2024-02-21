@@ -71,7 +71,7 @@ import { Alert } from 'vue-tg'
 
 - [ShareWidget](https://vue-tg.pages.dev/widgets.html#share-widget)
 - [PostWidget](https://vue-tg.pages.dev/widgets.html#post-widget)
-- [LoginWidget](https://vue-tg.pages.dev/widgets.htmll#login-widget)
+- [LoginWidget](https://vue-tg.pages.dev/widgets.html#login-widget)
 - [DiscussionWidget](https://vue-tg.pages.dev/widgets.html#discussion-widget)
 
 ### Mini Apps
