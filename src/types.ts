@@ -26,6 +26,13 @@ export type OnWriteAccessRequestedCallback = (eventData: {
 export type OnContactRequestedCallback = (eventData: {
   status: "sent" | "cancelled"
 }) => void
+export type OnBiometricAuthRequested = (eventData: {
+  isAuthenticated: boolean
+  biometricToken?: string
+}) => void
+export type OnBiometricTokenUpdated = (eventData: {
+  isUpdated: boolean
+}) => void
 
 /**
  * Widgets

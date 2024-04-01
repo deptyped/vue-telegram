@@ -1,5 +1,6 @@
 export { useWebApp } from "./useWebApp"
 export { useWebAppBackButton } from "./useWebAppBackButton"
+export { useWebAppBiometricManager } from "./useWebAppBiometricManager"
 export { useWebAppClipboard } from "./useWebAppClipboard"
 export { useWebAppClosingConfirmation } from "./useWebAppClosingConfirmation"
 export { useWebAppCloudStorage } from "./useWebAppCloudStorage"

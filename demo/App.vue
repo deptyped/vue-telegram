@@ -1,5 +1,15 @@
 <script lang="ts" setup>
-import { useWebApp, useWebAppHapticFeedback, useWebAppMainButton, useWebAppNavigation, useWebAppPopup, useWebAppQrScanner, useWebAppTheme, useWebAppViewport } from '../src'
+import {
+  useWebApp,
+  useWebAppHapticFeedback,
+  useWebAppMainButton,
+  useWebAppNavigation,
+  useWebAppPopup,
+  useWebAppQrScanner,
+  useWebAppTheme,
+  useWebAppViewport,
+  useWebAppBiometricManager,
+} from '../src'
 
 const { version, platform, initData, initDataUnsafe, sendData } = useWebApp()
 const { expand, isExpanded, viewportHeight, viewportStableHeight } = useWebAppViewport()
@@ -21,6 +31,18 @@ const {
 const { colorScheme, themeParams, headerColor, backgroundColor } = useWebAppTheme()
 const { impactOccurred, notificationOccurred, selectionChanged } = useWebAppHapticFeedback()
 const { showScanQrPopup } = useWebAppQrScanner()
+const {
+  isInit,
+  isAccessRequested,
+  isAccessGranted,
+  isBiometricTokenSaved,
+  isBiometricAvailable,
+  deviceId,
+  init,
+  requestAccess,
+  authenticate,
+  openSettings,
+} = useWebAppBiometricManager()
 
 function toggleMainButton() {
   isMainButtonVisible.value
@@ -32,6 +54,22 @@ function toggleMainButtonProgress() {
   isMainButtonProgressVisible.value
     ? hideMainButtonProgress()
     : showMainButtonProgress(true)
+}
+
+function initBiometricManager() {
+  init(() => console.log('init: isAccessGranted'))
+}
+
+function requestAccessBiometricManager() {
+  requestAccess({})
+}
+
+function authenticateBiometricManager() {
+  authenticate({})
+}
+
+function openSettingsBiometricManager() {
+  openSettings()
 }
 </script>
 
@@ -259,6 +297,27 @@ function toggleMainButtonProgress() {
       </div>
 
       <pre><code>{{ themeParams }}</code></pre>
+    </div>
+
+    <div>
+      <h4>Biometric Manager</h4>
+      <p>isInit: {{ isInit }}</p>
+      <p>isAccessRequested: {{ isAccessRequested }}</p>
+      <p>isAccessGranted: {{ isAccessGranted }}</p>
+      <p>isBiometricTokenSaved: {{ isBiometricTokenSaved }}</p>
+      <p>isBiometricAvailable: {{ isBiometricAvailable }}</p>
+      <p>deviceId: {{ deviceId }}</p>
+
+      <button @click.prevent="initBiometricManager">Init</button>
+      <button @click.prevent="requestAccessBiometricManager">
+        RequestAccess
+      </button>
+      <button @click.prevent="authenticateBiometricManager">
+        authenticate
+      </button>
+      <button @click.prevent="openSettingsBiometricManager">
+        open settings
+      </button>
     </div>
 
     <div>

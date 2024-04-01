@@ -13,6 +13,8 @@ outline: [2, 3]
 
 <!--@include: @/mini-apps/components/back-button.md-->
 
+<!--@include: @/mini-apps/components/biometric-manager.md-->
+
 <!--@include: @/mini-apps/components/closing-confirmation.md-->
 
 <!--@include: @/mini-apps/components/confirm.md-->
@@ -48,6 +50,7 @@ outline: [2, 3]
 | BackButton                   | [useWebAppBackButton](#usewebappbackbutton)                   |
 | MainButton                   | [useWebAppMainButton](#usewebappmainbutton)                   |
 | HapticFeedback               | [useWebAppHapticFeedback](#usewebapphapticfeedback)           |
+| BiometricManager             | [useWebAppBiometricManager](#usewebappbiometricmanager)       |
 | isVersionAtLeast             | [useWebApp](#usewebapp)                                       |
 | setHeaderColor               | [useWebAppTheme](#usewebapptheme)                             |
 | setBackgroundColor           | [useWebAppTheme](#usewebapptheme)                             |
@@ -88,23 +91,28 @@ onThemeChanged(() => {
 
 #### Mapping
 
-| Event name            | Handler                                                                       |
-| --------------------- | ----------------------------------------------------------------------------- |
-| themeChanged          | [useWebAppTheme → onThemeChanged](#usewebapptheme)                            |
-| viewportChanged       | [useWebAppViewport → onViewportChanged](#usewebappviewport)                   |
-| mainButtonClicked     | [useWebAppMainButton → onMainButtonClicked](#usewebappmainbutton)             |
-| backButtonClicked     | [useWebAppBackButton → onBackButtonClicked](#usewebappbackbutton)             |
-| settingsButtonClicked | [useWebAppSettingsButton → onSettingsButtonClicked](#usewebappsettingsbutton) |
-| invoiceClosed         | [useWebAppNavigation → onInvoiceClosed](#usewebappnavigation)                 |
-| popupClosed           | [useWebAppPopup → onPopupClosed](#usewebapppopup)                             |
-| qrTextReceived        | [useWebAppQrScanner → onQrTextReceived](#usewebappqrscanner)                  |
-| clipboardTextReceived | [useWebAppClipboard → onClipboardTextReceived](#usewebappclipboard)           |
-| writeAccessRequested  | [useWebAppRequests → onWriteAccessRequested](#usewebapprequests)              |
-| contactRequested      | [useWebAppRequests → onContactRequested](#usewebapprequests)                  |
+| Event name              | Handler                                                                             |
+|-------------------------|-------------------------------------------------------------------------------------|
+| themeChanged            | [useWebAppTheme → onThemeChanged](#usewebapptheme)                                  |
+| viewportChanged         | [useWebAppViewport → onViewportChanged](#usewebappviewport)                         |
+| mainButtonClicked       | [useWebAppMainButton → onMainButtonClicked](#usewebappmainbutton)                   |
+| backButtonClicked       | [useWebAppBackButton → onBackButtonClicked](#usewebappbackbutton)                   |
+| settingsButtonClicked   | [useWebAppSettingsButton → onSettingsButtonClicked](#usewebappsettingsbutton)       |
+| invoiceClosed           | [useWebAppNavigation → onInvoiceClosed](#usewebappnavigation)                       |
+| popupClosed             | [useWebAppPopup → onPopupClosed](#usewebapppopup)                                   |
+| qrTextReceived          | [useWebAppQrScanner → onQrTextReceived](#usewebappqrscanner)                        |
+| clipboardTextReceived   | [useWebAppClipboard → onClipboardTextReceived](#usewebappclipboard)                 |
+| writeAccessRequested    | [useWebAppRequests → onWriteAccessRequested](#usewebapprequests)                    |
+| contactRequested        | [useWebAppRequests → onContactRequested](#usewebapprequests)                        |
+| biometricManagerUpdated | [useWebAppBiometricManager → onBiometricManagerUpdated](#usewebappbiometricmanager) |
+| biometricAuthRequested  | [useWebAppBiometricManager → onBiometricAuthRequested](#usewebappbiometricmanager)  |
+| biometricTokenUpdated   | [useWebAppBiometricManager → onBiometricTokenUpdated](#usewebappbiometricmanager)   |
 
 <!--@include: @/mini-apps/composables/use-web-app.md-->
 
 <!--@include: @/mini-apps/composables/use-web-app-back-button.md-->
+
+<!--@include: @/mini-apps/composables/use-web-app-biometric-manager.md-->
 
 <!--@include: @/mini-apps/composables/use-web-app-clipboard.md-->
 
@@ -211,3 +219,24 @@ onThemeChanged(() => {
 | :----------------- | :------------------------- |
 | `eventData`        | `Object`                   |
 | `eventData.status` | `"allowed" \| "cancelled"` |
+
+### OnBiometricAuthRequested
+
+Ƭ **OnBiometricAuthRequested**: `(eventData) => void`
+
+##### Parameters
+
+| Name              | Type                  |
+|:------------------|:----------------------|
+| `isAuthenticated` | `boolean`             |
+| `biometricToken`  | `string \| undefined` |
+
+### OnBiometricTokenUpdated
+
+Ƭ **OnBiometricTokenUpdated**: `(eventData) => void`
+
+##### Parameters
+
+| Name        | Type      |
+|:------------|:----------|
+| `isUpdated` | `boolean` |
