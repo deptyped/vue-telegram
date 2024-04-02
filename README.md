@@ -98,7 +98,7 @@ import { Alert } from 'vue-tg'
 
 - [useWebApp](https://vue-tg.pages.dev/mini-apps.html#usewebapp)
 - [useWebAppBackButton](https://vue-tg.pages.dev/mini-apps.html#usewebappbackbutton)
-- [useWebAppBiometricManager](https://vue-tg.pages.dev/mini-apps.html#usewebappgiometricmanager)
+- [useWebAppBiometricManager](https://vue-tg.pages.dev/mini-apps.html#usewebappbiometricmanager)
 - [useWebAppClipboard](https://vue-tg.pages.dev/mini-apps.html#usewebappclipboard)
 - [useWebAppClosingConfirmation](https://vue-tg.pages.dev/mini-apps.html#usewebappclosingconfirmation)
 - [useWebAppCloudStorage](https://vue-tg.pages.dev/mini-apps.html#usewebappcloudstorage)
