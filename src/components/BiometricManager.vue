@@ -11,4 +11,4 @@ const { initBiometric } = useWebAppBiometricManager()
 onMounted(() => initBiometric(() => emit("init")))
 </script>
 
-<template><slot /></template>
+<template></template>
