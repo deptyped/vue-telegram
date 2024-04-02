@@ -2,6 +2,14 @@ import { readonly, ref } from "vue"
 import { OnBiometricAuthRequested, OnBiometricTokenUpdated } from "~/types"
 import { useWebApp } from "./useWebApp"
 
+const {
+  init,
+  requestAccess,
+  authenticate,
+  updateBiometricToken,
+  openSettings,
+} = Telegram.WebApp.BiometricManager
+
 const isBiometricInited = ref(Telegram.WebApp.BiometricManager.isInited)
 const isBiometricAvailable = ref(
   Telegram.WebApp.BiometricManager.isBiometricAvailable,
@@ -32,43 +40,6 @@ function updateState() {
     Telegram.WebApp.BiometricManager.isBiometricTokenSaved
 }
 
-const initBiometric = (
-  ...params: Parameters<typeof Telegram.WebApp.BiometricManager.init>
-) => {
-  Telegram.WebApp.BiometricManager.init(...params)
-  updateState()
-}
-
-const requestBiometricAccess = (
-  ...params: Parameters<typeof Telegram.WebApp.BiometricManager.requestAccess>
-) => {
-  Telegram.WebApp.BiometricManager.requestAccess(...params)
-  updateState()
-}
-
-const authenticateBiometric = (
-  ...params: Parameters<typeof Telegram.WebApp.BiometricManager.authenticate>
-) => {
-  Telegram.WebApp.BiometricManager.authenticate(...params)
-  updateState()
-}
-
-const updateBiometricToken = (
-  ...params: Parameters<
-    typeof Telegram.WebApp.BiometricManager.updateBiometricToken
-  >
-) => {
-  Telegram.WebApp.BiometricManager.updateBiometricToken(...params)
-  updateState()
-}
-
-const openBiometricSettings = (
-  ...params: Parameters<typeof Telegram.WebApp.BiometricManager.openSettings>
-) => {
-  Telegram.WebApp.BiometricManager.openSettings(...params)
-  updateState()
-}
-
 export function useWebAppBiometricManager() {
   const { onEvent } = useWebApp()
 
@@ -80,8 +51,6 @@ export function useWebAppBiometricManager() {
     onEvent("biometricTokenUpdated", eventHandler)
 
   onBiometricManagerUpdated(updateState)
-  onBiometricAuthRequested(updateState)
-  onBiometricTokenUpdated(updateState)
 
   return {
     isBiometricInited: readonly(isBiometricInited),
@@ -91,11 +60,11 @@ export function useWebAppBiometricManager() {
     isBiometricAccessGranted: readonly(isBiometricAccessGranted),
     isBiometricTokenSaved: readonly(isBiometricTokenSaved),
     biometricDeviceId: readonly(biometricDeviceId),
-    initBiometric,
-    requestBiometricAccess,
-    authenticateBiometric,
+    initBiometric: init,
+    requestBiometricAccess: requestAccess,
+    authenticateBiometric: authenticate,
     updateBiometricToken,
-    openBiometricSettings,
+    openBiometricSettings: openSettings,
     onBiometricManagerUpdated,
     onBiometricAuthRequested,
     onBiometricTokenUpdated,
