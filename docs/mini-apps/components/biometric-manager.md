@@ -13,14 +13,6 @@ const handleInit = () => {
 
 <template>
   <BiometricManager @init="handleInit" />
-  
-  <!-- OR -->
-  
-  <BiometricManager @init="handleInit">
-    <template>
-      <!-- ... -->
-    </template>
-  </BiometricManager>
 </template>
 ```
 
