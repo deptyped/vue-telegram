@@ -12,11 +12,11 @@ const handleInit = () => {
 </script>
 
 <template>
-  <BiometricManager @onInit="handleInit" />
+  <BiometricManager @init="handleInit" />
   
   <!-- OR -->
   
-  <BiometricManager @onInit="handleInit">
+  <BiometricManager @init="handleInit">
     <template>
       <!-- ... -->
     </template>
@@ -26,6 +26,6 @@ const handleInit = () => {
 
 #### Events
 
-| Name   | Type         | Description                               |
-|--------| ------------ |-------------------------------------------|
-| onInit | `() => void` | Emits when the biometric manager is init. |
+| Name | Type         | Description                               |
+| ---- | ------------ | ----------------------------------------- |
+| init | `() => void` | Emits when the biometric manager is init. |

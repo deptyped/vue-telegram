@@ -32,16 +32,16 @@ const { colorScheme, themeParams, headerColor, backgroundColor } = useWebAppThem
 const { impactOccurred, notificationOccurred, selectionChanged } = useWebAppHapticFeedback()
 const { showScanQrPopup } = useWebAppQrScanner()
 const {
-  isInit,
-  isAccessRequested,
-  isAccessGranted,
+  isBiometricInited,
+  isBiometricAccessRequested,
+  isBiometricAccessGranted,
   isBiometricTokenSaved,
   isBiometricAvailable,
-  deviceId,
-  init,
-  requestAccess,
-  authenticate,
-  openSettings,
+  biometricDeviceId,
+  initBiometric,
+  requestBiometricAccess,
+  authenticateBiometric,
+  openBiometricSettings,
 } = useWebAppBiometricManager()
 
 function toggleMainButton() {
@@ -57,19 +57,21 @@ function toggleMainButtonProgress() {
 }
 
 function initBiometricManager() {
-  init(() => console.log('init: isAccessGranted'))
+  initBiometric(() => console.log('init: isAccessGranted'))
 }
 
 function requestAccessBiometricManager() {
-  requestAccess({})
+  requestBiometricAccess({})
 }
 
 function authenticateBiometricManager() {
-  authenticate({})
+  authenticateBiometric({}, (isAuthenticated) => {
+    showAlert(`isAuthenticated: ${isAuthenticated}`)
+  })
 }
 
 function openSettingsBiometricManager() {
-  openSettings()
+  openBiometricSettings()
 }
 </script>
 
@@ -301,16 +303,16 @@ function openSettingsBiometricManager() {
 
     <div>
       <h4>Biometric Manager</h4>
-      <p>isInit: {{ isInit }}</p>
-      <p>isAccessRequested: {{ isAccessRequested }}</p>
-      <p>isAccessGranted: {{ isAccessGranted }}</p>
+      <p>isBiometricInited: {{ isBiometricInited }}</p>
+      <p>isBiometricAccessRequested: {{ isBiometricAccessRequested }}</p>
+      <p>isBiometricAccessGranted: {{ isBiometricAccessGranted }}</p>
       <p>isBiometricTokenSaved: {{ isBiometricTokenSaved }}</p>
       <p>isBiometricAvailable: {{ isBiometricAvailable }}</p>
-      <p>deviceId: {{ deviceId }}</p>
+      <p>biometricDeviceId: {{ biometricDeviceId }}</p>
 
       <button @click.prevent="initBiometricManager">Init</button>
       <button @click.prevent="requestAccessBiometricManager">
-        RequestAccess
+        request access
       </button>
       <button @click.prevent="authenticateBiometricManager">
         authenticate

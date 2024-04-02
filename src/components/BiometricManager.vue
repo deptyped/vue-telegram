@@ -3,12 +3,12 @@ import { onMounted } from "vue"
 import { useWebAppBiometricManager } from ".."
 
 const emit = defineEmits<{
-  (eventName: "onInit"): void
+  (eventName: "init"): void
 }>()
 
-const { init } = useWebAppBiometricManager()
+const { initBiometric } = useWebAppBiometricManager()
 
-onMounted(() => init(() => emit("onInit")))
+onMounted(() => initBiometric(() => emit("init")))
 </script>
 
 <template><slot /></template>

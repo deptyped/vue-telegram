@@ -1,48 +1,52 @@
-import { ref } from "vue"
+import { readonly, ref } from "vue"
 import { OnBiometricAuthRequested, OnBiometricTokenUpdated } from "~/types"
 import { useWebApp } from "./useWebApp"
 
-const isInit = ref(Telegram.WebApp.BiometricManager.isInited)
+const isBiometricInited = ref(Telegram.WebApp.BiometricManager.isInited)
 const isBiometricAvailable = ref(
   Telegram.WebApp.BiometricManager.isBiometricAvailable,
 )
 const biometricType = ref(Telegram.WebApp.BiometricManager.biometricType)
-const isAccessRequested = ref(
+const isBiometricAccessRequested = ref(
   Telegram.WebApp.BiometricManager.isAccessRequested,
 )
-const isAccessGranted = ref(Telegram.WebApp.BiometricManager.isAccessGranted)
+const isBiometricAccessGranted = ref(
+  Telegram.WebApp.BiometricManager.isAccessGranted,
+)
 const isBiometricTokenSaved = ref(
   Telegram.WebApp.BiometricManager.isAccessGranted,
 )
-const deviceId = ref(Telegram.WebApp.BiometricManager.deviceId)
+const biometricDeviceId = ref(Telegram.WebApp.BiometricManager.deviceId)
 
 function updateState() {
-  isInit.value = Telegram.WebApp.BiometricManager.isInited
+  isBiometricInited.value = Telegram.WebApp.BiometricManager.isInited
   isBiometricAvailable.value =
     Telegram.WebApp.BiometricManager.isBiometricAvailable
   biometricType.value = Telegram.WebApp.BiometricManager.biometricType
-  isAccessRequested.value = Telegram.WebApp.BiometricManager.isAccessRequested
-  isAccessGranted.value = Telegram.WebApp.BiometricManager.isAccessGranted
-  deviceId.value = Telegram.WebApp.BiometricManager.deviceId
+  isBiometricAccessRequested.value =
+    Telegram.WebApp.BiometricManager.isAccessRequested
+  isBiometricAccessGranted.value =
+    Telegram.WebApp.BiometricManager.isAccessGranted
+  biometricDeviceId.value = Telegram.WebApp.BiometricManager.deviceId
   isBiometricTokenSaved.value =
     Telegram.WebApp.BiometricManager.isBiometricTokenSaved
 }
 
-const init = (
+const initBiometric = (
   ...params: Parameters<typeof Telegram.WebApp.BiometricManager.init>
 ) => {
   Telegram.WebApp.BiometricManager.init(...params)
   updateState()
 }
 
-const requestAccess = (
+const requestBiometricAccess = (
   ...params: Parameters<typeof Telegram.WebApp.BiometricManager.requestAccess>
 ) => {
   Telegram.WebApp.BiometricManager.requestAccess(...params)
   updateState()
 }
 
-const authenticate = (
+const authenticateBiometric = (
   ...params: Parameters<typeof Telegram.WebApp.BiometricManager.authenticate>
 ) => {
   Telegram.WebApp.BiometricManager.authenticate(...params)
@@ -58,7 +62,7 @@ const updateBiometricToken = (
   updateState()
 }
 
-const openSettings = (
+const openBiometricSettings = (
   ...params: Parameters<typeof Telegram.WebApp.BiometricManager.openSettings>
 ) => {
   Telegram.WebApp.BiometricManager.openSettings(...params)
@@ -80,18 +84,18 @@ export function useWebAppBiometricManager() {
   onBiometricTokenUpdated(updateState)
 
   return {
-    isInit,
-    isBiometricAvailable,
-    biometricType,
-    isAccessRequested,
-    isAccessGranted,
-    isBiometricTokenSaved,
-    deviceId,
-    init,
-    requestAccess,
-    authenticate,
+    isBiometricInited: readonly(isBiometricInited),
+    isBiometricAvailable: readonly(isBiometricAvailable),
+    biometricType: readonly(biometricType),
+    isBiometricAccessRequested: readonly(isBiometricAccessRequested),
+    isBiometricAccessGranted: readonly(isBiometricAccessGranted),
+    isBiometricTokenSaved: readonly(isBiometricTokenSaved),
+    biometricDeviceId: readonly(biometricDeviceId),
+    initBiometric,
+    requestBiometricAccess,
+    authenticateBiometric,
     updateBiometricToken,
-    openSettings,
+    openBiometricSettings,
     onBiometricManagerUpdated,
     onBiometricAuthRequested,
     onBiometricTokenUpdated,
