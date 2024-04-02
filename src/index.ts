@@ -2,6 +2,7 @@ import type { App } from "vue"
 
 import Alert from "./components/Alert.vue"
 import BackButton from "./components/BackButton.vue"
+import BiometricManager from "./components/BiometricManager.vue"
 import ClosingConfirmation from "./components/ClosingConfirmation.vue"
 import Confirm from "./components/Confirm.vue"
 import ExpandedViewport from "./components/ExpandedViewport.vue"
@@ -17,6 +18,7 @@ import DiscussionWidget from "./widgets/DiscussionWidget.vue"
 export {
   Alert,
   BackButton,
+  BiometricManager,
   ClosingConfirmation,
   Confirm,
   ExpandedViewport,
@@ -38,6 +40,7 @@ const plugin = {
   install(Vue: App) {
     Vue.component("TgAlert", Alert)
     Vue.component("TgBackButton", BackButton)
+    Vue.component("TgBiometricManager", BiometricManager)
     Vue.component("TgClosingConfirmation", ClosingConfirmation)
     Vue.component("TgConfirm", Confirm)
     Vue.component("TgExpandedViewport", ExpandedViewport)
@@ -56,6 +59,7 @@ declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     TgAlert: typeof Alert
     TgBackButton: typeof BackButton
+    TgBiometricManager: typeof BiometricManager
     TgClosingConfirmation: typeof ClosingConfirmation
     TgConfirm: typeof Confirm
     TgExpandedViewport: typeof ExpandedViewport

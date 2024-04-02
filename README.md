@@ -85,6 +85,7 @@ import { Alert } from 'vue-tg'
 
 - [Alert](https://vue-tg.pages.dev/mini-apps.html#alert)
 - [BackButton](https://vue-tg.pages.dev/mini-apps.html#backbutton)
+- [BiometricManager](https://vue-tg.pages.dev/mini-apps.html#biometricmanager)
 - [ClosingConfirmation](https://vue-tg.pages.dev/mini-apps.html#closingconfirmation)
 - [Confirm](https://vue-tg.pages.dev/mini-apps.html#confirm)
 - [ExpandedViewport](https://vue-tg.pages.dev/mini-apps.html#expandedviewport)
@@ -97,6 +98,7 @@ import { Alert } from 'vue-tg'
 
 - [useWebApp](https://vue-tg.pages.dev/mini-apps.html#usewebapp)
 - [useWebAppBackButton](https://vue-tg.pages.dev/mini-apps.html#usewebappbackbutton)
+- [useWebAppBiometricManager](https://vue-tg.pages.dev/mini-apps.html#usewebappgiometricmanager)
 - [useWebAppClipboard](https://vue-tg.pages.dev/mini-apps.html#usewebappclipboard)
 - [useWebAppClosingConfirmation](https://vue-tg.pages.dev/mini-apps.html#usewebappclosingconfirmation)
 - [useWebAppCloudStorage](https://vue-tg.pages.dev/mini-apps.html#usewebappcloudstorage)
