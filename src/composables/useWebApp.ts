@@ -8,7 +8,6 @@ const {
   isVersionAtLeast,
   sendData,
   close,
-  offEvent
 } = Telegram.WebApp
 
 const isReady = ref(false)
@@ -45,7 +44,8 @@ export function useWebApp() {
     platform,
     isVersionAtLeast,
     onEvent,
-    offEvent,
+    internalOnEvent: Telegram.WebApp.onEvent,
+    internalOffEvent: Telegram.WebApp.offEvent,
     sendData,
     ready,
     close,
