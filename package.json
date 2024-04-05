@@ -1,6 +1,6 @@
 {
   "name": "vue-tg",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Telegram integration for Vue",
   "author": "deptyped <deptyped@gmail.com>",
   "license": "MIT",
