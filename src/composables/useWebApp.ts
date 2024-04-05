@@ -1,4 +1,5 @@
 import { onMounted, onUnmounted, readonly, ref } from "vue"
+import { OnEventOptions, OnEventWithOptions } from "~/types"
 
 const {
   initData,
@@ -24,17 +25,38 @@ const isPlatformUnknown = isPlatform("unknown")
 const canSendData = !isPlatformUnknown && Telegram.WebApp.initData === ""
 
 export function useWebApp() {
-  const onEvent: typeof Telegram.WebApp.onEvent = (...params) => {
-    onMounted(() =>
+  const onEvent: OnEventWithOptions<OnEventOptions> = (
+    eventType,
+    eventHandler,
+    options = { manual: false },
+  ) => {
+    const { manual } = options
+
+    const on = () => {
       Telegram.WebApp.onEvent(
-        ...(params as Parameters<typeof Telegram.WebApp.onEvent>),
-      ),
-    )
-    onUnmounted(() =>
+        ...([eventType, eventHandler] as Parameters<
+          typeof Telegram.WebApp.onEvent
+        >),
+      )
+    }
+    const off = () => {
       Telegram.WebApp.offEvent(
-        ...(params as Parameters<typeof Telegram.WebApp.offEvent>),
-      ),
-    )
+        ...([eventType, eventHandler] as Parameters<
+          typeof Telegram.WebApp.offEvent
+        >),
+      )
+    }
+
+    if (manual) {
+      on()
+    } else {
+      onMounted(on)
+      onUnmounted(off)
+    }
+
+    return {
+      off,
+    }
   }
 
   return {

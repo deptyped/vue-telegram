@@ -1,5 +1,6 @@
 import { computed, readonly, ref } from "vue"
 import { useWebApp } from "./useWebApp"
+import { OnEventOptions } from "~/types"
 
 const colorScheme = ref(Telegram.WebApp.colorScheme)
 const themeParams = ref(Telegram.WebApp.themeParams)
@@ -30,8 +31,8 @@ function setBackgroundColor(
 export function useWebAppTheme() {
   const { onEvent } = useWebApp()
 
-  const onThemeChanged = (eventHandler: () => void) =>
-    onEvent("themeChanged", eventHandler)
+  const onThemeChanged = (eventHandler: () => void, options?: OnEventOptions) =>
+    onEvent("themeChanged", eventHandler, options)
 
   onThemeChanged(updateState)
 

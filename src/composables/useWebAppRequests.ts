@@ -1,6 +1,7 @@
 import { useWebApp } from "./useWebApp"
 import type {
   OnContactRequestedCallback,
+  OnEventOptions,
   OnWriteAccessRequestedCallback,
 } from "~/types"
 
@@ -11,10 +12,13 @@ export function useWebAppRequests() {
 
   const onWriteAccessRequested = (
     eventHandler: OnWriteAccessRequestedCallback,
-  ) => onEvent("writeAccessRequested", eventHandler)
+    options?: OnEventOptions,
+  ) => onEvent("writeAccessRequested", eventHandler, options)
 
-  const onContactRequested = (eventHandler: OnContactRequestedCallback) =>
-    onEvent("contactRequested", eventHandler)
+  const onContactRequested = (
+    eventHandler: OnContactRequestedCallback,
+    options?: OnEventOptions,
+  ) => onEvent("contactRequested", eventHandler, options)
 
   return {
     requestContact,
