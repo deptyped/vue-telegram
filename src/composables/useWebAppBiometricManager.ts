@@ -1,5 +1,9 @@
 import { readonly, ref } from "vue"
-import { OnBiometricAuthRequested, OnBiometricTokenUpdated } from "~/types"
+import {
+  OnBiometricAuthRequested,
+  OnBiometricTokenUpdated,
+  OnEventOptions,
+} from "~/types"
 import { useWebApp } from "./useWebApp"
 
 const {
@@ -43,12 +47,18 @@ function updateState() {
 export function useWebAppBiometricManager() {
   const { onEvent } = useWebApp()
 
-  const onBiometricManagerUpdated = (eventHandler: () => void) =>
-    onEvent("biometricManagerUpdated", eventHandler)
-  const onBiometricAuthRequested = (eventHandler: OnBiometricAuthRequested) =>
-    onEvent("biometricAuthRequested", eventHandler)
-  const onBiometricTokenUpdated = (eventHandler: OnBiometricTokenUpdated) =>
-    onEvent("biometricTokenUpdated", eventHandler)
+  const onBiometricManagerUpdated = (
+    eventHandler: () => void,
+    options?: OnEventOptions,
+  ) => onEvent("biometricManagerUpdated", eventHandler, options)
+  const onBiometricAuthRequested = (
+    eventHandler: OnBiometricAuthRequested,
+    options?: OnEventOptions,
+  ) => onEvent("biometricAuthRequested", eventHandler, options)
+  const onBiometricTokenUpdated = (
+    eventHandler: OnBiometricTokenUpdated,
+    options?: OnEventOptions,
+  ) => onEvent("biometricTokenUpdated", eventHandler, options)
 
   onBiometricManagerUpdated(updateState)
 

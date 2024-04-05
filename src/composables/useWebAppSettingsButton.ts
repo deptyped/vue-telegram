@@ -1,6 +1,6 @@
 import { computed, ref } from "vue"
 import { useWebApp } from "./useWebApp"
-import type { OnSettingsButtonClickedCallback } from "~/types"
+import type { OnEventOptions, OnSettingsButtonClickedCallback } from "~/types"
 
 const isSettingsButtonVisible = ref(Telegram.WebApp.SettingsButton.isVisible)
 
@@ -27,7 +27,8 @@ export function useWebAppSettingsButton() {
 
   const onSettingsButtonClicked = (
     eventHandler: OnSettingsButtonClickedCallback,
-  ) => onEvent("settingsButtonClicked", eventHandler)
+    options?: OnEventOptions,
+  ) => onEvent("settingsButtonClicked", eventHandler, options)
 
   return {
     isSettingsButtonVisible: computed({
