@@ -15,4 +15,7 @@ hero:
     - theme: alt
       text: Telegram Widgets
       link: /widgets
+    - theme: alt
+      text: View on GitHub
+      link: https://github.com/deptyped/vue-telegram
 ---
