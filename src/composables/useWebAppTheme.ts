@@ -9,7 +9,9 @@ const backgroundColor = ref(Telegram.WebApp.backgroundColor)
 
 function updateState() {
   colorScheme.value = Telegram.WebApp.colorScheme
-  themeParams.value = Telegram.WebApp.themeParams
+  themeParams.value = {
+    ...Telegram.WebApp.themeParams,
+  }
   headerColor.value = Telegram.WebApp.headerColor
   backgroundColor.value = Telegram.WebApp.backgroundColor
 }
