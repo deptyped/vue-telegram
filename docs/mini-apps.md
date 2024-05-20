@@ -7,30 +7,6 @@ outline: [2, 3]
 
 [Official Telegram Mini Apps Documentation](https://core.telegram.org/bots/webapps#initializing-mini-apps)
 
-## Components
-
-<!--@include: @/mini-apps/components/alert.md-->
-
-<!--@include: @/mini-apps/components/back-button.md-->
-
-<!--@include: @/mini-apps/components/biometric-manager.md-->
-
-<!--@include: @/mini-apps/components/closing-confirmation.md-->
-
-<!--@include: @/mini-apps/components/confirm.md-->
-
-<!--@include: @/mini-apps/components/expanded-viewport.md-->
-
-<!--@include: @/mini-apps/components/main-button.md-->
-
-<!--@include: @/mini-apps/components/popup.md-->
-
-<!--@include: @/mini-apps/components/scan-qr.md-->
-
-<!--@include: @/mini-apps/components/settings-button.md-->
-
-## Composables
-
 ### Field Mapping
 
 | Field                        | Composable                                                    |
@@ -77,7 +53,7 @@ outline: [2, 3]
 
 ### Event Handling
 
-#### Usage Example
+#### Example
 
 ```ts
 import { useWebAppTheme } from 'vue-tg'
@@ -92,7 +68,7 @@ onThemeChanged(() => {
 #### Mapping
 
 | Event name              | Handler                                                                             |
-|-------------------------|-------------------------------------------------------------------------------------|
+| ----------------------- | ----------------------------------------------------------------------------------- |
 | themeChanged            | [useWebAppTheme → onThemeChanged](#usewebapptheme)                                  |
 | viewportChanged         | [useWebAppViewport → onViewportChanged](#usewebappviewport)                         |
 | mainButtonClicked       | [useWebAppMainButton → onMainButtonClicked](#usewebappmainbutton)                   |
@@ -107,6 +83,30 @@ onThemeChanged(() => {
 | biometricManagerUpdated | [useWebAppBiometricManager → onBiometricManagerUpdated](#usewebappbiometricmanager) |
 | biometricAuthRequested  | [useWebAppBiometricManager → onBiometricAuthRequested](#usewebappbiometricmanager)  |
 | biometricTokenUpdated   | [useWebAppBiometricManager → onBiometricTokenUpdated](#usewebappbiometricmanager)   |
+
+## Components
+
+<!--@include: @/mini-apps/components/alert.md-->
+
+<!--@include: @/mini-apps/components/back-button.md-->
+
+<!--@include: @/mini-apps/components/biometric-manager.md-->
+
+<!--@include: @/mini-apps/components/closing-confirmation.md-->
+
+<!--@include: @/mini-apps/components/confirm.md-->
+
+<!--@include: @/mini-apps/components/expanded-viewport.md-->
+
+<!--@include: @/mini-apps/components/main-button.md-->
+
+<!--@include: @/mini-apps/components/popup.md-->
+
+<!--@include: @/mini-apps/components/scan-qr.md-->
+
+<!--@include: @/mini-apps/components/settings-button.md-->
+
+## Composables
 
 <!--@include: @/mini-apps/composables/use-web-app.md-->
 
@@ -227,7 +227,7 @@ onThemeChanged(() => {
 ##### Parameters
 
 | Name              | Type                  |
-|:------------------|:----------------------|
+| :---------------- | :-------------------- |
 | `isAuthenticated` | `boolean`             |
 | `biometricToken`  | `string \| undefined` |
 
@@ -238,5 +238,5 @@ onThemeChanged(() => {
 ##### Parameters
 
 | Name        | Type      |
-|:------------|:----------|
+| :---------- | :-------- |
 | `isUpdated` | `boolean` |

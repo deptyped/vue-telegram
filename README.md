@@ -20,101 +20,24 @@ const { showAlert } = useWebAppPopup()
 
 ### Installation
 
+Install package:
+
+```bash
+npm i vue-tg
+```
+
 To connect your Mini App to the Telegram client, place the script `telegram-web-app.js` in the `<head>` tag before any other scripts, using this code:
 
 ```html
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 ```
 
-After that, install package:
-
-```bash
-npm i vue-tg
-```
-
-#### Global Aliases _(Optional)_
-
-Register on Vue instance:
-
-```ts
-import VueTelegram from 'vue-tg'
-
-Vue.use(VueTelegram)
-```
-
-After that, you can use global aliases for components
-
-```vue
-<script lang="ts" setup>
-import { Alert } from 'vue-tg'
-</script>
-
-<template>
-  <Alert message="Hello!" />
-</template>
-
-<!-- Same with using an alias of the component -->
-
-<template>
-  <tg-alert message="Hello!" />
-</template>
-```
-
-## Setting up in Nuxt 3
-
-Firstly, include the Telegram web app script in the <head> section of your Nuxt application by adding it to the `nuxt.config.ts` file:
-
-```ts
-// nuxt.config.ts
-export default defineNuxtConfig({
-  app: {
-    head: {
-      script: [{ src: 'https://telegram.org/js/telegram-web-app.js' }],
-    },
-  },
-})
-```
-
-After that, install the `vue-tg` package
-
-```bash
-npm i vue-tg
-```
-
-Next, create a vue component ( MiniApp.vue ) and import the necessary components from vue-tg and utilize them in your component:
-
-```vue
-<!-- MiniApp.vue -->
-<script lang="ts" setup>
-import { MainButton, useWebAppPopup } from 'vue-tg'
-
-const { showAlert } = useWebAppPopup()
-</script>
-
-<template>
-  <MainButton text="Open alert" @click="() => showAlert('Hello!')" />
-</template>
-```
-
-Import that component ( MiniApp.vue ) into your `app.vue` file and wrap it inside a _`ClientOnly`_ component. This ensures that the component is only rendered on the client-side:
-
-```vue
-<!-- app.vue -->
-<template>
-  <NuxtPage />
-  <ClientOnly>
-    <MiniApp />
-  </ClientOnly>
-</template>
-
-<script setup lang="ts">
-import MiniApp from '~/components/MiniApp.vue'
-</script>
-```
-
-You can manage the state within the component ( MiniApp.vue ) using Nuxt's built-in `useState` or any other state management library like `pinia`.
-
 ## Documentation
+
+### Instructions
+
+- [Global Aliases](https://vue-tg.pages.dev/installation.html#global-aliases)
+- [Using with Nuxt 3](https://vue-tg.pages.dev/installation.html#using-with-nuxt-3)
 
 ### Widgets
 
