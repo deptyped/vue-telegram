@@ -60,6 +60,60 @@ import { Alert } from 'vue-tg'
 </template>
 ```
 
+## Setting up in Nuxt 3
+
+Firstly, include the Telegram web app script in the <head> section of your Nuxt application by adding it to the `nuxt.config.ts` file:
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  app: {
+    head: {
+      script: [{ src: 'https://telegram.org/js/telegram-web-app.js' }],
+    },
+  },
+})
+```
+
+After that, install the `vue-tg` package
+
+```bash
+npm i vue-tg
+```
+
+Next, create a vue component ( MiniApp.vue ) and import the necessary components from vue-tg and utilize them in your component:
+
+```vue
+<!-- MiniApp.vue -->
+<script lang="ts" setup>
+import { MainButton, useWebAppPopup } from 'vue-tg'
+
+const { showAlert } = useWebAppPopup()
+</script>
+
+<template>
+  <MainButton text="Open alert" @click="() => showAlert('Hello!')" />
+</template>
+```
+
+Import that component ( MiniApp.vue ) into your `app.vue` file and wrap it inside a _`ClientOnly`_ component. This ensures that the component is only rendered on the client-side:
+
+```vue
+<!-- app.vue -->
+<template>
+  <NuxtPage />
+  <ClientOnly>
+    <MiniApp />
+  </ClientOnly>
+</template>
+
+<script setup lang="ts">
+import MiniApp from '~/components/MiniApp.vue'
+</script>
+```
+
+You can manage the state within the component ( MiniApp.vue ) using Nuxt's built-in `useState` or any other state management library like `pinia`.
+
 ## Documentation
 
 ### Widgets
