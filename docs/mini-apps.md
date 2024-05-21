@@ -33,7 +33,7 @@ outline: [2, 3]
 | enableClosingConfirmation    | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | disableClosingConfirmation   | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | onEvent                      | [useWebApp](#usewebapp)                                       |
-| offEvent                     | Handled automagically 🪄                                       |
+| offEvent                     | [Handled automagically 🪄](#managing-event-subscriptions)      |
 | sendData                     | [useWebApp](#usewebapp)                                       |
 | switchInlineQuery            | [useWebAppNavigation](#usewebappnavigation)                   |
 | openLink                     | [useWebAppNavigation](#usewebappnavigation)                   |
@@ -53,7 +53,7 @@ outline: [2, 3]
 
 ### Event Handling
 
-#### Example
+The package provides a set of functions for event handling. By convention, the name of the functions consists of the prefix `on` + the name of the Telegram event in camelCase. So `themeChanged` event turns into `onThemeChanged` and so on. [onEvent](#usewebapp) is also available if you prefer it instead.
 
 ```ts
 import { useWebAppTheme } from 'vue-tg'
@@ -83,6 +83,46 @@ onThemeChanged(() => {
 | biometricManagerUpdated | [useWebAppBiometricManager → onBiometricManagerUpdated](#usewebappbiometricmanager) |
 | biometricAuthRequested  | [useWebAppBiometricManager → onBiometricAuthRequested](#usewebappbiometricmanager)  |
 | biometricTokenUpdated   | [useWebAppBiometricManager → onBiometricTokenUpdated](#usewebappbiometricmanager)   |
+
+
+#### Managing event subscriptions
+
+By default, event handlers are automatically unsubscribed when the component is unmounted.
+But you can unsubscribe before that if you need to:
+
+```ts{9-10}
+import { useWebAppTheme } from 'vue-tg'
+
+const { onThemeChanged } = useWebAppTheme()
+
+const handler = onThemeChanged(() => {
+  // handle theme update
+})
+
+// unsubscribe
+handler.off()
+```
+
+You can also disable automatic unsubscribing completely:
+
+```ts{9,12-13}
+import { useWebAppTheme } from 'vue-tg'
+
+const { onThemeChanged } = useWebAppTheme()
+
+const handler = onThemeChanged(
+  () => {
+    // handle theme update
+  },
+  { manual: true },
+)
+
+// unsubscribe
+handler.off()
+```
+
+Please note that in `manual` mode, you are responsible for managing subscription. 
+If subscription is not managed properly, it can lead to memory leaks and other issues.
 
 ## Components
 
