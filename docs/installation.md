@@ -53,6 +53,23 @@ import { Alert } from 'vue-tg'
 </template>
 ```
 
+| Component                                             | Alias                     |
+| ----------------------------------------------------- | ------------------------- |
+| [Alert](/mini-apps#alert)                             | `tg-alert`                |
+| [BackButton](/mini-apps#backbutton)                   | `tg-back-button`          |
+| [BiometricManager](/mini-apps#biometricmanager)       | `tg-biometric-manager`    |
+| [ClosingConfirmation](/mini-apps#closingconfirmation) | `tg-closing-confirmation` |
+| [Confirm](/mini-apps#confirm)                         | `tg-confirm`              |
+| [ExpandedViewport](/mini-apps#expandedviewport)       | `tg-expanded-viewport`    |
+| [MainButton](/mini-apps#mainbutton)                   | `tg-main-button`          |
+| [Popup](/mini-apps#Popup)                             | `tg-popup`                |
+| [ScanQr](/mini-apps#scanqr)                           | `tg-scan-qr`              |
+| [SettingsButton](/mini-apps#settingsbutton)           | `tg-settings-button`      |
+| [ShareWidget](/widgets#share-widget)                  | `tg-share-widget`         |
+| [PostWidget](/widgets#post-widget)                    | `tg-post-widget`          |
+| [LoginWidget](/widgets#login-widget)                  | `tg-login-widget`         |
+| [DiscussionWidget](/widgets#discussion-widget)        | `tg-discussion-widget`    |
+
 ## Using with [Nuxt 3](https://nuxt.com/)
 
 Install package:

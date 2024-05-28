@@ -114,15 +114,17 @@ const handler = onThemeChanged(
   () => {
     // handle theme update
   },
-  { manual: true },
+  { manual: true },  // [!code ++]
 )
 
 // unsubscribe
 handler.off()
 ```
 
+::: warning
 Please note that in `manual` mode, you are responsible for managing subscription. 
 If subscription is not managed properly, it can lead to memory leaks and other issues.
+:::
 
 ## Components
 
