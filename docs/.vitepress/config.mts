@@ -9,6 +9,13 @@ export default defineConfig({
       provider: 'local',
       options: {
         detailedView: true,
+        _render(src, env, md) {
+          if (env.relativePath.startsWith('mini-apps/components')) return ''
+          if (env.relativePath.startsWith('mini-apps/composables')) return ''
+          if (env.relativePath.startsWith('widgets/')) return ''
+
+          return md.render(src, env)
+        }
       }
     },
 
