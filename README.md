@@ -1,8 +1,10 @@
-## `vue-tg` - Telegram integration for Vue
+## `vue-tg` - Telegram integration for Vue 
+
+[![docs](https://img.shields.io/badge/Documentation-gray?style=flat)](https://vue-tg.pages.dev/)
+[![version](https://img.shields.io/badge/Bot%20API-7.2-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#march-31-2024)
+[![downloads](https://img.shields.io/npm/dm/vue-tg?label=Downloads&logo=npm&style=flat&color=478be6)](https://www.npmjs.com/package/vue-tg)
 
 A package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
-
-[Documentation »](https://vue-tg.pages.dev)
 
 ### Usage Example
 
