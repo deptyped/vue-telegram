@@ -12,7 +12,7 @@ import {
 } from '../src'
 
 const { version, platform, initData, initDataUnsafe, sendData } = useWebApp()
-const { expand, isExpanded, viewportHeight, viewportStableHeight } = useWebAppViewport()
+const { expand, isExpanded, viewportHeight, viewportStableHeight, isVerticalSwipesEnabled } = useWebAppViewport()
 const { openLink, openTelegramLink, switchInlineQuery } = useWebAppNavigation()
 const { showConfirm, showAlert, showPopup } = useWebAppPopup()
 const {
@@ -133,9 +133,15 @@ function openSettingsBiometricManager() {
       <p>
         Expanded: {{ isExpanded }}
       </p>
+      <p>
+        Vertical Swipes: {{ isVerticalSwipesEnabled }}
+      </p>
 
       <button @click.prevent="expand()">
         Expand Viewport
+      </button>
+      <button @click.prevent="isVerticalSwipesEnabled = !isVerticalSwipesEnabled">
+        Toggle Vertical Swipes
       </button>
     </div>
 
