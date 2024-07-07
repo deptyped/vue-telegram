@@ -14,6 +14,6 @@ import { ExpandedViewport } from 'vue-tg'
 
 #### Props
 
-| Name  | Type    | Required | Description                                                                                                                               |
-| ----- | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| force | boolean | false    | Keep the viewport expanded despite user interaction. Set to false by default. <br/> **Note:** does not prevent the Mini App from closing. |
+| Name  | Type    | Required | Description                                                                                                    |
+| ----- | ------- | -------- | -------------------------------------------------------------------------------------------------------------- |
+| force | boolean | false    | Expands the viewport despite user interaction. Disables vertical swipes if supported. Set to false by default. |
