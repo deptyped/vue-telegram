@@ -74,4 +74,4 @@ declare module "@vue/runtime-core" {
   }
 }
 
-export default plugin
+export { plugin as VueTelegramPlugin }

@@ -28,9 +28,9 @@ Done!
 Register on Vue instance:
 
 ```ts
-import VueTelegram from 'vue-tg'
+import { VueTelegramPlugin } from 'vue-tg'
 
-Vue.use(VueTelegram)
+Vue.use(VueTelegramPlugin)
 ```
 
 After that, you can use global aliases for components:
