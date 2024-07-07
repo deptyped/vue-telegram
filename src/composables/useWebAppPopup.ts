@@ -1,5 +1,5 @@
 import { useWebApp } from "./useWebApp"
-import type { OnEventOptions, OnPopupClosedCallback } from "~/types"
+import type { OnEventOptions } from "~/types"
 
 const { showPopup, showAlert, showConfirm } = Telegram.WebApp
 
@@ -7,7 +7,7 @@ export function useWebAppPopup() {
   const { onEvent } = useWebApp()
 
   const onPopupClosed = (
-    eventHandler: OnPopupClosedCallback,
+    eventHandler: PopupClosedCallback,
     options?: OnEventOptions,
   ) => onEvent("popupClosed", eventHandler, options)
 

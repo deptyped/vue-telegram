@@ -1,6 +1,6 @@
 import { computed, ref } from "vue"
 import { useWebApp } from "./useWebApp"
-import type { OnEventOptions, OnMainButtonClickedCallback } from "~/types"
+import type { OnEventOptions } from "~/types"
 
 const mainButtonText = ref(Telegram.WebApp.MainButton.text)
 const mainButtonColor = ref(Telegram.WebApp.MainButton.color)
@@ -81,7 +81,7 @@ export function useWebAppMainButton() {
   const { onEvent } = useWebApp()
 
   const onMainButtonClicked = (
-    eventHandler: OnMainButtonClickedCallback,
+    eventHandler: MainButtonClickedCallback,
     options?: OnEventOptions,
   ) => onEvent("mainButtonClicked", eventHandler, options)
 

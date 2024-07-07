@@ -2,38 +2,6 @@
  * Mini Apps
  */
 
-export type OnThemeChangedCallback = () => void
-export type OnViewportChangedCallback = (eventData: {
-  isStateStable: boolean
-}) => void
-export type OnMainButtonClickedCallback = () => void
-export type OnBackButtonClickedCallback = () => void
-export type OnSettingsButtonClickedCallback = () => void
-export type OnInvoiceClosedCallback = (eventData: {
-  url: string
-  status: "paid" | "cancelled" | "failed" | "pending"
-}) => void
-export type OnPopupClosedCallback = (eventData: {
-  button_id: string | null
-}) => void
-export type OnQrTextReceivedCallback = (eventData: { data: string }) => void
-export type OnClipboardTextReceivedCallback = (eventData: {
-  data: string | null
-}) => void
-export type OnWriteAccessRequestedCallback = (eventData: {
-  status: "allowed" | "cancelled"
-}) => void
-export type OnContactRequestedCallback = (eventData: {
-  status: "sent" | "cancelled"
-}) => void
-export type OnBiometricAuthRequested = (eventData: {
-  isAuthenticated: boolean
-  biometricToken?: string
-}) => void
-export type OnBiometricTokenUpdated = (eventData: {
-  isUpdated: boolean
-}) => void
-
 type OnEventReturn = {
   off: () => void
 }
@@ -49,64 +17,78 @@ export type OnEventOptions = {
 
 export type OnEventWithOptions<O> = {
   (
-    eventType:
-      | "themeChanged"
-      | "mainButtonClicked"
-      | "backButtonClicked"
-      | "settingsButtonClicked"
-      | "biometricManagerUpdated",
-    eventHandler: () => void,
+    eventType: "themeChanged",
+    eventHandler: ThemeChangedCallback,
+    options?: O,
+  ): OnEventReturn
+  (
+    eventType: "mainButtonClicked",
+    eventHandler: MainButtonClickedCallback,
+    options?: O,
+  ): OnEventReturn
+  (
+    eventType: "backButtonClicked",
+    eventHandler: BackButtonClickedCallback,
+    options?: O,
+  ): OnEventReturn
+  (
+    eventType: "settingsButtonClicked",
+    eventHandler: SettingsButtonClickedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "popupClosed",
-    eventHandler: (eventData: { button_id: string | null }) => void,
+    eventHandler: PopupClosedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "viewportChanged",
-    eventHandler: (eventData: { isStateStable: boolean }) => void,
+    eventHandler: ViewportChangedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "invoiceClosed",
-    eventHandler: (eventData: {
-      url: string
-      status: "paid" | "cancelled" | "failed" | "pending"
-    }) => void,
+    eventHandler: InvoiceClosedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "qrTextReceived",
-    eventHandler: (eventData: { data: string }) => void,
+    eventHandler: QrTextReceivedCallback,
+    options?: O,
+  ): OnEventReturn
+  (
+    eventType: "scanQrPopupClosed",
+    eventHandler: ScanQrPopupClosedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "clipboardTextReceived",
-    eventHandler: (eventData: { data: string | null }) => void,
+    eventHandler: ClipboardTextReceivedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "writeAccessRequested",
-    eventHandler: (eventData: { status: "allowed" | "cancelled" }) => void,
+    eventHandler: WriteAccessRequestedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "contactRequested",
-    eventHandler: (eventData: RequestContactResponse) => void,
+    eventHandler: ContactRequestedCallback,
+    options?: O,
+  ): OnEventReturn
+  (
+    eventType: "biometricManagerUpdated",
+    eventHandler: BiometricManagerUpdatedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "biometricAuthRequested",
-    eventHandler: (eventData: {
-      isAuthenticated: boolean
-      biometricToken?: string
-    }) => void,
+    eventHandler: BiometricAuthRequestedCallback,
     options?: O,
   ): OnEventReturn
   (
     eventType: "biometricTokenUpdated",
-    eventHandler: (eventData: { isUpdated: boolean }) => void,
+    eventHandler: BiometricTokenUpdatedCallback,
     options?: O,
   ): OnEventReturn
 }
