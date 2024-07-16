@@ -23,6 +23,7 @@ outline: [2, 3]
 | headerColor                  | [useWebAppTheme](#usewebapptheme)                             |
 | backgroundColor              | [useWebAppTheme](#usewebapptheme)                             |
 | isClosingConfirmationEnabled | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
+| isVerticalSwipesEnabled      | [useWebAppViewport](#usewebappviewport)                       |
 | BackButton                   | [useWebAppBackButton](#usewebappbackbutton)                   |
 | MainButton                   | [useWebAppMainButton](#usewebappmainbutton)                   |
 | HapticFeedback               | [useWebAppHapticFeedback](#usewebapphapticfeedback)           |
@@ -32,6 +33,8 @@ outline: [2, 3]
 | setBackgroundColor           | [useWebAppTheme](#usewebapptheme)                             |
 | enableClosingConfirmation    | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | disableClosingConfirmation   | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
+| enableVerticalSwipes         | [useWebAppViewport](#usewebappviewport)                       |
+| disableVerticalSwipes        | [useWebAppViewport](#usewebappviewport)                       |
 | onEvent                      | [useWebApp](#usewebapp)                                       |
 | offEvent                     | [Handled automagically 🪄](#managing-event-subscriptions)      |
 | sendData                     | [useWebApp](#usewebapp)                                       |
