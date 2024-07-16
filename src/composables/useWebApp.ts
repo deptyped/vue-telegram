@@ -21,6 +21,14 @@ const ready: typeof Telegram.WebApp.ready = (...params) => {
 const isPlatform = (name: string) => Telegram.WebApp.platform === name
 
 const isPlatformUnknown = isPlatform("unknown")
+const isPlatformAndroid = isPlatform("android")
+const isPlatformAndroidX = isPlatform("android_x")
+const isPlatformIOS = isPlatform("ios")
+const isPlatformMacOS = isPlatform("macos")
+const isPlatformTDesktop = isPlatform("tdesktop")
+const isPlatformWebA = isPlatform("weba")
+const isPlatformWebK = isPlatform("webk")
+const isPlatformUnigram = isPlatform("unigram")
 
 const canSendData = !isPlatformUnknown && Telegram.WebApp.initData === ""
 
@@ -72,6 +80,14 @@ export function useWebApp() {
     isReady: readonly(isReady),
     isPlatform,
     isPlatformUnknown,
+    isPlatformAndroid,
+    isPlatformAndroidX,
+    isPlatformIOS,
+    isPlatformMacOS,
+    isPlatformTDesktop,
+    isPlatformWebA,
+    isPlatformWebK,
+    isPlatformUnigram,
     canSendData,
   }
 }
