@@ -6,11 +6,11 @@ const props = defineProps({
   force: { type: Boolean, default: false },
 })
 
-const { isVersionAtLeast } = useWebApp()
+const { isFeatureSupported } = useWebApp()
 const { onViewportChanged, expand, isExpanded, isVerticalSwipesEnabled } =
   useWebAppViewport()
 
-if (isVersionAtLeast("7.7")) {
+if (isFeatureSupported("DisableVerticalSwipes")) {
   watch(
     () => props.force,
     isForceMode => {
