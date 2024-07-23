@@ -30,4 +30,5 @@ import { useWebApp } from 'vue-tg'
 | `isPlatformWebA` <Badge type="tip" text="custom" />     | `boolean`                                                                                   |
 | `isPlatformWebK` <Badge type="tip" text="custom" />     | `boolean`                                                                                   |
 | `isPlatformUnigram` <Badge type="tip" text="custom" />  | `boolean`                                                                                   |
+| `isFeatureSupported` <Badge type="tip" text="custom" /> | `(name: string) => boolean`                                                                 |
 | `canSendData` <Badge type="tip" text="custom" />        | `boolean`                                                                                   |
