@@ -22,13 +22,5 @@ import { useWebApp } from 'vue-tg'
 | `isReady` <Badge type="tip" text="custom" />            | `Readonly<Ref<boolean>>`                                                                    |
 | `isPlatform` <Badge type="tip" text="custom" />         | `(name: string) => boolean`                                                                 |
 | `isPlatformUnknown` <Badge type="tip" text="custom" />  | `boolean`                                                                                   |
-| `isPlatformAndroid` <Badge type="tip" text="custom" />  | `boolean`                                                                                   |
-| `isPlatformAndroidX` <Badge type="tip" text="custom" /> | `boolean`                                                                                   |
-| `isPlatformIOS` <Badge type="tip" text="custom" />      | `boolean`                                                                                   |
-| `isPlatformMacOS` <Badge type="tip" text="custom" />    | `boolean`                                                                                   |
-| `isPlatformTDesktop` <Badge type="tip" text="custom" /> | `boolean`                                                                                   |
-| `isPlatformWebA` <Badge type="tip" text="custom" />     | `boolean`                                                                                   |
-| `isPlatformWebK` <Badge type="tip" text="custom" />     | `boolean`                                                                                   |
-| `isPlatformUnigram` <Badge type="tip" text="custom" />  | `boolean`                                                                                   |
 | `isFeatureSupported` <Badge type="tip" text="custom" /> | `(name: string) => boolean`                                                                 |
 | `canSendData` <Badge type="tip" text="custom" />        | `boolean`                                                                                   |
