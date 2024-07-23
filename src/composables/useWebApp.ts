@@ -30,6 +30,19 @@ const isPlatformWebA = isPlatform("weba")
 const isPlatformWebK = isPlatform("webk")
 const isPlatformUnigram = isPlatform("unigram")
 
+const featureSupportVersion = {
+  ClosingConfirmation: "6.2",
+  CloudStorage: "6.9",
+  RequestWriteAccess: "6.9",
+  RequestContact: "6.9",
+  SettingsButton: "7.0",
+  BiometricManager: "7.2",
+  DisableVerticalSwipes: "7.7",
+}
+const isFeatureSupported = (name: keyof typeof featureSupportVersion) => {
+  return isVersionAtLeast(featureSupportVersion[name])
+}
+
 const canSendData = !isPlatformUnknown && Telegram.WebApp.initData === ""
 
 export function useWebApp() {
@@ -88,6 +101,7 @@ export function useWebApp() {
     isPlatformWebA,
     isPlatformWebK,
     isPlatformUnigram,
+    isFeatureSupported,
     canSendData,
   }
 }
