@@ -4,6 +4,7 @@
   "description": "Telegram integration for Vue",
   "author": "deptyped <deptyped@gmail.com>",
   "license": "MIT",
+  "sideEffects": false,
   "homepage": "https://github.com/deptyped/vue-telegram#readme",
   "repository": {
     "type": "git",

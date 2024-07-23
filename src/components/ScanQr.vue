@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from "vue"
-import { useWebAppQrScanner } from "../composables"
+import { useWebAppQrScanner } from "../"
 
 const props = defineProps({
   text: { type: String },

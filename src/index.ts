@@ -34,7 +34,22 @@ export {
 
 export type { LoginWidgetUser } from "./types"
 
-export * from "./composables"
+export { useWebApp } from "./composables/useWebApp"
+export { useWebAppBackButton } from "./composables/useWebAppBackButton"
+export { useWebAppBiometricManager } from "./composables/useWebAppBiometricManager"
+export { useWebAppClipboard } from "./composables/useWebAppClipboard"
+export { useWebAppClosingConfirmation } from "./composables/useWebAppClosingConfirmation"
+export { useWebAppCloudStorage } from "./composables/useWebAppCloudStorage"
+export { useWebAppHapticFeedback } from "./composables/useWebAppHapticFeedback"
+export { useWebAppMainButton } from "./composables/useWebAppMainButton"
+export { useWebAppNavigation } from "./composables/useWebAppNavigation"
+export { useWebAppPopup } from "./composables/useWebAppPopup"
+export { useWebAppQrScanner } from "./composables/useWebAppQrScanner"
+export { useWebAppRequests } from "./composables/useWebAppRequests"
+export { useWebAppSendData } from "./composables/useWebAppSendData"
+export { useWebAppSettingsButton } from "./composables/useWebAppSettingsButton"
+export { useWebAppTheme } from "./composables/useWebAppTheme"
+export { useWebAppViewport } from "./composables/useWebAppViewport"
 
 const plugin = {
   install(Vue: App) {
