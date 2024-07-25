@@ -80,6 +80,7 @@ onThemeChanged(() => {
 | invoiceClosed           | [useWebAppNavigation → onInvoiceClosed](#usewebappnavigation)                       |
 | popupClosed             | [useWebAppPopup → onPopupClosed](#usewebapppopup)                                   |
 | qrTextReceived          | [useWebAppQrScanner → onQrTextReceived](#usewebappqrscanner)                        |
+| scanQrPopupClosed       | [useWebAppQrScanner → onScanQrPopupClosed](#usewebappqrscanner)                     |
 | clipboardTextReceived   | [useWebAppClipboard → onClipboardTextReceived](#usewebappclipboard)                 |
 | writeAccessRequested    | [useWebAppRequests → onWriteAccessRequested](#usewebapprequests)                    |
 | contactRequested        | [useWebAppRequests → onContactRequested](#usewebapprequests)                        |
