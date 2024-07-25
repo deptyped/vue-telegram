@@ -1,16 +1,31 @@
 <script lang="ts" setup>
-import { onMounted } from "vue"
-import { useWebAppViewport } from ".."
+import { onMounted, watch } from "vue"
+import { useWebApp, useWebAppViewport } from ".."
 
 const props = defineProps({
   force: { type: Boolean, default: false },
 })
 
-const { onViewportChanged, expand } = useWebAppViewport()
+const { isFeatureSupported } = useWebApp()
+const { onViewportChanged, expand, isExpanded, isVerticalSwipesEnabled } =
+  useWebAppViewport()
 
-onViewportChanged(({ isStateStable }) => {
-  props.force && isStateStable && expand()
-})
+if (isFeatureSupported("DisableVerticalSwipes")) {
+  watch(
+    () => props.force,
+    isForceMode => {
+      isForceMode && !isExpanded.value && expand()
+      isVerticalSwipesEnabled.value = !isForceMode
+    },
+    {
+      immediate: true,
+    },
+  )
+} else {
+  onViewportChanged(({ isStateStable }) => {
+    props.force && isStateStable && !isExpanded.value && expand()
+  })
+}
 
 onMounted(() => expand())
 </script>

@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import VueTg from '../src'
+import {VueTelegramPlugin} from '../src'
 import App from './App.vue'
 
-createApp(App).use(VueTg).mount('#app')
+createApp(App).use(VueTelegramPlugin).mount('#app')

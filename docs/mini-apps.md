@@ -23,6 +23,7 @@ outline: [2, 3]
 | headerColor                  | [useWebAppTheme](#usewebapptheme)                             |
 | backgroundColor              | [useWebAppTheme](#usewebapptheme)                             |
 | isClosingConfirmationEnabled | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
+| isVerticalSwipesEnabled      | [useWebAppViewport](#usewebappviewport)                       |
 | BackButton                   | [useWebAppBackButton](#usewebappbackbutton)                   |
 | MainButton                   | [useWebAppMainButton](#usewebappmainbutton)                   |
 | HapticFeedback               | [useWebAppHapticFeedback](#usewebapphapticfeedback)           |
@@ -32,6 +33,8 @@ outline: [2, 3]
 | setBackgroundColor           | [useWebAppTheme](#usewebapptheme)                             |
 | enableClosingConfirmation    | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | disableClosingConfirmation   | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
+| enableVerticalSwipes         | [useWebAppViewport](#usewebappviewport)                       |
+| disableVerticalSwipes        | [useWebAppViewport](#usewebappviewport)                       |
 | onEvent                      | [useWebApp](#usewebapp)                                       |
 | offEvent                     | [Handled automagically 🪄](#managing-event-subscriptions)      |
 | sendData                     | [useWebApp](#usewebapp)                                       |
@@ -77,6 +80,7 @@ onThemeChanged(() => {
 | invoiceClosed           | [useWebAppNavigation → onInvoiceClosed](#usewebappnavigation)                       |
 | popupClosed             | [useWebAppPopup → onPopupClosed](#usewebapppopup)                                   |
 | qrTextReceived          | [useWebAppQrScanner → onQrTextReceived](#usewebappqrscanner)                        |
+| scanQrPopupClosed       | [useWebAppQrScanner → onScanQrPopupClosed](#usewebappqrscanner)                     |
 | clipboardTextReceived   | [useWebAppClipboard → onClipboardTextReceived](#usewebappclipboard)                 |
 | writeAccessRequested    | [useWebAppRequests → onWriteAccessRequested](#usewebapprequests)                    |
 | contactRequested        | [useWebAppRequests → onContactRequested](#usewebapprequests)                        |

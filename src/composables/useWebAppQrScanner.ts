@@ -11,9 +11,15 @@ export function useWebAppQrScanner() {
     options?: OnEventOptions,
   ) => onEvent("qrTextReceived", eventHandler, options)
 
+  const onScanQrPopupClosed = (
+    eventHandler: ScanQrPopupClosedCallback,
+    options?: OnEventOptions,
+  ) => onEvent("scanQrPopupClosed", eventHandler, options)
+
   return {
     showScanQrPopup,
     closeScanQrPopup,
     onQrTextReceived,
+    onScanQrPopupClosed,
   }
 }
