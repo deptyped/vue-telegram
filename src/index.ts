@@ -48,6 +48,7 @@ export { useWebAppQrScanner } from "./composables/useWebAppQrScanner"
 export { useWebAppRequests } from "./composables/useWebAppRequests"
 export { useWebAppSendData } from "./composables/useWebAppSendData"
 export { useWebAppSettingsButton } from "./composables/useWebAppSettingsButton"
+export { useWebAppShare } from "./composables/useWebAppShare"
 export { useWebAppTheme } from "./composables/useWebAppTheme"
 export { useWebAppViewport } from "./composables/useWebAppViewport"
 
