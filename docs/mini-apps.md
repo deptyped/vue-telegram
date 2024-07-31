@@ -42,6 +42,7 @@ outline: [2, 3]
 | openLink                     | [useWebAppNavigation](#usewebappnavigation)                   |
 | openTelegramLink             | [useWebAppNavigation](#usewebappnavigation)                   |
 | openInvoice                  | [useWebAppNavigation](#usewebappnavigation)                   |
+| shareToStory                 | [useWebAppShare](#usewebappshare)                             |
 | showPopup                    | [useWebAppPopup](#usewebapppopup)                             |
 | showAlert                    | [useWebAppPopup](#usewebapppopup)                             |
 | showConfirm                  | [useWebAppPopup](#usewebapppopup)                             |
@@ -181,6 +182,8 @@ If subscription is not managed properly, it can lead to memory leaks and other i
 <!--@include: @/mini-apps/composables/use-web-app-send-data.md-->
 
 <!--@include: @/mini-apps/composables/use-web-app-settings-button.md-->
+
+<!--@include: @/mini-apps/composables/use-web-app-share.md-->
 
 <!--@include: @/mini-apps/composables/use-web-app-theme.md-->
 
