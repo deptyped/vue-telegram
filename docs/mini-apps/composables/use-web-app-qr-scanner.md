@@ -1,16 +1,13 @@
 ### useWebAppQrScanner
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppQrScanner } from 'vue-tg'
 ```
 
-▸ **useWebAppQrScanner**(): `Object`
-
-#### Returns
-
-| Name                  | Type                                                                                                                                      |
-| :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| `showScanQrPopup`     | `(params:`[`ScanQrPopupParams ↗`](https://core.telegram.org/bots/webapps#scanqrpopupparams)`, callback?: (data: string) => void) => void` |
-| `closeScanQrPopup`    | `() => void`                                                                                                                              |
-| `onQrTextReceived`    | `(eventHandler:`[`OnQrTextReceivedCallback`](#onqrtextreceivedcallback)`) => void`                                                        |
-| `onScanQrPopupClosed` | `(eventHandler: () => void) => void`                                                                                                      |
+| Name                  | Type                                                                                                                  |
+| :-------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| `showScanQrPopup`     | <!--@include: @/generated/WebApp-showScanQrPopup.md -->                                                               |
+| `closeScanQrPopup`    | <!--@include: @/generated/WebApp-closeScanQrPopup.md -->                                                              |
+| `onQrTextReceived`    | <Badge type="tip" text="Bot API 6.4+" /> A method that sets the `qrTextReceived` [event handler](#event-handling).    |
+| `onScanQrPopupClosed` | <Badge type="tip" text="Bot API 7.7+" /> A method that sets the `scanQrPopupClosed` [event handler](#event-handling). |

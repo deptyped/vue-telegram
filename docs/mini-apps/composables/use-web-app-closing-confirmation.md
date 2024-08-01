@@ -1,15 +1,12 @@
 ### useWebAppClosingConfirmation
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppClosingConfirmation } from 'vue-tg'
 ```
 
-▸ **useWebAppClosingConfirmation**(): `Object`
-
-#### Returns
-
-| Name                           | Type           |
-| :----------------------------- | :------------- |
-| `disableClosingConfirmation`   | `() => void`   |
-| `enableClosingConfirmation`    | `() => void`   |
-| `isClosingConfirmationEnabled` | `Ref<boolean>` |
+| Name                           | Type                                                                                                               |
+| :----------------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| `isClosingConfirmationEnabled` | <!--@include: @/generated/WebApp-isClosingConfirmationEnabled.md --> <br/> <Badge type="info" text="⚡️ reactive" /> |
+| `enableClosingConfirmation`    | <!--@include: @/generated/WebApp-enableClosingConfirmation.md -->                                                  |
+| `disableClosingConfirmation`   | <!--@include: @/generated/WebApp-disableClosingConfirmation.md -->                                                 |

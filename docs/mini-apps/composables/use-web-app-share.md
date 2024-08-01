@@ -1,13 +1,10 @@
 ### useWebAppShare
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppShare } from 'vue-tg'
 ```
 
-▸ **useWebAppShare**(): `Object`
-
-#### Returns
-
-| Name           | Type                                                                                                                    |
-| :------------- | :---------------------------------------------------------------------------------------------------------------------- |
-| `shareToStory` | `(media_url?: string, params?:`[`StoryShareParams`](https://core.telegram.org/bots/webapps#storyshareparams)`) => void` |
+| Name           | Type                                                 |
+| :------------- | :--------------------------------------------------- |
+| `shareToStory` | <!--@include: @/generated/WebApp-shareToStory.md --> |

@@ -1,16 +1,13 @@
 ### useWebAppPopup
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppPopup } from 'vue-tg'
 ```
 
-▸ **useWebAppPopup**(): `Object`
-
-#### Returns
-
-| Name            | Type                                                                         |
-| :-------------- | :--------------------------------------------------------------------------- |
-| `onPopupClosed` | `(eventHandler:`[`OnPopupClosedCallback`](#onpopupclosedcallback)`) => void` |
-| `showAlert`     | `(message: string, callback?: () => void) => void`                           |
-| `showConfirm`   | `(message: string, callback?: (ok: boolean) => void) => void`               |
-| `showPopup`     | `(params: PopupParams, callback?: (button_id: string) => void) => void`      |
+| Name            | Type                                                                                                            |
+| :-------------- | :-------------------------------------------------------------------------------------------------------------- |
+| `onPopupClosed` | <Badge type="tip" text="Bot API 6.2+" /> A method that sets the `popupClosed` [event handler](#event-handling). |
+| `showAlert`     | <!--@include: @/generated/WebApp-showAlert.md -->                                                               |
+| `showConfirm`   | <!--@include: @/generated/WebApp-showConfirm.md -->                                                             |
+| `showPopup`     | <!--@include: @/generated/WebApp-showPopup.md -->                                                               |

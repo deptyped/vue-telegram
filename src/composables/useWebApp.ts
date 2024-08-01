@@ -98,6 +98,9 @@ export function useWebApp() {
     isPlatform,
     isPlatformUnknown,
     isFeatureSupported,
+    /**
+     * @deprecated
+     */
     canSendData,
   }
 }

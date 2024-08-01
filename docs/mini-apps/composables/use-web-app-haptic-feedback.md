@@ -1,15 +1,12 @@
 ### useWebAppHapticFeedback
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppHapticFeedback } from 'vue-tg'
 ```
 
-▸ **useWebAppHapticFeedback**(): `Object`
-
-#### Returns
-
-| Name                   | Type                                                                         |
-| :--------------------- | :--------------------------------------------------------------------------- |
-| `impactOccurred`       | `(style: "light" \| "medium" \| "heavy" \| "rigid" \| "soft") => () => void` |
-| `notificationOccurred` | `(type: "error" \| "success" \| "warning") => () => void`                    |
-| `selectionChanged`     | `() => void`                                                                 |
+| Name                   | Type                                                                 |
+| :--------------------- | :------------------------------------------------------------------- |
+| `impactOccurred`       | <!--@include: @/generated/HapticFeedback-impactOccurred.md -->       |
+| `notificationOccurred` | <!--@include: @/generated/HapticFeedback-notificationOccurred.md --> |
+| `selectionChanged`     | <!--@include: @/generated/HapticFeedback-selectionChanged.md -->     |

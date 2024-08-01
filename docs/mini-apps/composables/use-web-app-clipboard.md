@@ -1,14 +1,11 @@
 ### useWebAppClipboard
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppClipboard } from 'vue-tg'
 ```
 
-▸ **useWebAppClipboard**(): `Object`
-
-#### Returns
-
-| Name                      | Type                                                                                              |
-| :------------------------ | :------------------------------------------------------------------------------------------------ |
-| `onClipboardTextReceived` | `(eventHandler:` [`OnClipboardTextReceivedCallback`](#onclipboardtextreceivedcallback)`) => void` |
-| `readTextFromClipboard`   | `(callback?: (data: null \| string) => void) => void`                                             |
+| Name                      | Type                                                                                                                      |
+| :------------------------ | :------------------------------------------------------------------------------------------------------------------------ |
+| `onClipboardTextReceived` | <Badge type="tip" text="Bot API 6.4+" /> A method that sets the `clipboardTextReceived` [event handler](#event-handling). |
+| `readTextFromClipboard`   | <!--@include: @/generated/WebApp-readTextFromClipboard.md -->                                                             |

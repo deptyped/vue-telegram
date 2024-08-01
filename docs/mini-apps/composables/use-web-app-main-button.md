@@ -1,27 +1,24 @@
 ### useWebAppMainButton
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppMainButton } from 'vue-tg'
 ```
 
-▸ **useWebAppMainButton**(): `Object`
-
-#### Returns
-
-| Name                          | Type                                                                                         |
-| :---------------------------- | :------------------------------------------------------------------------------------------- |
-| `disableMainButton`           | `() => void`                                                                                 |
-| `enableMainButton`            | `() => void`                                                                                 |
-| `hideMainButton`              | `() => void`                                                                                 |
-| `hideMainButtonProgress`      | `() => void`                                                                                 |
-| `isMainButtonActive`          | `Ref<boolean>`                                                                               |
-| `isMainButtonProgressVisible` | `Ref<boolean>`                                                                               |
-| `isMainButtonVisible`         | `Ref<boolean>`                                                                               |
-| `mainButtonColor`             | `Ref<string>`                                                                                |
-| `mainButtonText`              | `Ref<string>`                                                                                |
-| `mainButtonTextColor`         | `Ref<string>`                                                                                |
-| `onMainButtonClicked`         | `(eventHandler: () => void) => void`                                                         |
-| `setMainButtonParams`         | `(params:`[MainButtonParams ↗](https://core.telegram.org/bots/webapps#mainbutton)`) => void` |
-| `setMainButtonText`           | `(text: string) => void`                                                                     |
-| `showMainButton`              | `() => void`                                                                                 |
-| `showMainButtonProgress`      | `(leaveActive?: boolean) => void`                                                            |
+| Name                          | Type                                                                                                       |
+| :---------------------------- | :--------------------------------------------------------------------------------------------------------- |
+| `mainButtonText`              | <!--@include: @/generated/MainButton-text.md --><br/> <Badge type="info" text="⚡️ reactive" />              |
+| `mainButtonColor`             | <!--@include: @/generated/MainButton-color.md --><br/> <Badge type="info" text="⚡️ reactive" />             |
+| `mainButtonTextColor`         | <!--@include: @/generated/MainButton-textColor.md --><br/> <Badge type="info" text="⚡️ reactive" />         |
+| `isMainButtonVisible`         | <!--@include: @/generated/MainButton-isVisible.md --><br/> <Badge type="info" text="⚡️ reactive" />         |
+| `isMainButtonActive`          | <!--@include: @/generated/MainButton-isActive.md --><br/> <Badge type="info" text="⚡️ reactive" />          |
+| `isMainButtonProgressVisible` | <!--@include: @/generated/MainButton-isProgressVisible.md --><br/> <Badge type="info" text="⚡️ reactive" /> |
+| `setMainButtonText`           | <!--@include: @/generated/MainButton-setText.md -->                                                        |
+| `onMainButtonClicked`         | A method that sets the `mainButtonClicked` [event handler](#event-handling).                               |
+| `showMainButton`              | <!--@include: @/generated/MainButton-show.md -->                                                           |
+| `hideMainButton`              | <!--@include: @/generated/MainButton-hide.md -->                                                           |
+| `enableMainButton`            | <!--@include: @/generated/MainButton-enable.md -->                                                         |
+| `disableMainButton`           | <!--@include: @/generated/MainButton-disable.md -->                                                        |
+| `showMainButtonProgress`      | <!--@include: @/generated/MainButton-showProgress.md -->                                                   |
+| `hideMainButtonProgress`      | <!--@include: @/generated/MainButton-hideProgress.md -->                                                   |
+| `setMainButtonParams`         | <!--@include: @/generated/MainButton-setParams.md -->                                                      |

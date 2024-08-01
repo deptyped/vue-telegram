@@ -1,20 +1,17 @@
 ### useWebAppViewport
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppViewport } from 'vue-tg'
 ```
 
-▸ **useWebAppViewport**(): `Object`
-
-#### Returns
-
-| Name                      | Type                                                                                 |
-| :------------------------ | :----------------------------------------------------------------------------------- |
-| `expand`                  | `() => void`                                                                         |
-| `isExpanded`              | `Readonly<Ref<boolean>>`                                                             |
-| `onViewportChanged`       | `(eventHandler:`[`OnViewportChangedCallback`](#onviewportchangedcallback)`) => void` |
-| `viewportHeight`          | `Readonly<Ref<number>>`                                                              |
-| `viewportStableHeight`    | `Readonly<Ref<number>>`                                                              |
-| `isVerticalSwipesEnabled` | `Ref<boolean>`                                                                       |
-| `enableVerticalSwipes`    | `() => void`                                                                         |
-| `disableVerticalSwipes`   | `() => void`                                                                         |
+| Name                      | Type                                                                                                               |
+| :------------------------ | :----------------------------------------------------------------------------------------------------------------- |
+| `isExpanded`              | <!--@include: @/generated/WebApp-isExpanded.md --><br/> <Badge type="info" text="⚡️ readonly reactive" />           |
+| `viewportHeight`          | <!--@include: @/generated/WebApp-viewportHeight.md --><br/> <Badge type="info" text="⚡️ readonly reactive" />       |
+| `viewportStableHeight`    | <!--@include: @/generated/WebApp-viewportStableHeight.md --><br/> <Badge type="info" text="⚡️ readonly reactive" /> |
+| `isVerticalSwipesEnabled` | <!--@include: @/generated/WebApp-isVerticalSwipesEnabled.md --><br/> <Badge type="info" text="⚡️ reactive" />       |
+| `expand`                  | <!--@include: @/generated/WebApp-expand.md -->                                                                     |
+| `enableVerticalSwipes`    | <!--@include: @/generated/WebApp-enableVerticalSwipes.md -->                                                       |
+| `disableVerticalSwipes`   | <!--@include: @/generated/WebApp-disableVerticalSwipes.md -->                                                      |
+| `onViewportChanged`       | A method that sets the `viewportChanged` [event handler](#event-handling).                                         |

@@ -3,6 +3,9 @@ import { useWebApp } from "./useWebApp"
 
 const { initData, initDataUnsafe, sendData, close } = useWebApp()
 
+/**
+ * @deprecated
+ */
 export function useWebAppSendData<D>(
   data: D,
   options: {

@@ -1,26 +1,22 @@
 ### useWebApp
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebApp } from 'vue-tg'
 ```
 
-▸ **useWebApp**(): `Object`
-
-#### Returns
-
-| Name                                                    | Type                                                                                        |
-| :------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
-| `close`                                                 | `() => void`                                                                                |
-| `initData`                                              | `string`                                                                                    |
-| `initDataUnsafe`                                        | [WebAppInitData ↗](https://core.telegram.org/bots/webapps#webappinitdata)                   |
-| `isVersionAtLeast`                                      | `(version: string) => boolean`                                                              |
-| `onEvent`                                               | [Available Events ↗](https://core.telegram.org/bots/webapps#events-available-for-mini-apps) |
-| `platform`                                              | `string`                                                                                    |
-| `ready`                                                 | `() => void`                                                                                |
-| `sendData`                                              | `(data: string) => void`                                                                    |
-| `version`                                               | `string`                                                                                    |
-| `isReady` <Badge type="tip" text="custom" />            | `Readonly<Ref<boolean>>`                                                                    |
-| `isPlatform` <Badge type="tip" text="custom" />         | `(name: string) => boolean`                                                                 |
-| `isPlatformUnknown` <Badge type="tip" text="custom" />  | `boolean`                                                                                   |
-| `isFeatureSupported` <Badge type="tip" text="custom" /> | `(name: string) => boolean`                                                                 |
-| `canSendData` <Badge type="tip" text="custom" />        | `boolean`                                                                                   |
+| Name                 | Description                                                                                                                        |
+| :------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| `initData`           | <!--@include: @/generated/WebApp-initData.md -->                                                                                   |
+| `initDataUnsafe`     | <!--@include: @/generated/WebApp-initDataUnsafe.md -->                                                                             |
+| `version`            | <!--@include: @/generated/WebApp-version.md -->                                                                                    |
+| `platform`           | <!--@include: @/generated/WebApp-platform.md -->                                                                                   |
+| `isVersionAtLeast`   | <!--@include: @/generated/WebApp-isVersionAtLeast.md -->                                                                           |
+| `onEvent`            | <!--@include: @/generated/WebApp-onEvent.md -->                                                                                    |
+| `sendData`           | <!--@include: @/generated/WebApp-sendData.md -->                                                                                   |
+| `ready`              | <!--@include: @/generated/WebApp-ready.md -->                                                                                      |
+| `close`              | <!--@include: @/generated/WebApp-close.md -->                                                                                      |
+| `isReady`            | Boolean indicating if the app is ready. <br/><Badge type="info" text="🔋 custom" /><Badge type="info" text="⚡️ readonly reactive" /> |
+| `isPlatform`         | Function to check if the app is running on a specified platform. <br/><Badge type="info" text="🔋 custom" />                        |
+| `isPlatformUnknown`  | Boolean indicating if the platform is unknown. <br/><Badge type="info" text="🔋 custom" />                                          |
+| `isFeatureSupported` | Function to check if a specified feature is supported. <br/><Badge type="info" text="🔋 custom" />                                  |

@@ -1,9 +1,26 @@
 import { defineConfig } from 'vitepress'
+import { transformerTwoslash } from '@shikijs/vitepress-twoslash'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "vue-tg",
   description: "Vue-Telegram Documentation",
+  markdown: {
+    codeTransformers: [
+      transformerTwoslash({
+        twoslashOptions: {
+          compilerOptions: {
+            noErrorTruncation: true,
+            paths: {
+              'vue-tg': [
+                './dist'
+              ]
+            }
+          }
+        }
+      })
+    ]
+  },
   themeConfig: {
     search: {
       provider: 'local',

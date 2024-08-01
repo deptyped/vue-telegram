@@ -1,18 +1,15 @@
 ### useWebAppCloudStorage
 
-```ts
+```ts twoslash
+// Hover to inspect type
 import { useWebAppCloudStorage } from 'vue-tg'
 ```
 
-▸ **useWebAppCloudStorage**(): `Object`
-
-#### Returns
-
-| Name                 | Type                                                    |
-| :------------------- | :------------------------------------------------------ |
-| `getStorageItem`     | `(key: string) => Promise<null \| string>`              |
-| `getStorageItems`    | `(keys: string[]) => Promise<Record<string, string>>`   |
-| `getStorageKeys`     | `() => Promise<string[]>`                               |
-| `removeStorageItem`  | `(key: string) => Promise<null \| true>`                |
-| `removeStorageItems` | `(keys: string[]) => Promise<null \| true>`             |
-| `setStorageItem`     | `(key: string, value: string) => Promise<null \| true>` |
+| Name                 | Type                                                      |
+| :------------------- | :-------------------------------------------------------- |
+| `setStorageItem`     | <!--@include: @/generated/CloudStorage-setItem.md -->     |
+| `getStorageItem`     | <!--@include: @/generated/CloudStorage-getItem.md -->     |
+| `getStorageItems`    | <!--@include: @/generated/CloudStorage-getItems.md -->    |
+| `removeStorageItem`  | <!--@include: @/generated/CloudStorage-removeItem.md -->  |
+| `removeStorageItems` | <!--@include: @/generated/CloudStorage-removeItems.md --> |
+| `getStorageKeys`     | <!--@include: @/generated/CloudStorage-getKeys.md -->     |
