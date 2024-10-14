@@ -1,8 +1,6 @@
 import { useWebApp } from "./useWebApp"
 import type { OnEventOptions } from "~/types"
 
-const { requestContact, requestWriteAccess } = Telegram.WebApp
-
 export function useWebAppRequests() {
   const { onEvent } = useWebApp()
 
@@ -15,6 +13,8 @@ export function useWebAppRequests() {
     eventHandler: ContactRequestedCallback,
     options?: OnEventOptions,
   ) => onEvent("contactRequested", eventHandler, options)
+
+  const { requestContact, requestWriteAccess } = Telegram.WebApp
 
   return {
     requestContact,

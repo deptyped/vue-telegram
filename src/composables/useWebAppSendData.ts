@@ -1,8 +1,6 @@
 import { ref } from "vue"
 import { useWebApp } from "./useWebApp"
 
-const { initData, initDataUnsafe, sendData, close } = useWebApp()
-
 /**
  * @deprecated
  */
@@ -21,6 +19,8 @@ export function useWebAppSendData<D>(
   }
 
   const isLoading = ref(false)
+
+  const { initData, initDataUnsafe, sendData, close } = useWebApp()
 
   return {
     error,
