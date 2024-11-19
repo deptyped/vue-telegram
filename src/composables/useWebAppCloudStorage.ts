@@ -1,12 +1,12 @@
-const CloudStorage = Telegram.WebApp.CloudStorage
-
 type SetItemResult = Parameters<
-  NonNullable<NonNullable<Parameters<typeof CloudStorage.setItem>>[2]>
+  NonNullable<
+    NonNullable<Parameters<typeof Telegram.WebApp.CloudStorage.setItem>>[2]
+  >
 >[1]
 
 function setStorageItem(key: string, value: string) {
   return new Promise<SetItemResult>((resolve, reject) => {
-    CloudStorage.setItem(key, value, (error, ok) => {
+    Telegram.WebApp.CloudStorage.setItem(key, value, (error, ok) => {
       if (error) reject(error)
 
       resolve(ok)
@@ -15,12 +15,14 @@ function setStorageItem(key: string, value: string) {
 }
 
 type GetItemResult = Parameters<
-  NonNullable<NonNullable<Parameters<typeof CloudStorage.getItem>>[1]>
+  NonNullable<
+    NonNullable<Parameters<typeof Telegram.WebApp.CloudStorage.getItem>>[1]
+  >
 >[1]
 
 function getStorageItem(key: string) {
   return new Promise<GetItemResult>((resolve, reject) => {
-    CloudStorage.getItem(key, (error, value) => {
+    Telegram.WebApp.CloudStorage.getItem(key, (error, value) => {
       if (error) reject(error)
 
       resolve(value)
@@ -30,13 +32,15 @@ function getStorageItem(key: string) {
 
 type GetItemsResult = NonNullable<
   Parameters<
-    NonNullable<NonNullable<Parameters<typeof CloudStorage.getItems>>[1]>
+    NonNullable<
+      NonNullable<Parameters<typeof Telegram.WebApp.CloudStorage.getItems>>[1]
+    >
   >[1]
 >
 
 function getStorageItems(keys: string[]) {
   return new Promise<GetItemsResult>((resolve, reject) => {
-    CloudStorage.getItems(keys, (error, values) => {
+    Telegram.WebApp.CloudStorage.getItems(keys, (error, values) => {
       if (error) reject(error)
 
       resolve(values as GetItemsResult)
@@ -45,12 +49,14 @@ function getStorageItems(keys: string[]) {
 }
 
 type RemoveItemResult = Parameters<
-  NonNullable<NonNullable<Parameters<typeof CloudStorage.removeItem>>[1]>
+  NonNullable<
+    NonNullable<Parameters<typeof Telegram.WebApp.CloudStorage.removeItem>>[1]
+  >
 >[1]
 
 function removeStorageItem(key: string) {
   return new Promise<RemoveItemResult>((resolve, reject) => {
-    CloudStorage.removeItem(key, (error, ok) => {
+    Telegram.WebApp.CloudStorage.removeItem(key, (error, ok) => {
       if (error) reject(error)
 
       resolve(ok)
@@ -59,12 +65,14 @@ function removeStorageItem(key: string) {
 }
 
 type RemoveItemsResult = Parameters<
-  NonNullable<NonNullable<Parameters<typeof CloudStorage.removeItems>>[1]>
+  NonNullable<
+    NonNullable<Parameters<typeof Telegram.WebApp.CloudStorage.removeItems>>[1]
+  >
 >[1]
 
 function removeStorageItems(keys: string[]) {
   return new Promise<RemoveItemsResult>((resolve, reject) => {
-    CloudStorage.removeItems(keys, (error, ok) => {
+    Telegram.WebApp.CloudStorage.removeItems(keys, (error, ok) => {
       if (error) reject(error)
 
       resolve(ok)
@@ -74,13 +82,15 @@ function removeStorageItems(keys: string[]) {
 
 type GetKeysResult = NonNullable<
   Parameters<
-    NonNullable<NonNullable<Parameters<typeof CloudStorage.getKeys>>[0]>
+    NonNullable<
+      NonNullable<Parameters<typeof Telegram.WebApp.CloudStorage.getKeys>>[0]
+    >
   >[1]
 >
 
 function getStorageKeys() {
   return new Promise<GetKeysResult>((resolve, reject) => {
-    CloudStorage.getKeys((error, values) => {
+    Telegram.WebApp.CloudStorage.getKeys((error, values) => {
       if (error) reject(error)
 
       resolve(values as GetKeysResult)

@@ -1,16 +1,6 @@
 import { onMounted, onUnmounted, readonly, ref } from "vue"
 import { OnEventOptions, OnEventWithOptions } from "~/types"
 
-const {
-  initData,
-  initDataUnsafe,
-  version,
-  platform,
-  isVersionAtLeast,
-  sendData,
-  close,
-} = Telegram.WebApp
-
 const isReady = ref(false)
 
 const ready: typeof Telegram.WebApp.ready = (...params) => {
@@ -32,8 +22,6 @@ const isPlatform = (
     | "unigram",
 ) => Telegram.WebApp.platform === name
 
-const isPlatformUnknown = isPlatform("unknown")
-
 const featureSupportVersion = {
   ClosingConfirmation: "6.2",
   CloudStorage: "6.9",
@@ -44,10 +32,8 @@ const featureSupportVersion = {
   DisableVerticalSwipes: "7.7",
 }
 const isFeatureSupported = (name: keyof typeof featureSupportVersion) => {
-  return isVersionAtLeast(featureSupportVersion[name])
+  return Telegram.WebApp.isVersionAtLeast(featureSupportVersion[name])
 }
-
-const canSendData = !isPlatformUnknown && Telegram.WebApp.initData === ""
 
 export function useWebApp() {
   const onEvent: OnEventWithOptions<OnEventOptions> = (
@@ -83,6 +69,20 @@ export function useWebApp() {
       off,
     }
   }
+
+  const {
+    initData,
+    initDataUnsafe,
+    version,
+    platform,
+    isVersionAtLeast,
+    sendData,
+    close,
+  } = Telegram.WebApp
+
+  const isPlatformUnknown = isPlatform("unknown")
+
+  const canSendData = !isPlatformUnknown && initData === ""
 
   return {
     initData,

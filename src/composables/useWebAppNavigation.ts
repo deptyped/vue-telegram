@@ -1,9 +1,6 @@
 import { useWebApp } from "./useWebApp"
 import type { OnEventOptions } from "~/types"
 
-const { switchInlineQuery, openLink, openTelegramLink, openInvoice } =
-  Telegram.WebApp
-
 export function useWebAppNavigation() {
   const { onEvent } = useWebApp()
 
@@ -11,6 +8,9 @@ export function useWebAppNavigation() {
     eventHandler: InvoiceClosedCallback,
     options?: OnEventOptions,
   ) => onEvent("invoiceClosed", eventHandler, options)
+
+  const { switchInlineQuery, openLink, openTelegramLink, openInvoice } =
+    Telegram.WebApp
 
   return {
     switchInlineQuery,

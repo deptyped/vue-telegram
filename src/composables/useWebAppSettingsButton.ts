@@ -1,28 +1,36 @@
 import { computed, ref } from "vue"
+import { defineStore } from "../utils"
 import { useWebApp } from "./useWebApp"
 import type { OnEventOptions } from "~/types"
 
-const isSettingsButtonVisible = ref(Telegram.WebApp.SettingsButton.isVisible)
+const useStore = defineStore(() => {
+  const isSettingsButtonVisible = ref(Telegram.WebApp.SettingsButton.isVisible)
 
-function updateState() {
-  isSettingsButtonVisible.value = Telegram.WebApp.SettingsButton.isVisible
-}
+  function showSettingsButton(
+    ...params: Parameters<typeof Telegram.WebApp.SettingsButton.show>
+  ) {
+    Telegram.WebApp.SettingsButton.show(...params)
+    isSettingsButtonVisible.value = true
+  }
 
-function showSettingsButton(
-  ...params: Parameters<typeof Telegram.WebApp.SettingsButton.show>
-) {
-  Telegram.WebApp.SettingsButton.show(...params)
-  updateState()
-}
+  function hideSettingsButton(
+    ...params: Parameters<typeof Telegram.WebApp.SettingsButton.hide>
+  ) {
+    Telegram.WebApp.SettingsButton.hide(...params)
+    isSettingsButtonVisible.value = false
+  }
 
-function hideSettingsButton(
-  ...params: Parameters<typeof Telegram.WebApp.SettingsButton.hide>
-) {
-  Telegram.WebApp.SettingsButton.hide(...params)
-  updateState()
-}
+  return {
+    isSettingsButtonVisible,
+    showSettingsButton,
+    hideSettingsButton,
+  }
+})
 
 export function useWebAppSettingsButton() {
+  const { isSettingsButtonVisible, showSettingsButton, hideSettingsButton } =
+    useStore()
+
   const { onEvent } = useWebApp()
 
   const onSettingsButtonClicked = (

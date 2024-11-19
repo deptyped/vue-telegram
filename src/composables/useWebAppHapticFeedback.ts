@@ -1,7 +1,7 @@
-const { impactOccurred, notificationOccurred, selectionChanged } =
-  Telegram.WebApp.HapticFeedback
-
 export function useWebAppHapticFeedback() {
+  const { impactOccurred, notificationOccurred, selectionChanged } =
+    Telegram.WebApp.HapticFeedback
+
   return {
     impactOccurred,
     notificationOccurred,

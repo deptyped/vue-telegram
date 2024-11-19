@@ -1,8 +1,6 @@
 import { useWebApp } from "./useWebApp"
 import type { OnEventOptions } from "~/types"
 
-const { showScanQrPopup, closeScanQrPopup } = Telegram.WebApp
-
 export function useWebAppQrScanner() {
   const { onEvent } = useWebApp()
 
@@ -15,6 +13,8 @@ export function useWebAppQrScanner() {
     eventHandler: ScanQrPopupClosedCallback,
     options?: OnEventOptions,
   ) => onEvent("scanQrPopupClosed", eventHandler, options)
+
+  const { showScanQrPopup, closeScanQrPopup } = Telegram.WebApp
 
   return {
     showScanQrPopup,

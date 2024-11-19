@@ -1,8 +1,6 @@
 import { useWebApp } from "./useWebApp"
 import type { OnEventOptions } from "~/types"
 
-const { readTextFromClipboard } = Telegram.WebApp
-
 export function useWebAppClipboard() {
   const { onEvent } = useWebApp()
 
@@ -10,6 +8,8 @@ export function useWebAppClipboard() {
     eventHandler: ClipboardTextReceivedCallback,
     options?: OnEventOptions,
   ) => onEvent("clipboardTextReceived", eventHandler, options)
+
+  const { readTextFromClipboard } = Telegram.WebApp
 
   return {
     readTextFromClipboard,
