@@ -1,6 +1,8 @@
+<template></template>
+
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch } from "vue"
-import { useWebAppMainButton } from ".."
+import { onMounted, onUnmounted, watch } from 'vue'
+import { useWebAppMainButton } from '..'
 
 const props = defineProps({
   text: { type: String },
@@ -11,7 +13,7 @@ const props = defineProps({
   progress: { type: Boolean, default: false },
 })
 const emit = defineEmits<{
-  (eventName: "click"): void
+  (eventName: 'click'): void
 }>()
 
 const {
@@ -24,7 +26,7 @@ const {
 
 watch(
   () => props.text,
-  text => {
+  (text) => {
     setMainButtonParams({
       text,
     })
@@ -33,7 +35,7 @@ watch(
 
 watch(
   () => props.color,
-  color => {
+  (color) => {
     setMainButtonParams({
       color,
     })
@@ -42,7 +44,7 @@ watch(
 
 watch(
   () => props.textColor,
-  textColor => {
+  (textColor) => {
     setMainButtonParams({
       text_color: textColor,
     })
@@ -51,7 +53,7 @@ watch(
 
 watch(
   () => props.visible,
-  isVisible => {
+  (isVisible) => {
     setMainButtonParams({
       is_visible: isVisible,
     })
@@ -60,7 +62,7 @@ watch(
 
 watch(
   () => props.disabled,
-  isDisabled => {
+  (isDisabled) => {
     setMainButtonParams({
       is_active: !isDisabled,
     })
@@ -69,12 +71,12 @@ watch(
 
 watch(
   () => props.progress,
-  inProgress => {
+  (inProgress) => {
     inProgress ? showMainButtonProgress() : hideMainButtonProgress()
   },
 )
 
-onMainButtonClicked(() => emit("click"))
+onMainButtonClicked(() => emit('click'))
 
 onMounted(() => {
   props.progress ? showMainButtonProgress() : hideMainButtonProgress()
@@ -93,5 +95,3 @@ onUnmounted(() => {
   hideMainButton()
 })
 </script>
-
-<template></template>

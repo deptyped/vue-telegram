@@ -1,7 +1,7 @@
-import { computed, ref } from "vue"
-import { defineStore } from "../utils"
-import { useWebApp } from "./useWebApp"
-import type { OnEventOptions } from "~/types"
+import type { OnEventOptions } from '../types'
+import { computed, ref } from 'vue'
+import { defineStore } from '../utils'
+import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const mainButtonText = ref(Telegram.WebApp.MainButton.text)
@@ -19,8 +19,8 @@ const useStore = defineStore(() => {
     mainButtonTextColor.value = Telegram.WebApp.MainButton.textColor
     isMainButtonVisible.value = Telegram.WebApp.MainButton.isVisible
     isMainButtonActive.value = Telegram.WebApp.MainButton.isActive
-    isMainButtonProgressVisible.value =
-      Telegram.WebApp.MainButton.isProgressVisible
+    isMainButtonProgressVisible.value
+      = Telegram.WebApp.MainButton.isProgressVisible
   }
 
   function setMainButtonText(
@@ -120,7 +120,7 @@ export function useWebAppMainButton() {
   const onMainButtonClicked = (
     eventHandler: MainButtonClickedCallback,
     options?: OnEventOptions,
-  ) => onEvent("mainButtonClicked", eventHandler, options)
+  ) => onEvent('mainButtonClicked', eventHandler, options)
 
   return {
     mainButtonText: computed({

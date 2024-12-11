@@ -1,6 +1,8 @@
+<template></template>
+
 <script lang="ts" setup>
-import { onMounted } from "vue"
-import { useWebAppPopup } from ".."
+import { onMounted } from 'vue'
+import { useWebAppPopup } from '..'
 
 const props = defineProps({
   message: {
@@ -9,12 +11,10 @@ const props = defineProps({
   },
 })
 const emit = defineEmits<{
-  (eventName: "close"): void
+  (eventName: 'close'): void
 }>()
 
 const { showAlert } = useWebAppPopup()
 
-onMounted(() => showAlert(props.message, () => emit("close")))
+onMounted(() => showAlert(props.message, () => emit('close')))
 </script>
-
-<template></template>

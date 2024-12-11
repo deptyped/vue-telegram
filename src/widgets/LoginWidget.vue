@@ -1,6 +1,24 @@
+<template>
+  <component :is="tag" :key="key">
+    <component
+      is="script"
+      async
+      src="https://telegram.org/js/telegram-widget.js?22"
+      :data-telegram-login="botUsername"
+      :data-size="size"
+      :data-radius="cornerRadius"
+      :data-userpic="userPhoto"
+      :data-request-access="requestWrite ? 'write' : null"
+      :data-onauth="redirectUrl ? null : 'onTelegramAuth(user)'"
+      :data-auth-url="redirectUrl"
+    />
+  </component>
+</template>
+
 <script lang="ts" setup>
-import { PropType, computed, onMounted } from "vue"
-import { LoginWidgetUser } from "~/types"
+import type { PropType } from 'vue'
+import type { LoginWidgetUser } from '../types'
+import { computed, onMounted } from 'vue'
 
 const props = defineProps({
   botUsername: {
@@ -12,7 +30,7 @@ const props = defineProps({
     default: null,
   },
   size: {
-    type: String as PropType<"large" | "medium" | "small">,
+    type: String as PropType<'large' | 'medium' | 'small'>,
     default: null,
   },
   cornerRadius: {
@@ -29,34 +47,15 @@ const props = defineProps({
   },
   tag: {
     type: String,
-    default: "div",
+    default: 'div',
   },
 })
-const key = computed(() => JSON.stringify(props))
 const emit = defineEmits<{
-  (eventName: "auth", user: LoginWidgetUser): void
+  (eventName: 'auth', user: LoginWidgetUser): void
 }>()
-
+const key = computed(() => JSON.stringify(props))
 onMounted(() => {
   // @ts-expect-error interop
-  window.onTelegramAuth = user => emit("auth", user)
+  window.onTelegramAuth = user => emit('auth', user)
 })
 </script>
-
-<template>
-  <component :is="tag" :key="key">
-    <component
-      is="script"
-      async
-      src="https://telegram.org/js/telegram-widget.js?22"
-      :data-telegram-login="botUsername"
-      :data-size="size"
-      :data-radius="cornerRadius"
-      :data-userpic="userPhoto"
-      :data-request-access="requestWrite ? 'write' : null"
-      :data-onauth="redirectUrl ? null : 'onTelegramAuth(user)'"
-      :data-auth-url="redirectUrl"
-    >
-    </component>
-  </component>
-</template>

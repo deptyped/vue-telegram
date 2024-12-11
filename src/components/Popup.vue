@@ -1,7 +1,9 @@
+<template></template>
+
 <script lang="ts" setup>
-import type { PropType } from "vue"
-import { onMounted } from "vue"
-import { useWebAppPopup } from ".."
+import type { PropType } from 'vue'
+import { onMounted } from 'vue'
+import { useWebAppPopup } from '..'
 
 const props = defineProps({
   title: { type: String },
@@ -9,7 +11,7 @@ const props = defineProps({
   buttons: { type: Array as PropType<PopupButton[]> },
 })
 const emit = defineEmits<{
-  (eventName: "close", buttonId: string): void
+  (eventName: 'close', buttonId: string): void
 }>()
 
 const { showPopup } = useWebAppPopup()
@@ -21,9 +23,7 @@ onMounted(() =>
       message: props.message,
       buttons: props.buttons,
     },
-    buttonId => emit("close", buttonId),
+    buttonId => emit('close', buttonId),
   ),
 )
 </script>
-
-<template></template>

@@ -1,4 +1,4 @@
-import { effectScope } from "vue"
+import { effectScope } from 'vue'
 
 /**
  * Create a composable that returns a lazily initialized store.

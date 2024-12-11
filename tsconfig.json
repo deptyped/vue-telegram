@@ -3,23 +3,20 @@
     "incremental": false,
     "target": "ESNext",
     "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "node",
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    },
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "strictNullChecks": true,
     "noUnusedLocals": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*.ts", 
-    "src/**/*.d.ts", 
+    "src/**/*.ts",
+    "src/**/*.d.ts",
     "src/**/*.vue"
   ]
 }

@@ -9,7 +9,6 @@ interface StoryShareParams {
 }
 
 function shareToStory(mediaUrl: string, params?: StoryShareParams) {
-  // @ts-expect-error not typed
   Telegram.WebApp.shareToStory(mediaUrl, params)
 }
 

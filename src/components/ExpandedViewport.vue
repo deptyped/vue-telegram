@@ -1,19 +1,21 @@
+<template></template>
+
 <script lang="ts" setup>
-import { onMounted, watch } from "vue"
-import { useWebApp, useWebAppViewport } from ".."
+import { onMounted, watch } from 'vue'
+import { useWebApp, useWebAppViewport } from '..'
 
 const props = defineProps({
   force: { type: Boolean, default: false },
 })
 
 const { isFeatureSupported } = useWebApp()
-const { onViewportChanged, expand, isExpanded, isVerticalSwipesEnabled } =
-  useWebAppViewport()
+const { onViewportChanged, expand, isExpanded, isVerticalSwipesEnabled }
+  = useWebAppViewport()
 
-if (isFeatureSupported("DisableVerticalSwipes")) {
+if (isFeatureSupported('DisableVerticalSwipes')) {
   watch(
     () => props.force,
-    isForceMode => {
+    (isForceMode) => {
       isForceMode && !isExpanded.value && expand()
       isVerticalSwipesEnabled.value = !isForceMode
     },
@@ -21,7 +23,8 @@ if (isFeatureSupported("DisableVerticalSwipes")) {
       immediate: true,
     },
   )
-} else {
+}
+else {
   onViewportChanged(({ isStateStable }) => {
     props.force && isStateStable && !isExpanded.value && expand()
   })
@@ -29,5 +32,3 @@ if (isFeatureSupported("DisableVerticalSwipes")) {
 
 onMounted(() => expand())
 </script>
-
-<template></template>

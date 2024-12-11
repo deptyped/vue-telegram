@@ -1,7 +1,7 @@
-import { readonly, ref } from "vue"
-import { defineStore } from "../utils"
-import { OnEventOptions } from "~/types"
-import { useWebApp } from "./useWebApp"
+import type { OnEventOptions } from '../types'
+import { readonly, ref } from 'vue'
+import { defineStore } from '../utils'
+import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const isBiometricInited = ref(Telegram.WebApp.BiometricManager.isInited)
@@ -22,16 +22,16 @@ const useStore = defineStore(() => {
 
   function updateState() {
     isBiometricInited.value = Telegram.WebApp.BiometricManager.isInited
-    isBiometricAvailable.value =
-      Telegram.WebApp.BiometricManager.isBiometricAvailable
+    isBiometricAvailable.value
+      = Telegram.WebApp.BiometricManager.isBiometricAvailable
     biometricType.value = Telegram.WebApp.BiometricManager.biometricType
-    isBiometricAccessRequested.value =
-      Telegram.WebApp.BiometricManager.isAccessRequested
-    isBiometricAccessGranted.value =
-      Telegram.WebApp.BiometricManager.isAccessGranted
+    isBiometricAccessRequested.value
+      = Telegram.WebApp.BiometricManager.isAccessRequested
+    isBiometricAccessGranted.value
+      = Telegram.WebApp.BiometricManager.isAccessGranted
     biometricDeviceId.value = Telegram.WebApp.BiometricManager.deviceId
-    isBiometricTokenSaved.value =
-      Telegram.WebApp.BiometricManager.isBiometricTokenSaved
+    isBiometricTokenSaved.value
+      = Telegram.WebApp.BiometricManager.isBiometricTokenSaved
   }
 
   return {
@@ -63,15 +63,15 @@ export function useWebAppBiometricManager() {
   const onBiometricManagerUpdated = (
     eventHandler: () => void,
     options?: OnEventOptions,
-  ) => onEvent("biometricManagerUpdated", eventHandler, options)
+  ) => onEvent('biometricManagerUpdated', eventHandler, options)
   const onBiometricAuthRequested = (
     eventHandler: BiometricAuthRequestedCallback,
     options?: OnEventOptions,
-  ) => onEvent("biometricAuthRequested", eventHandler, options)
+  ) => onEvent('biometricAuthRequested', eventHandler, options)
   const onBiometricTokenUpdated = (
     eventHandler: BiometricTokenUpdatedCallback,
     options?: OnEventOptions,
-  ) => onEvent("biometricTokenUpdated", eventHandler, options)
+  ) => onEvent('biometricTokenUpdated', eventHandler, options)
 
   onBiometricManagerUpdated(updateState)
 

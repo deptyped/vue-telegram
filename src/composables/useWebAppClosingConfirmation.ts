@@ -1,5 +1,5 @@
-import { computed, ref } from "vue"
-import { defineStore } from "../utils"
+import { computed, ref } from 'vue'
+import { defineStore } from '../utils'
 
 const useStore = defineStore(() => {
   const isClosingConfirmationEnabled = ref(
@@ -7,8 +7,8 @@ const useStore = defineStore(() => {
   )
 
   function updateStatus() {
-    isClosingConfirmationEnabled.value =
-      Telegram.WebApp.isClosingConfirmationEnabled
+    isClosingConfirmationEnabled.value
+      = Telegram.WebApp.isClosingConfirmationEnabled
   }
 
   function enableClosingConfirmation(

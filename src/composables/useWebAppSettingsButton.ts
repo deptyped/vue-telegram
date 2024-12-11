@@ -1,7 +1,7 @@
-import { computed, ref } from "vue"
-import { defineStore } from "../utils"
-import { useWebApp } from "./useWebApp"
-import type { OnEventOptions } from "~/types"
+import type { OnEventOptions } from '../types'
+import { computed, ref } from 'vue'
+import { defineStore } from '../utils'
+import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const isSettingsButtonVisible = ref(Telegram.WebApp.SettingsButton.isVisible)
@@ -28,15 +28,15 @@ const useStore = defineStore(() => {
 })
 
 export function useWebAppSettingsButton() {
-  const { isSettingsButtonVisible, showSettingsButton, hideSettingsButton } =
-    useStore()
+  const { isSettingsButtonVisible, showSettingsButton, hideSettingsButton }
+    = useStore()
 
   const { onEvent } = useWebApp()
 
   const onSettingsButtonClicked = (
     eventHandler: SettingsButtonClickedCallback,
     options?: OnEventOptions,
-  ) => onEvent("settingsButtonClicked", eventHandler, options)
+  ) => onEvent('settingsButtonClicked', eventHandler, options)
 
   return {
     isSettingsButtonVisible: computed({

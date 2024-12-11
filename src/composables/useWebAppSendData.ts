@@ -1,5 +1,5 @@
-import { ref } from "vue"
-import { useWebApp } from "./useWebApp"
+import { ref } from 'vue'
+import { useWebApp } from './useWebApp'
 
 /**
  * @deprecated
@@ -12,7 +12,7 @@ export function useWebAppSendData<D>(
 ) {
   const serialize = options.serialize ?? JSON.stringify
 
-  const error = ref("")
+  const error = ref('')
   const setError = (errorMessage: string) => {
     error.value = errorMessage
     console.error(errorMessage)
@@ -31,7 +31,7 @@ export function useWebAppSendData<D>(
       setTimeout(
         () =>
           setError(
-            "Telegram.WebApp.sendData is only available for custom keyboards.",
+            'Telegram.WebApp.sendData is only available for custom keyboards.',
           ),
         1_000,
       )
@@ -44,7 +44,7 @@ export function useWebAppSendData<D>(
       isLoading.value = true
       try {
         const response = await fetch(callbackUrl, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             initData,
             initDataUnsafe,
@@ -52,14 +52,18 @@ export function useWebAppSendData<D>(
           }),
         })
 
-        if (!response.ok) setError(`${response.status} ${response.statusText}`)
+        if (!response.ok)
+          setError(`${response.status} ${response.statusText}`)
 
-        if (response.ok && closeAfter) close()
+        if (response.ok && closeAfter)
+          close()
 
         return response
-      } catch (err) {
+      }
+      catch (err) {
         setError(String(err))
-      } finally {
+      }
+      finally {
         isLoading.value = false
       }
     },

@@ -1,5 +1,5 @@
-import { onMounted, onUnmounted, readonly, ref } from "vue"
-import { OnEventOptions, OnEventWithOptions } from "~/types"
+import type { OnEventOptions, OnEventWithOptions } from '../types'
+import { onMounted, onUnmounted, readonly, ref } from 'vue'
 
 const isReady = ref(false)
 
@@ -8,30 +8,30 @@ const ready: typeof Telegram.WebApp.ready = (...params) => {
   isReady.value = true
 }
 
-const isPlatform = (
-  name:
+function isPlatform(name:
     | (string & Record<never, never>)
-    | "unknown"
-    | "android"
-    | "android_x"
-    | "ios"
-    | "macos"
-    | "tdesktop"
-    | "weba"
-    | "webk"
-    | "unigram",
-) => Telegram.WebApp.platform === name
+    | 'unknown'
+    | 'android'
+    | 'android_x'
+    | 'ios'
+    | 'macos'
+    | 'tdesktop'
+    | 'weba'
+    | 'webk'
+    | 'unigram') {
+  return Telegram.WebApp.platform === name
+}
 
 const featureSupportVersion = {
-  ClosingConfirmation: "6.2",
-  CloudStorage: "6.9",
-  RequestWriteAccess: "6.9",
-  RequestContact: "6.9",
-  SettingsButton: "7.0",
-  BiometricManager: "7.2",
-  DisableVerticalSwipes: "7.7",
+  ClosingConfirmation: '6.2',
+  CloudStorage: '6.9',
+  RequestWriteAccess: '6.9',
+  RequestContact: '6.9',
+  SettingsButton: '7.0',
+  BiometricManager: '7.2',
+  DisableVerticalSwipes: '7.7',
 }
-const isFeatureSupported = (name: keyof typeof featureSupportVersion) => {
+function isFeatureSupported(name: keyof typeof featureSupportVersion) {
   return Telegram.WebApp.isVersionAtLeast(featureSupportVersion[name])
 }
 
@@ -60,7 +60,8 @@ export function useWebApp() {
 
     if (manual) {
       on()
-    } else {
+    }
+    else {
       onMounted(on)
       onUnmounted(off)
     }
@@ -80,9 +81,9 @@ export function useWebApp() {
     close,
   } = Telegram.WebApp
 
-  const isPlatformUnknown = isPlatform("unknown")
+  const isPlatformUnknown = isPlatform('unknown')
 
-  const canSendData = !isPlatformUnknown && initData === ""
+  const canSendData = !isPlatformUnknown && initData === ''
 
   return {
     initData,

@@ -1,80 +1,3 @@
-<script lang="ts" setup>
-import {
-  useWebApp,
-  useWebAppHapticFeedback,
-  useWebAppMainButton,
-  useWebAppNavigation,
-  useWebAppPopup,
-  useWebAppQrScanner,
-  useWebAppTheme,
-  useWebAppViewport,
-  useWebAppBiometricManager,
-} from '../src'
-
-const { version, platform, initData, initDataUnsafe, sendData } = useWebApp()
-const { expand, isExpanded, viewportHeight, viewportStableHeight, isVerticalSwipesEnabled } = useWebAppViewport()
-const { openLink, openTelegramLink, switchInlineQuery } = useWebAppNavigation()
-const { showConfirm, showAlert, showPopup } = useWebAppPopup()
-const {
-  showMainButton,
-  hideMainButton,
-  showMainButtonProgress,
-  hideMainButtonProgress,
-  mainButtonText,
-  mainButtonColor,
-  mainButtonTextColor,
-  isMainButtonActive,
-  isMainButtonVisible,
-  isMainButtonProgressVisible,
-  setMainButtonParams,
-} = useWebAppMainButton()
-const { colorScheme, themeParams, headerColor, backgroundColor } = useWebAppTheme()
-const { impactOccurred, notificationOccurred, selectionChanged } = useWebAppHapticFeedback()
-const { showScanQrPopup } = useWebAppQrScanner()
-const {
-  isBiometricInited,
-  isBiometricAccessRequested,
-  isBiometricAccessGranted,
-  isBiometricTokenSaved,
-  isBiometricAvailable,
-  biometricDeviceId,
-  initBiometric,
-  requestBiometricAccess,
-  authenticateBiometric,
-  openBiometricSettings,
-} = useWebAppBiometricManager()
-
-function toggleMainButton() {
-  isMainButtonVisible.value
-    ? hideMainButton()
-    : showMainButton()
-}
-
-function toggleMainButtonProgress() {
-  isMainButtonProgressVisible.value
-    ? hideMainButtonProgress()
-    : showMainButtonProgress(true)
-}
-
-function initBiometricManager() {
-  initBiometric(() => console.log('init: isAccessGranted'))
-}
-
-function requestAccessBiometricManager() {
-  requestBiometricAccess({})
-}
-
-function authenticateBiometricManager() {
-  authenticateBiometric({}, (isAuthenticated) => {
-    showAlert(`isAuthenticated: ${isAuthenticated}`)
-  })
-}
-
-function openSettingsBiometricManager() {
-  openBiometricSettings()
-}
-</script>
-
 <template>
   <section>
     <tg-main-button disabled />
@@ -316,7 +239,9 @@ function openSettingsBiometricManager() {
       <p>isBiometricAvailable: {{ isBiometricAvailable }}</p>
       <p>biometricDeviceId: {{ biometricDeviceId }}</p>
 
-      <button @click.prevent="initBiometricManager">Init</button>
+      <button @click.prevent="initBiometricManager">
+        Init
+      </button>
       <button @click.prevent="requestAccessBiometricManager">
         request access
       </button>
@@ -335,6 +260,84 @@ function openSettingsBiometricManager() {
     </div>
   </section>
 </template>
+
+<script lang="ts" setup>
+import {
+  useWebApp,
+  useWebAppBiometricManager,
+  useWebAppHapticFeedback,
+  useWebAppMainButton,
+  useWebAppNavigation,
+  useWebAppPopup,
+  useWebAppQrScanner,
+  useWebAppTheme,
+  useWebAppViewport,
+} from '../src'
+
+const { version, platform, initData, initDataUnsafe, sendData } = useWebApp()
+const { expand, isExpanded, viewportHeight, viewportStableHeight, isVerticalSwipesEnabled } = useWebAppViewport()
+const { openLink, openTelegramLink, switchInlineQuery } = useWebAppNavigation()
+const { showConfirm, showAlert, showPopup } = useWebAppPopup()
+const {
+  showMainButton,
+  hideMainButton,
+  showMainButtonProgress,
+  hideMainButtonProgress,
+  mainButtonText,
+  mainButtonColor,
+  mainButtonTextColor,
+  isMainButtonActive,
+  isMainButtonVisible,
+  isMainButtonProgressVisible,
+  setMainButtonParams,
+} = useWebAppMainButton()
+const { colorScheme, themeParams, headerColor, backgroundColor } = useWebAppTheme()
+const { impactOccurred, notificationOccurred, selectionChanged } = useWebAppHapticFeedback()
+const { showScanQrPopup } = useWebAppQrScanner()
+const {
+  isBiometricInited,
+  isBiometricAccessRequested,
+  isBiometricAccessGranted,
+  isBiometricTokenSaved,
+  isBiometricAvailable,
+  biometricDeviceId,
+  initBiometric,
+  requestBiometricAccess,
+  authenticateBiometric,
+  openBiometricSettings,
+} = useWebAppBiometricManager()
+
+function toggleMainButton() {
+  isMainButtonVisible.value
+    ? hideMainButton()
+    : showMainButton()
+}
+
+function toggleMainButtonProgress() {
+  isMainButtonProgressVisible.value
+    ? hideMainButtonProgress()
+    : showMainButtonProgress(true)
+}
+
+function initBiometricManager() {
+  // eslint-disable-next-line no-console
+  initBiometric(() => console.log('init: isAccessGranted'))
+}
+
+function requestAccessBiometricManager() {
+  requestBiometricAccess({})
+}
+
+function authenticateBiometricManager() {
+  authenticateBiometric({}, (isAuthenticated) => {
+    showAlert(`isAuthenticated: ${isAuthenticated}`)
+  })
+}
+
+function openSettingsBiometricManager() {
+  openBiometricSettings()
+}
+</script>
 
 <style>
 body {

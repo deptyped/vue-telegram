@@ -1,4 +1,4 @@
-## `vue-tg` - Telegram integration for Vue 
+## `vue-tg` - Telegram integration for Vue
 
 [![docs](https://img.shields.io/badge/Documentation-gray?style=flat)](https://vue-tg.deptyped.com/)
 [![version](https://img.shields.io/badge/Bot%20API-7.8-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#july-31-2024)
@@ -10,15 +10,15 @@ A lightweight package for seamless integration of [Telegram Mini Apps](https://c
 ### Usage Example
 
 ```vue
+<template>
+  <MainButton text="Open alert" @click="() => showAlert('Hello!')" />
+</template>
+
 <script lang="ts" setup>
 import { MainButton, useWebAppPopup } from 'vue-tg'
 
 const { showAlert } = useWebAppPopup()
 </script>
-
-<template>
-  <MainButton text="Open alert" @click="() => showAlert('Hello!')" />
-</template>
 ```
 
 ### Installation
