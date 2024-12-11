@@ -134,4 +134,3 @@ data/
 docs/.vitepress/dist
 docs/.vitepress/cache
 docs/generated
-package-lock.json
