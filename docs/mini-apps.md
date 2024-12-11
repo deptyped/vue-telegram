@@ -147,36 +147,36 @@ If subscription is not managed properly, it can lead to memory leaks and other i
 
 <!--@include: @/mini-apps/components/settings-button.md-->
 
-## Composables
+## Composables (Legacy)
 
-<!--@include: @/mini-apps/composables/use-web-app.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-back-button.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-back-button.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-biometric-manager.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-biometric-manager.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-clipboard.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-clipboard.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-closing-confirmation.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-closing-confirmation.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-cloud-storage.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-cloud-storage.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-haptic-feedback.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-haptic-feedback.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-main-button.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-main-button.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-navigation.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-navigation.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-popup.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-popup.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-qr-scanner.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-qr-scanner.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-requests.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-requests.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-settings-button.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-settings-button.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-share.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-share.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-theme.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-theme.md-->
 
-<!--@include: @/mini-apps/composables/use-web-app-viewport.md-->
+<!--@include: @/mini-apps/composables-legacy/use-web-app-viewport.md-->
