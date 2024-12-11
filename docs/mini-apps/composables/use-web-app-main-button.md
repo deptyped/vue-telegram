@@ -14,7 +14,6 @@ import { useWebAppMainButton } from 'vue-tg'
 | `isMainButtonActive`          | <!--@include: @/generated/MainButton-isActive.md --><br/> <Badge type="info" text="⚡️ reactive" />          |
 | `isMainButtonProgressVisible` | <!--@include: @/generated/MainButton-isProgressVisible.md --><br/> <Badge type="info" text="⚡️ reactive" /> |
 | `setMainButtonText`           | <!--@include: @/generated/MainButton-setText.md -->                                                        |
-| `onMainButtonClicked`         | A method that sets the `mainButtonClicked` [event handler](#event-handling).                               |
 | `showMainButton`              | <!--@include: @/generated/MainButton-show.md -->                                                           |
 | `hideMainButton`              | <!--@include: @/generated/MainButton-hide.md -->                                                           |
 | `enableMainButton`            | <!--@include: @/generated/MainButton-enable.md -->                                                         |

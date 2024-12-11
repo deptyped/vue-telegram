@@ -1,7 +1,6 @@
-import type { OnEventOptions } from '../types'
 import { readonly, ref } from 'vue'
+import { onBiometricAuthRequested, onBiometricManagerUpdated, onBiometricTokenUpdated } from '../events'
 import { defineStore } from '../utils'
-import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const isBiometricInited = ref(Telegram.WebApp.BiometricManager.isInited)
@@ -58,21 +57,6 @@ export function useWebAppBiometricManager() {
     updateState,
   } = useStore()
 
-  const { onEvent } = useWebApp()
-
-  const onBiometricManagerUpdated = (
-    eventHandler: () => void,
-    options?: OnEventOptions,
-  ) => onEvent('biometricManagerUpdated', eventHandler, options)
-  const onBiometricAuthRequested = (
-    eventHandler: BiometricAuthRequestedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('biometricAuthRequested', eventHandler, options)
-  const onBiometricTokenUpdated = (
-    eventHandler: BiometricTokenUpdatedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('biometricTokenUpdated', eventHandler, options)
-
   onBiometricManagerUpdated(updateState)
 
   const {
@@ -96,8 +80,17 @@ export function useWebAppBiometricManager() {
     authenticateBiometric: authenticate,
     updateBiometricToken,
     openBiometricSettings: openSettings,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onBiometricManagerUpdated,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onBiometricAuthRequested,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onBiometricTokenUpdated,
   }
 }

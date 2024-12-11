@@ -12,7 +12,6 @@ import { useWebApp } from 'vue-tg'
 | `version`            | <!--@include: @/generated/WebApp-version.md -->                                                                                    |
 | `platform`           | <!--@include: @/generated/WebApp-platform.md -->                                                                                   |
 | `isVersionAtLeast`   | <!--@include: @/generated/WebApp-isVersionAtLeast.md -->                                                                           |
-| `onEvent`            | <!--@include: @/generated/WebApp-onEvent.md -->                                                                                    |
 | `sendData`           | <!--@include: @/generated/WebApp-sendData.md -->                                                                                   |
 | `ready`              | <!--@include: @/generated/WebApp-ready.md -->                                                                                      |
 | `close`              | <!--@include: @/generated/WebApp-close.md -->                                                                                      |

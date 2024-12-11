@@ -1,25 +1,18 @@
-import type { OnEventOptions } from '../types'
-import { useWebApp } from './useWebApp'
+import { onQrTextReceived, onScanQrPopupClosed } from '../events'
 
 export function useWebAppQrScanner() {
-  const { onEvent } = useWebApp()
-
-  const onQrTextReceived = (
-    eventHandler: QrTextReceivedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('qrTextReceived', eventHandler, options)
-
-  const onScanQrPopupClosed = (
-    eventHandler: ScanQrPopupClosedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('scanQrPopupClosed', eventHandler, options)
-
   const { showScanQrPopup, closeScanQrPopup } = Telegram.WebApp
 
   return {
     showScanQrPopup,
     closeScanQrPopup,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onQrTextReceived,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onScanQrPopupClosed,
   }
 }

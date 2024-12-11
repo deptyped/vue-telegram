@@ -1,7 +1,6 @@
-import type { OnEventOptions } from '../types'
 import { computed, readonly, ref } from 'vue'
+import { onThemeChanged } from '../events'
 import { defineStore } from '../utils'
-import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const colorScheme = ref(Telegram.WebApp.colorScheme)
@@ -54,11 +53,6 @@ export function useWebAppTheme() {
     setBackgroundColor,
   } = useStore()
 
-  const { onEvent } = useWebApp()
-
-  const onThemeChanged = (eventHandler: () => void, options?: OnEventOptions) =>
-    onEvent('themeChanged', eventHandler, options)
-
   onThemeChanged(updateState)
 
   return {
@@ -82,6 +76,9 @@ export function useWebAppTheme() {
     }),
     setHeaderColor,
     setBackgroundColor,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onThemeChanged,
   }
 }

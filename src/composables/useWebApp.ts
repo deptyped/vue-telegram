@@ -1,5 +1,5 @@
-import type { OnEventOptions, OnEventWithOptions } from '../types'
-import { onMounted, onUnmounted, readonly, ref } from 'vue'
+import { readonly, ref } from 'vue'
+import { onEvent } from '../events'
 
 const isReady = ref(false)
 
@@ -36,41 +36,6 @@ function isFeatureSupported(name: keyof typeof featureSupportVersion) {
 }
 
 export function useWebApp() {
-  const onEvent: OnEventWithOptions<OnEventOptions> = (
-    eventType,
-    eventHandler,
-    options = { manual: false },
-  ) => {
-    const { manual } = options
-
-    const on = () => {
-      Telegram.WebApp.onEvent(
-        ...([eventType, eventHandler] as Parameters<
-          typeof Telegram.WebApp.onEvent
-        >),
-      )
-    }
-    const off = () => {
-      Telegram.WebApp.offEvent(
-        ...([eventType, eventHandler] as Parameters<
-          typeof Telegram.WebApp.offEvent
-        >),
-      )
-    }
-
-    if (manual) {
-      on()
-    }
-    else {
-      onMounted(on)
-      onUnmounted(off)
-    }
-
-    return {
-      off,
-    }
-  }
-
   const {
     initData,
     initDataUnsafe,
@@ -91,7 +56,6 @@ export function useWebApp() {
     version,
     platform,
     isVersionAtLeast,
-    onEvent,
     sendData,
     ready,
     close,
@@ -99,6 +63,10 @@ export function useWebApp() {
     isPlatform,
     isPlatformUnknown,
     isFeatureSupported,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
+    onEvent,
     /**
      * @deprecated
      */

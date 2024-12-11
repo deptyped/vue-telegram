@@ -1,7 +1,6 @@
-import type { OnEventOptions } from '../types'
 import { computed, readonly, ref } from 'vue'
+import { onViewportChanged } from '../events'
 import { defineStore } from '../utils'
-import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const isExpanded = ref(Telegram.WebApp.isExpanded)
@@ -59,13 +58,6 @@ export function useWebAppViewport() {
     disableVerticalSwipes,
   } = useStore()
 
-  const { onEvent } = useWebApp()
-
-  const onViewportChanged = (
-    eventHandler: ViewportChangedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('viewportChanged', eventHandler, options)
-
   onViewportChanged(updateState)
 
   return {
@@ -73,7 +65,6 @@ export function useWebAppViewport() {
     viewportHeight: readonly(viewportHeight),
     viewportStableHeight: readonly(viewportStableHeight),
     expand,
-    onViewportChanged,
     isVerticalSwipesEnabled: computed({
       get() {
         return isVerticalSwipesEnabled.value
@@ -84,5 +75,9 @@ export function useWebAppViewport() {
     }),
     enableVerticalSwipes,
     disableVerticalSwipes,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
+    onViewportChanged,
   }
 }

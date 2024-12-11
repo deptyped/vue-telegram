@@ -1,7 +1,6 @@
-import type { OnEventOptions } from '../types'
 import { computed, ref } from 'vue'
+import { onMainButtonClicked } from '../events'
 import { defineStore } from '../utils'
-import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const mainButtonText = ref(Telegram.WebApp.MainButton.text)
@@ -115,13 +114,6 @@ export function useWebAppMainButton() {
     setMainButtonParams,
   } = useStore()
 
-  const { onEvent } = useWebApp()
-
-  const onMainButtonClicked = (
-    eventHandler: MainButtonClickedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('mainButtonClicked', eventHandler, options)
-
   return {
     mainButtonText: computed({
       get() {
@@ -176,7 +168,6 @@ export function useWebAppMainButton() {
       },
     }),
     setMainButtonText,
-    onMainButtonClicked,
     showMainButton,
     hideMainButton,
     enableMainButton,
@@ -184,5 +175,9 @@ export function useWebAppMainButton() {
     showMainButtonProgress,
     hideMainButtonProgress,
     setMainButtonParams,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
+    onMainButtonClicked,
   }
 }

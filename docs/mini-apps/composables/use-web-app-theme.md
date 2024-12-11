@@ -13,4 +13,3 @@ import { useWebAppTheme } from 'vue-tg'
 | `backgroundColor`    | <!--@include: @/generated/WebApp-backgroundColor.md --><br/><Badge type="info" text="⚡️ reactive" />      |
 | `setHeaderColor`     | <!--@include: @/generated/WebApp-setHeaderColor.md -->                                                   |
 | `setBackgroundColor` | <!--@include: @/generated/WebApp-setBackgroundColor.md -->                                               |
-| `onThemeChanged`     | A method that sets the `themeParams` [event handler](#event-handling).                                   |
