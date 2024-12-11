@@ -35,8 +35,8 @@ outline: [2, 3]
 | disableClosingConfirmation   | [useWebAppClosingConfirmation](#usewebappclosingconfirmation) |
 | enableVerticalSwipes         | [useWebAppViewport](#usewebappviewport)                       |
 | disableVerticalSwipes        | [useWebAppViewport](#usewebappviewport)                       |
-| onEvent                      | [useWebApp](#usewebapp)                                       |
-| offEvent                     | [Handled automagically 🪄](#managing-event-subscriptions)      |
+| onEvent                      | [Event Handling](#event-handling)                             |
+| offEvent                     | [Managing Event Subscriptions](#managing-event-subscriptions) |
 | sendData                     | [useWebApp](#usewebapp)                                       |
 | switchInlineQuery            | [useWebAppNavigation](#usewebappnavigation)                   |
 | openLink                     | [useWebAppNavigation](#usewebappnavigation)                   |
@@ -57,12 +57,10 @@ outline: [2, 3]
 
 ### Event Handling
 
-The package provides a set of functions for event handling. By convention, the name of the functions consists of the prefix `on` + the name of the Telegram event in camelCase. So `themeChanged` event turns into `onThemeChanged` and so on. [onEvent](#usewebapp) is also available if you prefer it instead.
+The package provides a set of functions for event handling. By convention, the name of the functions consists of the prefix `on` + the name of the Telegram event in camelCase. So `themeChanged` event turns into `onThemeChanged` and so on. Generic `onEvent` is also available if you prefer it instead.
 
 ```ts
-import { useWebAppTheme } from 'vue-tg'
-
-const { onThemeChanged } = useWebAppTheme()
+import { onThemeChanged } from 'vue-tg'
 
 onThemeChanged(() => {
   // handle theme update
@@ -71,23 +69,23 @@ onThemeChanged(() => {
 
 #### Mapping
 
-| Event name              | Handler                                                                             |
-| ----------------------- | ----------------------------------------------------------------------------------- |
-| themeChanged            | [useWebAppTheme → onThemeChanged](#usewebapptheme)                                  |
-| viewportChanged         | [useWebAppViewport → onViewportChanged](#usewebappviewport)                         |
-| mainButtonClicked       | [useWebAppMainButton → onMainButtonClicked](#usewebappmainbutton)                   |
-| backButtonClicked       | [useWebAppBackButton → onBackButtonClicked](#usewebappbackbutton)                   |
-| settingsButtonClicked   | [useWebAppSettingsButton → onSettingsButtonClicked](#usewebappsettingsbutton)       |
-| invoiceClosed           | [useWebAppNavigation → onInvoiceClosed](#usewebappnavigation)                       |
-| popupClosed             | [useWebAppPopup → onPopupClosed](#usewebapppopup)                                   |
-| qrTextReceived          | [useWebAppQrScanner → onQrTextReceived](#usewebappqrscanner)                        |
-| scanQrPopupClosed       | [useWebAppQrScanner → onScanQrPopupClosed](#usewebappqrscanner)                     |
-| clipboardTextReceived   | [useWebAppClipboard → onClipboardTextReceived](#usewebappclipboard)                 |
-| writeAccessRequested    | [useWebAppRequests → onWriteAccessRequested](#usewebapprequests)                    |
-| contactRequested        | [useWebAppRequests → onContactRequested](#usewebapprequests)                        |
-| biometricManagerUpdated | [useWebAppBiometricManager → onBiometricManagerUpdated](#usewebappbiometricmanager) |
-| biometricAuthRequested  | [useWebAppBiometricManager → onBiometricAuthRequested](#usewebappbiometricmanager)  |
-| biometricTokenUpdated   | [useWebAppBiometricManager → onBiometricTokenUpdated](#usewebappbiometricmanager)   |
+| Event name              | Handler                   |
+| ----------------------- | ------------------------- |
+| themeChanged            | onThemeChanged            |
+| viewportChanged         | onViewportChanged         |
+| mainButtonClicked       | onMainButtonClicked       |
+| backButtonClicked       | onBackButtonClicked       |
+| settingsButtonClicked   | onSettingsButtonClicked   |
+| invoiceClosed           | onInvoiceClosed           |
+| popupClosed             | onPopupClosed             |
+| qrTextReceived          | onQrTextReceived          |
+| scanQrPopupClosed       | onScanQrPopupClosed       |
+| clipboardTextReceived   | onClipboardTextReceived   |
+| writeAccessRequested    | onWriteAccessRequested    |
+| contactRequested        | onContactRequested        |
+| biometricManagerUpdated | onBiometricManagerUpdated |
+| biometricAuthRequested  | onBiometricAuthRequested  |
+| biometricTokenUpdated   | onBiometricTokenUpdated   |
 
 
 #### Managing event subscriptions
@@ -95,10 +93,8 @@ onThemeChanged(() => {
 By default, event handlers are automatically unsubscribed when the component is unmounted.
 But you can unsubscribe before that if you need to:
 
-```ts{9-10}
-import { useWebAppTheme } from 'vue-tg'
-
-const { onThemeChanged } = useWebAppTheme()
+```ts{7-8}
+import { onThemeChanged } from 'vue-tg'
 
 const handler = onThemeChanged(() => {
   // handle theme update
@@ -110,10 +106,8 @@ handler.off()
 
 You can also disable automatic unsubscribing completely:
 
-```ts{9,12-13}
-import { useWebAppTheme } from 'vue-tg'
-
-const { onThemeChanged } = useWebAppTheme()
+```ts{10-11}
+import { onThemeChanged } from 'vue-tg'
 
 const handler = onThemeChanged(
   () => {

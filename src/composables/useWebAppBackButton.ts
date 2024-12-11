@@ -1,7 +1,6 @@
-import type { OnEventOptions } from '../types'
 import { computed, ref } from 'vue'
+import { onBackButtonClicked } from '../events'
 import { defineStore } from '../utils'
-import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const isBackButtonVisible = ref(Telegram.WebApp.BackButton.isVisible)
@@ -30,13 +29,6 @@ const useStore = defineStore(() => {
 export function useWebAppBackButton() {
   const { isBackButtonVisible, showBackButton, hideBackButton } = useStore()
 
-  const { onEvent } = useWebApp()
-
-  const onBackButtonClicked = (
-    eventHandler: BackButtonClickedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('backButtonClicked', eventHandler, options)
-
   return {
     isBackButtonVisible: computed({
       get() {
@@ -46,8 +38,11 @@ export function useWebAppBackButton() {
         isVisible ? showBackButton() : hideBackButton()
       },
     }),
-    onBackButtonClicked,
     showBackButton,
     hideBackButton,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
+    onBackButtonClicked,
   }
 }

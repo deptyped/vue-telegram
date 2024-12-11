@@ -33,7 +33,6 @@ export {
 }
 
 export { useWebApp } from './composables/useWebApp'
-
 export { useWebAppBackButton } from './composables/useWebAppBackButton'
 export { useWebAppBiometricManager } from './composables/useWebAppBiometricManager'
 export { useWebAppClipboard } from './composables/useWebAppClipboard'
@@ -50,6 +49,7 @@ export { useWebAppSettingsButton } from './composables/useWebAppSettingsButton'
 export { useWebAppShare } from './composables/useWebAppShare'
 export { useWebAppTheme } from './composables/useWebAppTheme'
 export { useWebAppViewport } from './composables/useWebAppViewport'
+export * from './events'
 export type { LoginWidgetUser } from './types'
 
 const plugin = {

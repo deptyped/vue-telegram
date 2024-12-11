@@ -1,14 +1,6 @@
-import type { OnEventOptions } from '../types'
-import { useWebApp } from './useWebApp'
+import { onInvoiceClosed } from '../events'
 
 export function useWebAppNavigation() {
-  const { onEvent } = useWebApp()
-
-  const onInvoiceClosed = (
-    eventHandler: InvoiceClosedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('invoiceClosed', eventHandler, options)
-
   const { switchInlineQuery, openLink, openTelegramLink, openInvoice }
     = Telegram.WebApp
 
@@ -17,6 +9,9 @@ export function useWebAppNavigation() {
     openLink,
     openTelegramLink,
     openInvoice,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
     onInvoiceClosed,
   }
 }

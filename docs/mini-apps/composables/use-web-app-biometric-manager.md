@@ -19,6 +19,6 @@ import { useWebAppBiometricManager } from 'vue-tg'
 | `authenticateBiometric`      | <!--@include: @/generated/BiometricManager-authenticate.md -->                                                                |
 | `updateBiometricToken`       | <!--@include: @/generated/BiometricManager-updateBiometricToken.md -->                                                        |
 | `openBiometricSettings`      | <!--@include: @/generated/BiometricManager-openSettings.md -->                                                                |
-| `onBiometricManagerUpdated`  | <Badge type="tip" text="Bot API 7.2+" /> A method that sets the `biometricManagerUpdated` [event handler](#event-handling).   |
-| `onBiometricAuthRequested`   | <Badge type="tip" text="Bot API 7.2+" /> A method that sets the `biometricAuthRequested` [event handler](#event-handling).    |
-| `onBiometricTokenUpdated`    | <Badge type="tip" text="Bot API 7.2+" /> A method that sets the `biometricTokenUpdated` [event handler](#event-handling).     |
+| `onManagerUpdated`           | <Badge type="tip" text="Bot API 7.2+" /> A method that sets the `biometricManagerUpdated` [event handler](#event-handling).   |
+| `onAuthRequested`            | <Badge type="tip" text="Bot API 7.2+" /> A method that sets the `biometricAuthRequested` [event handler](#event-handling).    |
+| `onTokenUpdated`             | <Badge type="tip" text="Bot API 7.2+" /> A method that sets the `biometricTokenUpdated` [event handler](#event-handling).     |

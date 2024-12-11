@@ -14,4 +14,3 @@ import { useWebAppViewport } from 'vue-tg'
 | `expand`                  | <!--@include: @/generated/WebApp-expand.md -->                                                                     |
 | `enableVerticalSwipes`    | <!--@include: @/generated/WebApp-enableVerticalSwipes.md -->                                                       |
 | `disableVerticalSwipes`   | <!--@include: @/generated/WebApp-disableVerticalSwipes.md -->                                                      |
-| `onViewportChanged`       | A method that sets the `viewportChanged` [event handler](#event-handling).                                         |

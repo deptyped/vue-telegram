@@ -1,7 +1,6 @@
-import type { OnEventOptions } from '../types'
 import { computed, ref } from 'vue'
+import { onSettingsButtonClicked } from '../events'
 import { defineStore } from '../utils'
-import { useWebApp } from './useWebApp'
 
 const useStore = defineStore(() => {
   const isSettingsButtonVisible = ref(Telegram.WebApp.SettingsButton.isVisible)
@@ -31,13 +30,6 @@ export function useWebAppSettingsButton() {
   const { isSettingsButtonVisible, showSettingsButton, hideSettingsButton }
     = useStore()
 
-  const { onEvent } = useWebApp()
-
-  const onSettingsButtonClicked = (
-    eventHandler: SettingsButtonClickedCallback,
-    options?: OnEventOptions,
-  ) => onEvent('settingsButtonClicked', eventHandler, options)
-
   return {
     isSettingsButtonVisible: computed({
       get() {
@@ -47,8 +39,11 @@ export function useWebAppSettingsButton() {
         isVisible ? showSettingsButton() : hideSettingsButton()
       },
     }),
-    onSettingsButtonClicked,
     showSettingsButton,
     hideSettingsButton,
+    /**
+     * @deprecated import directly from `vue-tg` instead.
+     */
+    onSettingsButtonClicked,
   }
 }
