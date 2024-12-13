@@ -1,12 +1,14 @@
+import type { EventCallback, WebAppInitData, WebAppUser } from './sdk'
+
 /**
  * Mini Apps
  */
 
-export interface OnEventReturn {
+export type OnEventReturn = {
   off: () => void
 }
 
-export interface OnEventOptions {
+export type OnEventOptions = {
   /**
    * Disables automatic subscription management; you need to call the returned function `off` to unsubscribe.
    *
@@ -15,81 +17,11 @@ export interface OnEventOptions {
   manual?: boolean
 }
 
-export interface OnEventWithOptions<O> {
-  (
-    eventType: 'themeChanged',
-    eventHandler: ThemeChangedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'mainButtonClicked',
-    eventHandler: MainButtonClickedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'backButtonClicked',
-    eventHandler: BackButtonClickedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'settingsButtonClicked',
-    eventHandler: SettingsButtonClickedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'popupClosed',
-    eventHandler: PopupClosedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'viewportChanged',
-    eventHandler: ViewportChangedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'invoiceClosed',
-    eventHandler: InvoiceClosedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'qrTextReceived',
-    eventHandler: QrTextReceivedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'scanQrPopupClosed',
-    eventHandler: ScanQrPopupClosedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'clipboardTextReceived',
-    eventHandler: ClipboardTextReceivedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'writeAccessRequested',
-    eventHandler: WriteAccessRequestedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'contactRequested',
-    eventHandler: ContactRequestedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'biometricManagerUpdated',
-    eventHandler: BiometricManagerUpdatedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'biometricAuthRequested',
-    eventHandler: BiometricAuthRequestedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'biometricTokenUpdated',
-    eventHandler: BiometricTokenUpdatedCallback,
-    options?: O,
+export type OnEventWithOptions<O> = {
+  <T extends keyof EventCallback>(
+    eventType: T,
+    eventHandler: EventCallback[T],
+    options?: O
   ): OnEventReturn
 }
 
@@ -97,8 +29,6 @@ export interface OnEventWithOptions<O> {
  * Widgets
  */
 
-export type LoginWidgetUser = Pick<
-  WebAppUser,
-  'id' | 'first_name' | 'last_name' | 'username' | 'photo_url'
-> &
-Pick<WebAppInitData, 'auth_date' | 'hash'>
+export type LoginWidgetUser =
+  & Pick<WebAppUser, 'id' | 'first_name' | 'last_name' | 'username' | 'photo_url'>
+  & Pick<WebAppInitData, 'auth_date' | 'hash'>

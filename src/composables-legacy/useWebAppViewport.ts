@@ -1,36 +1,37 @@
 import { computed, readonly, ref } from 'vue'
 import { onViewportChanged } from '../events'
+import { WebApp } from '../sdk'
 import { defineStore } from '../utils'
 
 const useStore = defineStore(() => {
-  const isExpanded = ref(Telegram.WebApp.isExpanded)
-  const viewportHeight = ref(Telegram.WebApp.viewportHeight)
-  const viewportStableHeight = ref(Telegram.WebApp.viewportStableHeight)
-  const isVerticalSwipesEnabled = ref(Telegram.WebApp.isVerticalSwipesEnabled)
+  const isExpanded = ref(WebApp.isExpanded)
+  const viewportHeight = ref(WebApp.viewportHeight)
+  const viewportStableHeight = ref(WebApp.viewportStableHeight)
+  const isVerticalSwipesEnabled = ref(WebApp.isVerticalSwipesEnabled)
 
   function updateState() {
-    isExpanded.value = Telegram.WebApp.isExpanded
-    viewportHeight.value = Telegram.WebApp.viewportHeight
-    viewportStableHeight.value = Telegram.WebApp.viewportStableHeight
-    isVerticalSwipesEnabled.value = Telegram.WebApp.isVerticalSwipesEnabled
+    isExpanded.value = WebApp.isExpanded
+    viewportHeight.value = WebApp.viewportHeight
+    viewportStableHeight.value = WebApp.viewportStableHeight
+    isVerticalSwipesEnabled.value = WebApp.isVerticalSwipesEnabled
   }
 
-  function expand(...params: Parameters<typeof Telegram.WebApp.expand>) {
-    Telegram.WebApp.expand(...params)
+  function expand(...params: Parameters<typeof WebApp.expand>) {
+    WebApp.expand(...params)
     updateState()
   }
 
-  const enableVerticalSwipes: typeof Telegram.WebApp.enableVerticalSwipes = (
+  const enableVerticalSwipes: typeof WebApp.enableVerticalSwipes = (
     ...params
   ) => {
-    Telegram.WebApp.enableVerticalSwipes(...params)
+    WebApp.enableVerticalSwipes(...params)
     updateState()
   }
 
-  const disableVerticalSwipes: typeof Telegram.WebApp.disableVerticalSwipes = (
+  const disableVerticalSwipes: typeof WebApp.disableVerticalSwipes = (
     ...params
   ) => {
-    Telegram.WebApp.disableVerticalSwipes(...params)
+    WebApp.disableVerticalSwipes(...params)
     updateState()
   }
 

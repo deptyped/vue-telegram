@@ -1,27 +1,25 @@
 import { computed, ref } from 'vue'
+import { WebApp } from '../sdk'
 import { defineStore } from '../utils'
 
 const useStore = defineStore(() => {
-  const isClosingConfirmationEnabled = ref(
-    Telegram.WebApp.isClosingConfirmationEnabled,
-  )
+  const isClosingConfirmationEnabled = ref(WebApp.isClosingConfirmationEnabled)
 
   function updateStatus() {
-    isClosingConfirmationEnabled.value
-      = Telegram.WebApp.isClosingConfirmationEnabled
+    isClosingConfirmationEnabled.value = WebApp.isClosingConfirmationEnabled
   }
 
   function enableClosingConfirmation(
-    ...params: Parameters<typeof Telegram.WebApp.enableClosingConfirmation>
+    ...params: Parameters<typeof WebApp.enableClosingConfirmation>
   ) {
-    Telegram.WebApp.enableClosingConfirmation(...params)
+    WebApp.enableClosingConfirmation(...params)
     updateStatus()
   }
 
   function disableClosingConfirmation(
-    ...params: Parameters<typeof Telegram.WebApp.disableClosingConfirmation>
+    ...params: Parameters<typeof WebApp.disableClosingConfirmation>
   ) {
-    Telegram.WebApp.disableClosingConfirmation(...params)
+    WebApp.disableClosingConfirmation(...params)
     updateStatus()
   }
 

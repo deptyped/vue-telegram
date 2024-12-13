@@ -2,6 +2,7 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
+import type { PopupButton } from '../sdk'
 import { onMounted } from 'vue'
 import { useWebAppPopup } from '..'
 

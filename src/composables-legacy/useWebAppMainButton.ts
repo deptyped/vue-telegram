@@ -1,80 +1,81 @@
 import { computed, ref } from 'vue'
 import { onMainButtonClicked } from '../events'
+import { WebApp } from '../sdk'
 import { defineStore } from '../utils'
 
 const useStore = defineStore(() => {
-  const mainButtonText = ref(Telegram.WebApp.MainButton.text)
-  const mainButtonColor = ref(Telegram.WebApp.MainButton.color)
-  const mainButtonTextColor = ref(Telegram.WebApp.MainButton.textColor)
-  const isMainButtonVisible = ref(Telegram.WebApp.MainButton.isVisible)
-  const isMainButtonActive = ref(Telegram.WebApp.MainButton.isActive)
+  const mainButtonText = ref(WebApp.MainButton.text)
+  const mainButtonColor = ref(WebApp.MainButton.color)
+  const mainButtonTextColor = ref(WebApp.MainButton.textColor)
+  const isMainButtonVisible = ref(WebApp.MainButton.isVisible)
+  const isMainButtonActive = ref(WebApp.MainButton.isActive)
   const isMainButtonProgressVisible = ref(
-    Telegram.WebApp.MainButton.isProgressVisible,
+    WebApp.MainButton.isProgressVisible,
   )
 
   function updateState() {
-    mainButtonText.value = Telegram.WebApp.MainButton.text
-    mainButtonColor.value = Telegram.WebApp.MainButton.color
-    mainButtonTextColor.value = Telegram.WebApp.MainButton.textColor
-    isMainButtonVisible.value = Telegram.WebApp.MainButton.isVisible
-    isMainButtonActive.value = Telegram.WebApp.MainButton.isActive
+    mainButtonText.value = WebApp.MainButton.text
+    mainButtonColor.value = WebApp.MainButton.color
+    mainButtonTextColor.value = WebApp.MainButton.textColor
+    isMainButtonVisible.value = WebApp.MainButton.isVisible
+    isMainButtonActive.value = WebApp.MainButton.isActive
     isMainButtonProgressVisible.value
-      = Telegram.WebApp.MainButton.isProgressVisible
+      = WebApp.MainButton.isProgressVisible
   }
 
   function setMainButtonText(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.setText>
+    ...params: Parameters<typeof WebApp.MainButton.setText>
   ) {
-    Telegram.WebApp.MainButton.setText(...params)
+    WebApp.MainButton.setText(...params)
     updateState()
   }
 
   function showMainButton(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.show>
+    ...params: Parameters<typeof WebApp.MainButton.show>
   ) {
-    Telegram.WebApp.MainButton.show(...params)
+    WebApp.MainButton.show(...params)
     updateState()
   }
 
   function hideMainButton(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.hide>
+    ...params: Parameters<typeof WebApp.MainButton.hide>
   ) {
-    Telegram.WebApp.MainButton.hide(...params)
+    WebApp.MainButton.hide(...params)
     updateState()
   }
 
   function enableMainButton(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.enable>
+    ...params: Parameters<typeof WebApp.MainButton.enable>
   ) {
-    Telegram.WebApp.MainButton.enable(...params)
+    WebApp.MainButton.enable(...params)
     updateState()
   }
 
   function disableMainButton(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.disable>
+    ...params: Parameters<typeof WebApp.MainButton.disable>
   ) {
-    Telegram.WebApp.MainButton.disable(...params)
+    WebApp.MainButton.disable(...params)
     updateState()
   }
 
   function showMainButtonProgress(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.showProgress>
+    ...params: Parameters<typeof WebApp.MainButton.showProgress>
   ) {
-    Telegram.WebApp.MainButton.showProgress(...params)
+    WebApp.MainButton.showProgress(...params)
     updateState()
   }
 
   function hideMainButtonProgress(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.hideProgress>
+    ...params: Parameters<typeof WebApp.MainButton.hideProgress>
   ) {
-    Telegram.WebApp.MainButton.hideProgress(...params)
+    WebApp.MainButton.hideProgress(...params)
     updateState()
   }
 
   function setMainButtonParams(
-    ...params: Parameters<typeof Telegram.WebApp.MainButton.setParams>
+    ...params: Parameters<typeof WebApp.MainButton.setParams>
   ) {
-    Telegram.WebApp.MainButton.setParams(...params)
+    WebApp.MainButton.setParams(...params)
     updateState()
   }
 

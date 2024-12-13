@@ -1,33 +1,34 @@
 import { computed, readonly, ref } from 'vue'
 import { onThemeChanged } from '../events'
+import { WebApp } from '../sdk'
 import { defineStore } from '../utils'
 
 const useStore = defineStore(() => {
-  const colorScheme = ref(Telegram.WebApp.colorScheme)
-  const themeParams = ref(Telegram.WebApp.themeParams)
-  const headerColor = ref(Telegram.WebApp.headerColor)
-  const backgroundColor = ref(Telegram.WebApp.backgroundColor)
+  const colorScheme = ref(WebApp.colorScheme)
+  const themeParams = ref(WebApp.themeParams)
+  const headerColor = ref(WebApp.headerColor)
+  const backgroundColor = ref(WebApp.backgroundColor)
 
   function updateState() {
-    colorScheme.value = Telegram.WebApp.colorScheme
+    colorScheme.value = WebApp.colorScheme
     themeParams.value = {
-      ...Telegram.WebApp.themeParams,
+      ...WebApp.themeParams,
     }
-    headerColor.value = Telegram.WebApp.headerColor
-    backgroundColor.value = Telegram.WebApp.backgroundColor
+    headerColor.value = WebApp.headerColor
+    backgroundColor.value = WebApp.backgroundColor
   }
 
   function setHeaderColor(
-    ...params: Parameters<typeof Telegram.WebApp.setHeaderColor>
+    ...params: Parameters<typeof WebApp.setHeaderColor>
   ) {
-    Telegram.WebApp.setHeaderColor(...params)
+    WebApp.setHeaderColor(...params)
     updateState()
   }
 
   function setBackgroundColor(
-    ...params: Parameters<typeof Telegram.WebApp.setBackgroundColor>
+    ...params: Parameters<typeof WebApp.setBackgroundColor>
   ) {
-    Telegram.WebApp.setBackgroundColor(...params)
+    WebApp.setBackgroundColor(...params)
     updateState()
   }
 

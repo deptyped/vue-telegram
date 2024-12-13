@@ -1,25 +1,26 @@
 import { computed, ref } from 'vue'
 import { onBackButtonClicked } from '../events'
+import { WebApp } from '../sdk'
 import { defineStore } from '../utils'
 
 const useStore = defineStore(() => {
-  const isBackButtonVisible = ref(Telegram.WebApp.BackButton.isVisible)
+  const isBackButtonVisible = ref(WebApp.BackButton.isVisible)
 
   function updateState() {
-    isBackButtonVisible.value = Telegram.WebApp.BackButton.isVisible
+    isBackButtonVisible.value = WebApp.BackButton.isVisible
   }
 
   function showBackButton(
-    ...params: Parameters<typeof Telegram.WebApp.BackButton.show>
+    ...params: Parameters<typeof WebApp.BackButton.show>
   ) {
-    Telegram.WebApp.BackButton.show(...params)
+    WebApp.BackButton.show(...params)
     updateState()
   }
 
   function hideBackButton(
-    ...params: Parameters<typeof Telegram.WebApp.BackButton.hide>
+    ...params: Parameters<typeof WebApp.BackButton.hide>
   ) {
-    Telegram.WebApp.BackButton.hide(...params)
+    WebApp.BackButton.hide(...params)
     updateState()
   }
 

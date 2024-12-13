@@ -1,10 +1,11 @@
 import { onQrTextReceived, onScanQrPopupClosed } from '../events'
+import { WebApp } from '../sdk'
 
 /**
  * @deprecated Use [`useQrScanner`](https://vue-tg.deptyped.com/mini-apps.html#useqrscanner) instead
  */
 export function useWebAppQrScanner() {
-  const { showScanQrPopup, closeScanQrPopup } = Telegram.WebApp
+  const { showScanQrPopup, closeScanQrPopup } = WebApp
 
   return {
     showScanQrPopup,

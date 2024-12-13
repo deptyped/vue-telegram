@@ -1,10 +1,11 @@
 import { readonly, ref } from 'vue'
 import { onEvent } from '../events'
+import { WebApp } from '../sdk'
 
 const isReady = ref(false)
 
-const ready: typeof Telegram.WebApp.ready = (...params) => {
-  Telegram.WebApp.ready(...params)
+const ready: typeof WebApp.ready = (...params) => {
+  WebApp.ready(...params)
   isReady.value = true
 }
 
@@ -19,7 +20,7 @@ function isPlatform(name:
     | 'weba'
     | 'webk'
     | 'unigram') {
-  return Telegram.WebApp.platform === name
+  return WebApp.platform === name
 }
 
 const featureSupportVersion = {
@@ -32,7 +33,7 @@ const featureSupportVersion = {
   DisableVerticalSwipes: '7.7',
 }
 function isFeatureSupported(name: keyof typeof featureSupportVersion) {
-  return Telegram.WebApp.isVersionAtLeast(featureSupportVersion[name])
+  return WebApp.isVersionAtLeast(featureSupportVersion[name])
 }
 
 /**
@@ -47,7 +48,7 @@ export function useWebApp() {
     isVersionAtLeast,
     sendData,
     close,
-  } = Telegram.WebApp
+  } = WebApp
 
   const isPlatformUnknown = isPlatform('unknown')
 
