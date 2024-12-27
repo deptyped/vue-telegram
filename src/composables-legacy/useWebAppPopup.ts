@@ -1,11 +1,11 @@
+import { usePopup } from '../composables/usePopup'
 import { onPopupClosed } from '../events'
-import { WebApp } from '../sdk'
 
 /**
  * @deprecated Use [`usePopup`](https://vue-tg.deptyped.com/mini-apps.html#usepopup) instead
  */
 export function useWebAppPopup() {
-  const { showPopup, showAlert, showConfirm } = WebApp
+  const { showPopup, showAlert, showConfirm } = usePopup({ version: '8.0' })
 
   return {
     showPopup,
