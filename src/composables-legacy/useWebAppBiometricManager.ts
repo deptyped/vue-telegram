@@ -1,88 +1,37 @@
-import { readonly, ref } from 'vue'
+import { useBiometricManager } from '../composables/useBiometricManager'
 import { onBiometricAuthRequested, onBiometricManagerUpdated, onBiometricTokenUpdated } from '../events'
-import { WebApp } from '../sdk'
-import { defineStore } from '../utils'
-
-const useStore = defineStore(() => {
-  const isBiometricInited = ref(WebApp.BiometricManager.isInited)
-  const isBiometricAvailable = ref(
-    WebApp.BiometricManager.isBiometricAvailable,
-  )
-  const biometricType = ref(WebApp.BiometricManager.biometricType)
-  const isBiometricAccessRequested = ref(
-    WebApp.BiometricManager.isAccessRequested,
-  )
-  const isBiometricAccessGranted = ref(
-    WebApp.BiometricManager.isAccessGranted,
-  )
-  const isBiometricTokenSaved = ref(
-    WebApp.BiometricManager.isAccessGranted,
-  )
-  const biometricDeviceId = ref(WebApp.BiometricManager.deviceId)
-
-  function updateState() {
-    isBiometricInited.value = WebApp.BiometricManager.isInited
-    isBiometricAvailable.value
-      = WebApp.BiometricManager.isBiometricAvailable
-    biometricType.value = WebApp.BiometricManager.biometricType
-    isBiometricAccessRequested.value
-      = WebApp.BiometricManager.isAccessRequested
-    isBiometricAccessGranted.value
-      = WebApp.BiometricManager.isAccessGranted
-    biometricDeviceId.value = WebApp.BiometricManager.deviceId
-    isBiometricTokenSaved.value
-      = WebApp.BiometricManager.isBiometricTokenSaved
-  }
-
-  return {
-    isBiometricInited,
-    isBiometricAvailable,
-    biometricType,
-    isBiometricAccessRequested,
-    isBiometricAccessGranted,
-    biometricDeviceId,
-    isBiometricTokenSaved,
-    updateState,
-  }
-})
 
 /**
  * @deprecated Use [`useBiometricManager`](https://vue-tg.deptyped.com/mini-apps.html#usebiometricmanager) instead
  */
 export function useWebAppBiometricManager() {
   const {
-    isBiometricInited,
+    isInited,
     isBiometricAvailable,
     biometricType,
-    isBiometricAccessRequested,
-    isBiometricAccessGranted,
-    biometricDeviceId,
+    isAccessRequested,
+    isAccessGranted,
+    deviceId,
     isBiometricTokenSaved,
-    updateState,
-  } = useStore()
-
-  onBiometricManagerUpdated(updateState)
-
-  const {
     init,
-    requestAccess,
     authenticate,
-    updateBiometricToken,
+    requestAccess,
     openSettings,
-  } = WebApp.BiometricManager
+    updateToken,
+  } = useBiometricManager({ version: '8.0' })
 
   return {
-    isBiometricInited: readonly(isBiometricInited),
-    isBiometricAvailable: readonly(isBiometricAvailable),
-    biometricType: readonly(biometricType),
-    isBiometricAccessRequested: readonly(isBiometricAccessRequested),
-    isBiometricAccessGranted: readonly(isBiometricAccessGranted),
-    isBiometricTokenSaved: readonly(isBiometricTokenSaved),
-    biometricDeviceId: readonly(biometricDeviceId),
+    isBiometricInited: isInited,
+    isBiometricAvailable,
+    biometricType,
+    isBiometricAccessRequested: isAccessRequested,
+    isBiometricAccessGranted: isAccessGranted,
+    isBiometricTokenSaved,
+    biometricDeviceId: deviceId,
     initBiometric: init,
     requestBiometricAccess: requestAccess,
     authenticateBiometric: authenticate,
-    updateBiometricToken,
+    updateBiometricToken: updateToken,
     openBiometricSettings: openSettings,
     /**
      * @deprecated import directly from `vue-tg` instead.
