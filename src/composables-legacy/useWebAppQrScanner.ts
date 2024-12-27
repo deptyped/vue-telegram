@@ -1,15 +1,15 @@
+import { useQrScanner } from '../composables/useQrScanner'
 import { onQrTextReceived, onScanQrPopupClosed } from '../events'
-import { WebApp } from '../sdk'
 
 /**
  * @deprecated Use [`useQrScanner`](https://vue-tg.deptyped.com/mini-apps.html#useqrscanner) instead
  */
 export function useWebAppQrScanner() {
-  const { showScanQrPopup, closeScanQrPopup } = WebApp
+  const qrScanner = useQrScanner({ version: '8.0' })
 
   return {
-    showScanQrPopup,
-    closeScanQrPopup,
+    showScanQrPopup: qrScanner.show,
+    closeScanQrPopup: qrScanner.close,
     /**
      * @deprecated import directly from `vue-tg` instead.
      */
