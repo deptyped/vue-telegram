@@ -1,27 +1,6 @@
-import { readonly, ref } from 'vue'
+import { useMiniApp } from '../composables/useMiniApp'
 import { onEvent } from '../events'
-import { WebApp } from '../sdk'
-
-const isReady = ref(false)
-
-const ready: typeof WebApp.ready = (...params) => {
-  WebApp.ready(...params)
-  isReady.value = true
-}
-
-function isPlatform(name:
-    | (string & Record<never, never>)
-    | 'unknown'
-    | 'android'
-    | 'android_x'
-    | 'ios'
-    | 'macos'
-    | 'tdesktop'
-    | 'weba'
-    | 'webk'
-    | 'unigram') {
-  return WebApp.platform === name
-}
+import { getWebApp } from '../sdk'
 
 const featureSupportVersion = {
   ClosingConfirmation: '6.2',
@@ -33,22 +12,25 @@ const featureSupportVersion = {
   DisableVerticalSwipes: '7.7',
 }
 function isFeatureSupported(name: keyof typeof featureSupportVersion) {
-  return WebApp.isVersionAtLeast(featureSupportVersion[name])
+  return getWebApp().isVersionAtLeast(featureSupportVersion[name])
 }
 
 /**
  * @deprecated Use [`useMiniApp`](https://vue-tg.deptyped.com/mini-apps.html#useminiapp) instead
  */
 export function useWebApp() {
+  const webApp = getWebApp()
   const {
     initData,
     initDataUnsafe,
     version,
+    isReady,
     platform,
-    isVersionAtLeast,
+    isPlatform,
     sendData,
+    ready,
     close,
-  } = WebApp
+  } = useMiniApp({ version: '8.0' })
 
   const isPlatformUnknown = isPlatform('unknown')
 
@@ -59,11 +41,11 @@ export function useWebApp() {
     initDataUnsafe,
     version,
     platform,
-    isVersionAtLeast,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     sendData,
     ready,
     close,
-    isReady: readonly(isReady),
+    isReady,
     isPlatform,
     isPlatformUnknown,
     isFeatureSupported,

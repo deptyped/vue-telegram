@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { useWebApp } from './useWebApp'
+import { useMiniApp } from '../composables/useMiniApp'
 
 /**
  * @deprecated
@@ -20,7 +20,7 @@ export function useWebAppSendData<D>(
 
   const isLoading = ref(false)
 
-  const { initData, initDataUnsafe, sendData, close } = useWebApp()
+  const { initData, initDataUnsafe, sendData, close } = useMiniApp({ version: '8.0' })
 
   return {
     error,

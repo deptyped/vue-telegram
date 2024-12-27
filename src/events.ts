@@ -1,7 +1,7 @@
 import type { EventCallback } from './sdk'
 import type { OnEventOptions, OnEventWithOptions } from './types'
 import { onMounted, onUnmounted } from 'vue'
-import { WebApp } from './sdk'
+import { getWebApp } from './sdk'
 
 export const onEvent: OnEventWithOptions<OnEventOptions> = (
   eventType,
@@ -9,11 +9,12 @@ export const onEvent: OnEventWithOptions<OnEventOptions> = (
   options = { manual: false },
 ) => {
   const { manual } = options
+  const webApp = getWebApp()
 
   const on = () =>
-    WebApp.onEvent(eventType, eventHandler)
+    webApp.onEvent(eventType, eventHandler)
   const off = () =>
-    WebApp.offEvent(eventType, eventHandler)
+    webApp.offEvent(eventType, eventHandler)
 
   if (manual) {
     on()

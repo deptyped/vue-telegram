@@ -1,4 +1,4 @@
-### ~~useWebApp~~ 
+### ~~useWebApp~~
 
 ::: danger Deprecated
 Use [useMiniApp](#useminiapp) instead.

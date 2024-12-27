@@ -1,11 +1,11 @@
+import { useMiniApp } from '../composables/useMiniApp'
 import { onContactRequested, onWriteAccessRequested } from '../events'
-import { WebApp } from '../sdk'
 
 /**
  * @deprecated Use [`useMiniApp`](https://vue-tg.deptyped.com/mini-apps.html#useminiapp) instead
  */
 export function useWebAppRequests() {
-  const { requestContact, requestWriteAccess } = WebApp
+  const { requestContact, requestWriteAccess } = useMiniApp({ version: '8.0' })
 
   return {
     requestContact,

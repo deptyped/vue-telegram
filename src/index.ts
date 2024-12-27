@@ -10,10 +10,38 @@ import MainButton from './components/MainButton.vue'
 import Popup from './components/Popup.vue'
 import ScanQr from './components/ScanQr.vue'
 import SettingsButton from './components/SettingsButton.vue'
+import { createComposablesWithVersion } from './versions/helpers'
 import DiscussionWidget from './widgets/DiscussionWidget.vue'
 import LoginWidget from './widgets/LoginWidget.vue'
 import PostWidget from './widgets/PostWidget.vue'
 import ShareWidget from './widgets/ShareWidget.vue'
+
+export * from './composables-legacy'
+export { isVersionAtLeast } from './composables/useMiniApp'
+export * from './events'
+export type { LoginWidgetUser } from './types'
+
+export const {
+  useAccelerometer,
+  useBackButton,
+  useBiometricManager,
+  useClipboard,
+  useCloudStorage,
+  useDeviceOrientation,
+  useEmojiStatus,
+  useGyroscope,
+  useHapticFeedback,
+  useHomeScreen,
+  useLocationManager,
+  useMainButton,
+  useMiniApp,
+  usePopup,
+  useQrScanner,
+  useSecondaryButton,
+  useSettingsButton,
+  useTheme,
+  useViewport,
+} = createComposablesWithVersion('6.0')
 
 export {
   Alert,
@@ -31,26 +59,6 @@ export {
   SettingsButton,
   ShareWidget,
 }
-
-export { useWebApp } from './composables-legacy/useWebApp'
-export { useWebAppBackButton } from './composables-legacy/useWebAppBackButton'
-export { useWebAppBiometricManager } from './composables-legacy/useWebAppBiometricManager'
-export { useWebAppClipboard } from './composables-legacy/useWebAppClipboard'
-export { useWebAppClosingConfirmation } from './composables-legacy/useWebAppClosingConfirmation'
-export { useWebAppCloudStorage } from './composables-legacy/useWebAppCloudStorage'
-export { useWebAppHapticFeedback } from './composables-legacy/useWebAppHapticFeedback'
-export { useWebAppMainButton } from './composables-legacy/useWebAppMainButton'
-export { useWebAppNavigation } from './composables-legacy/useWebAppNavigation'
-export { useWebAppPopup } from './composables-legacy/useWebAppPopup'
-export { useWebAppQrScanner } from './composables-legacy/useWebAppQrScanner'
-export { useWebAppRequests } from './composables-legacy/useWebAppRequests'
-export { useWebAppSendData } from './composables-legacy/useWebAppSendData'
-export { useWebAppSettingsButton } from './composables-legacy/useWebAppSettingsButton'
-export { useWebAppShare } from './composables-legacy/useWebAppShare'
-export { useWebAppTheme } from './composables-legacy/useWebAppTheme'
-export { useWebAppViewport } from './composables-legacy/useWebAppViewport'
-export * from './events'
-export type { LoginWidgetUser } from './types'
 
 const plugin = {
   install(Vue: App) {
