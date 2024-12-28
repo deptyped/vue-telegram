@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch } from 'vue'
-import { useWebAppMainButton } from '..'
+import { useMainButton } from '../composables/useMainButton'
 
 const props = defineProps({
   text: { type: String },
@@ -11,23 +11,18 @@ const props = defineProps({
   visible: { type: Boolean, default: true },
   disabled: { type: Boolean, default: false },
   progress: { type: Boolean, default: false },
+  hasShineEffect: { type: Boolean, default: false },
 })
 const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const {
-  setMainButtonParams,
-  onMainButtonClicked,
-  hideMainButton,
-  showMainButtonProgress,
-  hideMainButtonProgress,
-} = useWebAppMainButton()
+const mainButton = useMainButton({ version: '6.0' })
 
 watch(
   () => props.text,
   (text) => {
-    setMainButtonParams({
+    mainButton.setParams({
       text,
     })
   },
@@ -36,7 +31,7 @@ watch(
 watch(
   () => props.color,
   (color) => {
-    setMainButtonParams({
+    mainButton.setParams({
       color,
     })
   },
@@ -45,7 +40,7 @@ watch(
 watch(
   () => props.textColor,
   (textColor) => {
-    setMainButtonParams({
+    mainButton.setParams({
       text_color: textColor,
     })
   },
@@ -54,7 +49,7 @@ watch(
 watch(
   () => props.visible,
   (isVisible) => {
-    setMainButtonParams({
+    mainButton.setParams({
       is_visible: isVisible,
     })
   },
@@ -63,7 +58,7 @@ watch(
 watch(
   () => props.disabled,
   (isDisabled) => {
-    setMainButtonParams({
+    mainButton.setParams({
       is_active: !isDisabled,
     })
   },
@@ -72,26 +67,42 @@ watch(
 watch(
   () => props.progress,
   (inProgress) => {
-    inProgress ? showMainButtonProgress() : hideMainButtonProgress()
+    if (inProgress)
+      mainButton.showProgress()
+    else
+      mainButton.hideProgress()
   },
 )
 
-onMainButtonClicked(() => emit('click'))
+if (mainButton.isVersionAtLeast('7.10')) {
+  watch(
+    () => props.hasShineEffect,
+    (hasShineEffect) => {
+      mainButton.hasShineEffect.value = hasShineEffect
+    },
+  )
+}
+
+mainButton.onClick(() => emit('click'))
 
 onMounted(() => {
-  props.progress ? showMainButtonProgress() : hideMainButtonProgress()
+  if (props.progress)
+    mainButton.showProgress()
+  else
+    mainButton.hideProgress()
 
-  setMainButtonParams({
+  mainButton.setParams({
     text: props.text,
     text_color: props.textColor,
     color: props.color,
+    has_shine_effect: props.hasShineEffect,
     is_active: !props.disabled,
     is_visible: props.visible,
   })
 })
 
 onUnmounted(() => {
-  hideMainButtonProgress()
-  hideMainButton()
+  mainButton.hideProgress()
+  mainButton.hide()
 })
 </script>

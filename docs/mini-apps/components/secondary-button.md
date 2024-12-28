@@ -1,18 +1,18 @@
-### MainButton
+### SecondaryButton
 
-A component that enables the main button when is rendered.
+A component that enables the secondary button when is rendered.
 
 ```vue
 <script lang="ts" setup>
-import { MainButton } from 'vue-tg'
+import { SecondaryButton } from 'vue-tg'
 
-function handleMainButton() {
+function handleSecondaryButton() {
   // ...
 }
 </script>
 
 <template>
-  <MainButton @click="handleMainButton" />
+  <SecondaryButton @click="handleSecondaryButton" />
 </template>
 ```
 
@@ -27,6 +27,7 @@ function handleMainButton() {
 | color          | string  | false    | <!--@include: @/generated/MainButton-color.md -->            |
 | textColor      | string  | false    | <!--@include: @/generated/MainButton-textColor.md -->        |
 | hasShineEffect | boolean | false    | <!--@include: @/generated/MainButton-hasShineEffect.md -->   |
+| position       | string  | false    | <!--@include: @/generated/MainButton-position.md -->         |
 
 #### Events
 

@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch } from 'vue'
-import { useWebAppBackButton } from '..'
+import { useBackButton } from '../composables/useBackButton'
 
 const props = defineProps({
   visible: { type: Boolean, default: true },
@@ -12,19 +12,23 @@ const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const { showBackButton, onBackButtonClicked, hideBackButton }
-  = useWebAppBackButton()
+const backButton = useBackButton({ version: '6.0' })
 
-watch(
-  () => props.visible,
-  (isVisible) => {
-    isVisible ? showBackButton() : hideBackButton()
-  },
-)
+if (backButton.isVersionAtLeast('6.1')) {
+  watch(
+    () => props.visible,
+    (isVisible) => {
+      if (isVisible)
+        backButton.show()
+      else
+        backButton.hide()
+    },
+  )
 
-onBackButtonClicked(() => emit('click'))
+  backButton.onClick(() => emit('click'))
 
-onMounted(() => props.visible && showBackButton())
+  onMounted(() => props.visible && backButton.show())
 
-onUnmounted(() => hideBackButton())
+  onUnmounted(() => backButton.hide())
+}
 </script>

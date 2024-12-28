@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, watch } from 'vue'
-import { useWebAppSettingsButton } from '..'
+import { useSettingsButton } from '../composables/useSettingsButton'
 
 const props = defineProps({
   visible: { type: Boolean, default: true },
@@ -12,19 +12,28 @@ const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const { showSettingsButton, onSettingsButtonClicked, hideSettingsButton }
-  = useWebAppSettingsButton()
+const settingsButton = useSettingsButton({ version: '6.0' })
 
-watch(
-  () => props.visible,
-  (isVisible) => {
-    isVisible ? showSettingsButton() : hideSettingsButton()
-  },
-)
+if (settingsButton.isVersionAtLeast('7.0')) {
+  watch(
+    () => props.visible,
+    (isVisible) => {
+      if (isVisible)
+        settingsButton.show()
+      else
+        settingsButton.hide()
+    },
+  )
 
-onSettingsButtonClicked(() => emit('click'))
+  settingsButton.onClick(() => emit('click'))
 
-onMounted(() => props.visible && showSettingsButton())
+  onMounted(() => {
+    if (props.visible)
+      settingsButton.show()
+  })
 
-onUnmounted(() => hideSettingsButton())
+  onUnmounted(() => {
+    settingsButton.hide()
+  })
+}
 </script>

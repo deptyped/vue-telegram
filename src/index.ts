@@ -9,6 +9,7 @@ import ExpandedViewport from './components/ExpandedViewport.vue'
 import MainButton from './components/MainButton.vue'
 import Popup from './components/Popup.vue'
 import ScanQr from './components/ScanQr.vue'
+import SecondaryButton from './components/SecondaryButton.vue'
 import SettingsButton from './components/SettingsButton.vue'
 import { createComposablesWithVersion } from './versions/helpers'
 import DiscussionWidget from './widgets/DiscussionWidget.vue'
@@ -56,6 +57,7 @@ export {
   Popup,
   PostWidget,
   ScanQr,
+  SecondaryButton,
   SettingsButton,
   ShareWidget,
 }
@@ -71,6 +73,7 @@ const plugin = {
     Vue.component('TgMainButton', MainButton)
     Vue.component('TgPopup', Popup)
     Vue.component('TgScanQr', ScanQr)
+    Vue.component('TgSecondaryButton', SecondaryButton)
     Vue.component('TgSettingsButton', SettingsButton)
     Vue.component('TgShareWidget', ShareWidget)
     Vue.component('TgPostWidget', PostWidget)
@@ -90,6 +93,7 @@ declare module '@vue/runtime-core' {
     TgMainButton: typeof MainButton
     TgPopup: typeof Popup
     TgScanQr: typeof ScanQr
+    TgSecondaryButton: typeof SecondaryButton
     TgSettingsButton: typeof SettingsButton
     TgShareWidget: typeof ShareWidget
     TgPostWidget: typeof PostWidget

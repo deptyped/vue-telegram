@@ -281,6 +281,8 @@ Improper management may lead to memory leaks or other issues.
 
 <!--@include: @/mini-apps/components/scan-qr.md-->
 
+<!--@include: @/mini-apps/components/secondary-button.md-->
+
 <!--@include: @/mini-apps/components/settings-button.md-->
 
 ## Composables

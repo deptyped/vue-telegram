@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { useWebAppPopup } from '..'
+import { usePopup } from '../composables/usePopup'
 
 const props = defineProps({
   message: {
@@ -14,7 +14,11 @@ const emit = defineEmits<{
   (eventName: 'close'): void
 }>()
 
-const { showAlert } = useWebAppPopup()
+const popup = usePopup({ version: '6.0' })
 
-onMounted(() => showAlert(props.message, () => emit('close')))
+if (popup.isVersionAtLeast('6.2')) {
+  onMounted(() => {
+    popup.showAlert(props.message, () => emit('close'))
+  })
+}
 </script>
