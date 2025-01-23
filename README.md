@@ -3,7 +3,6 @@
 [![docs](https://img.shields.io/badge/Documentation-gray?style=flat)](https://vue-tg.deptyped.com/)
 [![version](https://img.shields.io/badge/Bot%20API-8.0-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#november-17-2024)
 [![downloads](https://img.shields.io/npm/dm/vue-tg?label=Downloads&logo=npm&style=flat&color=478be6)](https://www.npmjs.com/package/vue-tg)
-[![size](https://img.shields.io/bundlephobia/minzip/vue-tg?label=Size&style=flat&color=478be6)](https://bundlephobia.com/result?p=vue-tg@latest)
 
 A lightweight package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
 
@@ -11,13 +10,14 @@ A lightweight package for seamless integration of [Telegram Mini Apps](https://c
 
 ```vue
 <template>
-  <MainButton text="Open alert" @click="() => showAlert('Hello!')" />
+  <MainButton text="Open alert" @click="() => popup.showAlert('Hello!')" />
 </template>
 
 <script lang="ts" setup>
-import { MainButton, usePopup } from 'vue-tg/latest'
+import { MainButton } from 'vue-tg'
+import { usePopup } from 'vue-tg/latest'
 
-const { showAlert } = usePopup()
+const popup = usePopup()
 </script>
 ```
 
@@ -26,7 +26,7 @@ const { showAlert } = usePopup()
 Install package:
 
 ```bash
-npm i vue-tg
+npm i vue-tg@beta
 ```
 
 To connect your Mini App to the Telegram client, place the script `telegram-web-app.js` in the `<head>` tag before any other scripts, using this code:

@@ -8,7 +8,7 @@ next: 'test'
 Install package:
 
 ```bash
-npm i vue-tg
+npm i vue-tg@beta
 ```
 
 To connect your Mini App to the Telegram client, place the script `telegram-web-app.js` in the `<head>` tag before any other scripts, using this code:
