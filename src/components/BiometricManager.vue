@@ -2,13 +2,15 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
-import { useWebAppBiometricManager } from '..'
+import { useBiometricManager } from '../composables/useBiometricManager'
 
 const emit = defineEmits<{
   (eventName: 'init'): void
 }>()
 
-const { initBiometric } = useWebAppBiometricManager()
+const biometricManager = useBiometricManager({ version: '6.0' })
 
-onMounted(() => initBiometric(() => emit('init')))
+if (biometricManager.isVersionAtLeast('7.2')) {
+  onMounted(() => biometricManager.init(() => emit('init')))
+}
 </script>

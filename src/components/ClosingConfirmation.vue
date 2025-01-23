@@ -2,12 +2,17 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue'
-import { useWebAppClosingConfirmation } from '..'
+import { useMiniApp } from '../composables/useMiniApp'
 
-const { enableClosingConfirmation, disableClosingConfirmation }
-  = useWebAppClosingConfirmation()
+const miniApp = useMiniApp({ version: '6.0' })
 
-onMounted(() => enableClosingConfirmation())
+if (miniApp.isVersionAtLeast('6.2')) {
+  onMounted(() => {
+    miniApp.isClosingConfirmationEnabled.value = true
+  })
 
-onUnmounted(() => disableClosingConfirmation())
+  onUnmounted(() => {
+    miniApp.isClosingConfirmationEnabled.value = false
+  })
+}
 </script>

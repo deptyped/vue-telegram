@@ -2,8 +2,9 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
+import type { PopupButton } from '../sdk'
 import { onMounted } from 'vue'
-import { useWebAppPopup } from '..'
+import { usePopup } from '../composables/usePopup'
 
 const props = defineProps({
   title: { type: String },
@@ -14,16 +15,18 @@ const emit = defineEmits<{
   (eventName: 'close', buttonId: string): void
 }>()
 
-const { showPopup } = useWebAppPopup()
+const popup = usePopup({ version: '6.0' })
 
-onMounted(() =>
-  showPopup(
-    {
-      title: props.title,
-      message: props.message,
-      buttons: props.buttons,
-    },
-    buttonId => emit('close', buttonId),
-  ),
-)
+if (popup.isVersionAtLeast('6.2')) {
+  onMounted(() =>
+    popup.showPopup(
+      {
+        title: props.title,
+        message: props.message,
+        buttons: props.buttons,
+      },
+      buttonId => emit('close', buttonId),
+    ),
+  )
+}
 </script>

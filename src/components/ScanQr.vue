@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue'
-import { useWebAppQrScanner } from '../'
+import { useQrScanner } from '../composables/useQrScanner'
 
 const props = defineProps({
   text: { type: String },
@@ -11,16 +11,20 @@ const emit = defineEmits<{
   (eventName: 'result', data: string): void
 }>()
 
-const { showScanQrPopup, closeScanQrPopup } = useWebAppQrScanner()
+const qrScanner = useQrScanner({ version: '6.0' })
 
-onMounted(() =>
-  showScanQrPopup(
-    {
-      text: props.text,
-    },
-    data => emit('result', data),
-  ),
-)
+if (qrScanner.isVersionAtLeast('6.4')) {
+  onMounted(() => {
+    qrScanner.show(
+      {
+        text: props.text,
+      },
+      data => emit('result', data),
+    )
+  })
 
-onUnmounted(() => closeScanQrPopup())
+  onUnmounted(() => {
+    qrScanner.close()
+  })
+}
 </script>

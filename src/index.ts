@@ -9,11 +9,40 @@ import ExpandedViewport from './components/ExpandedViewport.vue'
 import MainButton from './components/MainButton.vue'
 import Popup from './components/Popup.vue'
 import ScanQr from './components/ScanQr.vue'
+import SecondaryButton from './components/SecondaryButton.vue'
 import SettingsButton from './components/SettingsButton.vue'
+import { createComposablesWithVersion } from './versions/helpers'
 import DiscussionWidget from './widgets/DiscussionWidget.vue'
 import LoginWidget from './widgets/LoginWidget.vue'
 import PostWidget from './widgets/PostWidget.vue'
 import ShareWidget from './widgets/ShareWidget.vue'
+
+export * from './composables-legacy'
+export { isVersionAtLeast } from './composables/useMiniApp'
+export * from './events'
+export type { LoginWidgetUser } from './types'
+
+export const {
+  useAccelerometer,
+  useBackButton,
+  useBiometricManager,
+  useClipboard,
+  useCloudStorage,
+  useDeviceOrientation,
+  useEmojiStatus,
+  useGyroscope,
+  useHapticFeedback,
+  useHomeScreen,
+  useLocationManager,
+  useMainButton,
+  useMiniApp,
+  usePopup,
+  useQrScanner,
+  useSecondaryButton,
+  useSettingsButton,
+  useTheme,
+  useViewport,
+} = createComposablesWithVersion('6.0')
 
 export {
   Alert,
@@ -28,29 +57,10 @@ export {
   Popup,
   PostWidget,
   ScanQr,
+  SecondaryButton,
   SettingsButton,
   ShareWidget,
 }
-
-export { useWebApp } from './composables/useWebApp'
-
-export { useWebAppBackButton } from './composables/useWebAppBackButton'
-export { useWebAppBiometricManager } from './composables/useWebAppBiometricManager'
-export { useWebAppClipboard } from './composables/useWebAppClipboard'
-export { useWebAppClosingConfirmation } from './composables/useWebAppClosingConfirmation'
-export { useWebAppCloudStorage } from './composables/useWebAppCloudStorage'
-export { useWebAppHapticFeedback } from './composables/useWebAppHapticFeedback'
-export { useWebAppMainButton } from './composables/useWebAppMainButton'
-export { useWebAppNavigation } from './composables/useWebAppNavigation'
-export { useWebAppPopup } from './composables/useWebAppPopup'
-export { useWebAppQrScanner } from './composables/useWebAppQrScanner'
-export { useWebAppRequests } from './composables/useWebAppRequests'
-export { useWebAppSendData } from './composables/useWebAppSendData'
-export { useWebAppSettingsButton } from './composables/useWebAppSettingsButton'
-export { useWebAppShare } from './composables/useWebAppShare'
-export { useWebAppTheme } from './composables/useWebAppTheme'
-export { useWebAppViewport } from './composables/useWebAppViewport'
-export type { LoginWidgetUser } from './types'
 
 const plugin = {
   install(Vue: App) {
@@ -63,6 +73,7 @@ const plugin = {
     Vue.component('TgMainButton', MainButton)
     Vue.component('TgPopup', Popup)
     Vue.component('TgScanQr', ScanQr)
+    Vue.component('TgSecondaryButton', SecondaryButton)
     Vue.component('TgSettingsButton', SettingsButton)
     Vue.component('TgShareWidget', ShareWidget)
     Vue.component('TgPostWidget', PostWidget)
@@ -82,6 +93,7 @@ declare module '@vue/runtime-core' {
     TgMainButton: typeof MainButton
     TgPopup: typeof Popup
     TgScanQr: typeof ScanQr
+    TgSecondaryButton: typeof SecondaryButton
     TgSettingsButton: typeof SettingsButton
     TgShareWidget: typeof ShareWidget
     TgPostWidget: typeof PostWidget

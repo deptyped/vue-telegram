@@ -1,12 +1,74 @@
+import type { EventCallback, WebAppInitData, WebAppUser } from './sdk'
+
+type BOT_API_VERSIONS = [
+  '6.0',
+  '6.1',
+  '6.2',
+  '6.4',
+  '6.7',
+  '6.9',
+  '7.0',
+  '7.2',
+  '7.6',
+  '7.7',
+  '7.8',
+  '7.10',
+  '8.0',
+]
+
+export type LATEST_VERSION = '8.0'
+
+type Reverse<T extends any[]> = T extends [infer First, ...infer Rest]
+  ? [...Reverse<Rest>, First]
+  : []
+
+type Equals<X, Y> = X extends Y ? (Y extends X ? true : false) : false
+
+export type Merge<T, U> = Omit<T, keyof U> & U
+
+export type BotApiVersion = BOT_API_VERSIONS[number]
+
+type VersionMap<T extends readonly BotApiVersion[], R = object> =
+  T extends readonly [infer First extends BotApiVersion, infer Second extends BotApiVersion, ...infer Rest extends BotApiVersion[]]
+    ? VersionMap<[Second, ...Rest], R & { [K in First]: Second }>
+    : R
+
+type BotApiNextVersionMap = VersionMap<BOT_API_VERSIONS>
+export type BotApiNextVersion<V extends BotApiVersion> = V extends keyof BotApiNextVersionMap
+  ? BotApiNextVersionMap[V]
+  : never
+
+type BotApiPrevVersionMap = VersionMap<Reverse<BOT_API_VERSIONS>>
+export type BotApiPrevVersion<V extends BotApiVersion> = V extends keyof BotApiPrevVersionMap
+  ? BotApiPrevVersionMap[V]
+  : never
+
+export type BotApiVersionRange<Start extends BotApiVersion, End extends BotApiVersion> =
+  Equals<Start, End> extends true
+    ? Start
+    : Start | BotApiVersionRange<BotApiNextVersion<Start>, End>
+
+export type VersionedReturnType<
+  Schema extends Record<BotApiVersion, object>,
+  Version extends BotApiVersion,
+  SuggestedVersions extends BotApiVersion,
+> =
+  & Extract<Schema[BotApiVersion], { version: BotApiVersionRange<Version, LATEST_VERSION> }>
+  & (Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>> extends never
+    ? object
+    : {
+        isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is { version: BotApiVersionRange<V, LATEST_VERSION> }
+      })
+
 /**
  * Mini Apps
  */
 
-export interface OnEventReturn {
+export type OnEventReturn = {
   off: () => void
 }
 
-export interface OnEventOptions {
+export type OnEventOptions = {
   /**
    * Disables automatic subscription management; you need to call the returned function `off` to unsubscribe.
    *
@@ -15,81 +77,11 @@ export interface OnEventOptions {
   manual?: boolean
 }
 
-export interface OnEventWithOptions<O> {
-  (
-    eventType: 'themeChanged',
-    eventHandler: ThemeChangedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'mainButtonClicked',
-    eventHandler: MainButtonClickedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'backButtonClicked',
-    eventHandler: BackButtonClickedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'settingsButtonClicked',
-    eventHandler: SettingsButtonClickedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'popupClosed',
-    eventHandler: PopupClosedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'viewportChanged',
-    eventHandler: ViewportChangedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'invoiceClosed',
-    eventHandler: InvoiceClosedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'qrTextReceived',
-    eventHandler: QrTextReceivedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'scanQrPopupClosed',
-    eventHandler: ScanQrPopupClosedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'clipboardTextReceived',
-    eventHandler: ClipboardTextReceivedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'writeAccessRequested',
-    eventHandler: WriteAccessRequestedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'contactRequested',
-    eventHandler: ContactRequestedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'biometricManagerUpdated',
-    eventHandler: BiometricManagerUpdatedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'biometricAuthRequested',
-    eventHandler: BiometricAuthRequestedCallback,
-    options?: O,
-  ): OnEventReturn
-  (
-    eventType: 'biometricTokenUpdated',
-    eventHandler: BiometricTokenUpdatedCallback,
-    options?: O,
+export type OnEventWithOptions<O> = {
+  <T extends keyof EventCallback>(
+    eventType: T,
+    eventHandler: EventCallback[T],
+    options?: O
   ): OnEventReturn
 }
 
@@ -97,8 +89,6 @@ export interface OnEventWithOptions<O> {
  * Widgets
  */
 
-export type LoginWidgetUser = Pick<
-  WebAppUser,
-  'id' | 'first_name' | 'last_name' | 'username' | 'photo_url'
-> &
-Pick<WebAppInitData, 'auth_date' | 'hash'>
+export type LoginWidgetUser =
+  & Pick<WebAppUser, 'id' | 'first_name' | 'last_name' | 'username' | 'photo_url'>
+  & Pick<WebAppInitData, 'auth_date' | 'hash'>

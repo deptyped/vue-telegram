@@ -64,6 +64,7 @@ import { Alert } from 'vue-tg'
 | [MainButton](/mini-apps#mainbutton)                   | `tg-main-button`          |
 | [Popup](/mini-apps#Popup)                             | `tg-popup`                |
 | [ScanQr](/mini-apps#scanqr)                           | `tg-scan-qr`              |
+| [SecondaryButton](/mini-apps#secondarybutton)         | `tg-secondary-button`     |
 | [SettingsButton](/mini-apps#settingsbutton)           | `tg-settings-button`      |
 | [ShareWidget](/widgets#share-widget)                  | `tg-share-widget`         |
 | [PostWidget](/widgets#post-widget)                    | `tg-post-widget`          |
