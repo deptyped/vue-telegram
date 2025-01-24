@@ -1,4 +1,4 @@
-### ScanQr
+### ScanQr <Badge type="tip" text="Bot API 6.4+" />
 
 A component that shows a native popup for scanning a QR code when is rendered.
 

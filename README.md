@@ -72,6 +72,7 @@ To connect your Mini App to the Telegram client, place the script `telegram-web-
 - [MainButton](https://vue-tg.deptyped.com/mini-apps.html#mainbutton)
 - [Popup](https://vue-tg.deptyped.com/mini-apps.html#popup)
 - [ScanQr](https://vue-tg.deptyped.com/mini-apps.html#scanqr)
+- [SecondaryButton](https://vue-tg.deptyped.com/mini-apps.html#secondarybutton)
 - [SettingsButton](https://vue-tg.deptyped.com/mini-apps.html#settingsbutton)
 
 #### Mapping

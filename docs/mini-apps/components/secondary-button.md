@@ -1,4 +1,4 @@
-### SecondaryButton
+### SecondaryButton <Badge type="tip" text="Bot API 7.10+" />
 
 A component that enables the secondary button when is rendered.
 

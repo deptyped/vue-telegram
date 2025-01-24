@@ -1,4 +1,4 @@
-### BackButton
+### BackButton <Badge type="tip" text="Bot API 6.1+" />
 
 A component that enables the back button when is rendered.
 

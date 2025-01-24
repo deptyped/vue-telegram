@@ -1,4 +1,4 @@
-### Confirm
+### Confirm <Badge type="tip" text="Bot API 6.2+" />
 
 A component that shows message in a simple confirmation window with 'OK' and
 'Cancel' buttons when is rendered.

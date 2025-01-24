@@ -1,4 +1,4 @@
-### BiometricManager
+### BiometricManager <Badge type="tip" text="Bot API 7.2+" />
 
 A component that init the biometric manager when is rendered.
 

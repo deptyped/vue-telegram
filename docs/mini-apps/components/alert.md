@@ -1,4 +1,4 @@
-### Alert
+### Alert <Badge type="tip" text="Bot API 6.2+" />
 
 A component that shows message in a simple alert with a 'Close' button when is
 rendered.

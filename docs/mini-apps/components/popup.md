@@ -1,4 +1,4 @@
-### Popup
+### Popup <Badge type="tip" text="Bot API 6.2+" />
 
 A component that shows a native popup when is rendered.
 

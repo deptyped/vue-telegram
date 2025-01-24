@@ -1,4 +1,4 @@
-### SettingsButton
+### SettingsButton <Badge type="tip" text="Bot API 7.0+" />
 
 A component that enables the settings button when is rendered.
 
