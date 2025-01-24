@@ -20,12 +20,82 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./6.0": {
+      "types": "./dist/versions/6.0.d.ts",
+      "import": "./dist/6.0.js",
+      "require": "./dist/6.0.cjs"
+    },
+    "./6.1": {
+      "types": "./dist/versions/6.1.d.ts",
+      "import": "./dist/6.1.js",
+      "require": "./dist/6.1.cjs"
+    },
+    "./6.2": {
+      "types": "./dist/versions/6.2.d.ts",
+      "import": "./dist/6.2.js",
+      "require": "./dist/6.2.cjs"
+    },
+    "./6.4": {
+      "types": "./dist/versions/6.4.d.ts",
+      "import": "./dist/6.4.js",
+      "require": "./dist/6.4.cjs"
+    },
+    "./6.7": {
+      "types": "./dist/versions/6.7.d.ts",
+      "import": "./dist/6.7.js",
+      "require": "./dist/6.7.cjs"
+    },
+    "./6.9": {
+      "types": "./dist/versions/6.9.d.ts",
+      "import": "./dist/6.9.js",
+      "require": "./dist/6.9.cjs"
+    },
+    "./7.0": {
+      "types": "./dist/versions/7.0.d.ts",
+      "import": "./dist/7.0.js",
+      "require": "./dist/7.0.cjs"
+    },
+    "./7.2": {
+      "types": "./dist/versions/7.2.d.ts",
+      "import": "./dist/7.2.js",
+      "require": "./dist/7.2.cjs"
+    },
+    "./7.6": {
+      "types": "./dist/versions/7.6.d.ts",
+      "import": "./dist/7.6.js",
+      "require": "./dist/7.6.cjs"
+    },
+    "./7.7": {
+      "types": "./dist/versions/7.7.d.ts",
+      "import": "./dist/7.7.js",
+      "require": "./dist/7.7.cjs"
+    },
+    "./7.8": {
+      "types": "./dist/versions/7.8.d.ts",
+      "import": "./dist/7.8.js",
+      "require": "./dist/7.8.cjs"
+    },
+    "./7.10": {
+      "types": "./dist/versions/7.10.d.ts",
+      "import": "./dist/7.10.js",
+      "require": "./dist/7.10.cjs"
+    },
+    "./8.0": {
+      "types": "./dist/versions/8.0.d.ts",
+      "import": "./dist/8.0.js",
+      "require": "./dist/8.0.cjs"
+    },
+    "./latest": {
+      "types": "./dist/versions/latest.d.ts",
+      "import": "./dist/latest.js",
+      "require": "./dist/latest.cjs"
     }
   },
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "LICENSE",
