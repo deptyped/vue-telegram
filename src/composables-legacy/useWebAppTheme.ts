@@ -18,11 +18,13 @@ export function useWebAppTheme() {
     themeParams,
     headerColor,
     backgroundColor,
-    setHeaderColor(color: Parameters<WebApp['setHeaderColor']>[0]) {
-      headerColor.value = color
+    setHeaderColor(color: Parameters<WebApp['setHeaderColor']>[0] | undefined) {
+      if (color)
+        headerColor.value = color
     },
-    setBackgroundColor(color: Parameters<WebApp['setBackgroundColor']>[0]) {
-      backgroundColor.value = color
+    setBackgroundColor(color: Parameters<WebApp['setBackgroundColor']>[0] | undefined) {
+      if (color)
+        backgroundColor.value = color
     },
     /**
      * @deprecated import directly from `vue-tg` instead.
