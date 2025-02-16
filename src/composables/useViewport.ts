@@ -2,7 +2,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { computed, readonly, ref } from 'vue'
 import { onContentSafeAreaChanged, onFullscreenChanged, onFullscreenFailed, onSafeAreaChanged, onViewportChanged } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type ViewportV60 = ReturnType<typeof useViewport60>
 type ViewportV77 = ReturnType<typeof useViewport77>
@@ -202,17 +202,16 @@ function useViewport80() {
 }
 
 export function useViewport<Version extends BotApiVersion>(
-  options?: { version?: Version },
+  options: { version: Version },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useViewport60(),
     ...(isVersionGreaterOrEqual(version, '7.7') && useViewport77()),
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useViewport80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '8.0') && useViewport80()),
   } as VersionedReturnType<Viewport, Version, '7.7' | '8.0'>
 }

@@ -10,7 +10,7 @@ import type {
 import { readonly, ref } from 'vue'
 import { onLocationManagerUpdated, onLocationRequested } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify, promisifyWithNoData, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithNoData, wrapFunction } from '../utils'
 
 type LocationManagerV60 = ReturnType<typeof useLocationManager60>
 type LocationManagerV80 = ReturnType<typeof useLocationManager80>
@@ -122,13 +122,12 @@ export function useLocationManager<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useLocationManager60(),
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useLocationManager80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '8.0') && useLocationManager80()),
   } as VersionedReturnType<LocationManager, Version, '8.0'>
 }

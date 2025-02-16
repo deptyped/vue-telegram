@@ -9,7 +9,7 @@ import type {
 } from '../types'
 import { onEmojiStatusAccessRequested, onEmojiStatusFailed, onEmojiStatusSet } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
 type EmojiStatusV80 = ReturnType<typeof useEmojiStatus80>
 
@@ -81,12 +81,11 @@ export function useEmojiStatus<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useEmojiStatus80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    isVersionAtLeast: webApp.isVersionAtLeast,
+    ...(isVersionGreaterOrEqual(version, '8.0') && useEmojiStatus80()),
   } as VersionedReturnType<EmojiStatus, Version, '8.0'>
 }

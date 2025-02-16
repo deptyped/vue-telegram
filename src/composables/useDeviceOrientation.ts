@@ -10,7 +10,7 @@ import type {
 import { readonly, ref } from 'vue'
 import { onDeviceOrientationChanged, onDeviceOrientationFailed, onDeviceOrientationStarted, onDeviceOrientationStopped } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
 type DeviceOrientationV60 = ReturnType<typeof useDeviceOrientation60>
 type DeviceOrientationV80 = ReturnType<typeof useDeviceOrientation80>
@@ -126,13 +126,12 @@ export function useDeviceOrientation<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useDeviceOrientation60(),
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useDeviceOrientation80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '8.0') && useDeviceOrientation80()),
   } as VersionedReturnType<DeviceOrientation, Version, '8.0'>
 }

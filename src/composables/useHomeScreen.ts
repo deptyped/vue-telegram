@@ -9,7 +9,7 @@ import type {
 } from '../types'
 import { onHomeScreenAdded, onHomeScreenChecked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
 type HomeScreenV80 = ReturnType<typeof useHomeScreen80>
 
@@ -67,12 +67,11 @@ export function useHomeScreen<
   Version extends BotApiVersion,
 >(options: { version: Version }) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useHomeScreen80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    isVersionAtLeast: webApp.isVersionAtLeast,
+    ...(isVersionGreaterOrEqual(version, '8.0') && useHomeScreen80()),
   } as VersionedReturnType<HomeScreen, Version, '8.0'>
 }

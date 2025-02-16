@@ -2,7 +2,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { computed, readonly, ref } from 'vue'
 import { onSecondaryButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type SecondaryButtonV60 = ReturnType<typeof useSecondaryButton60>
 type SecondaryButtonV710 = ReturnType<typeof useSecondaryButton710>
@@ -218,16 +218,15 @@ function useSecondaryButton710() {
 }
 
 export function useSecondaryButton<Version extends BotApiVersion>(
-  options?: { version?: Version },
+  options: { version: Version },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useSecondaryButton60(),
-    ...(isVersionGreaterOrEqual(version, '7.10')
-      ? useSecondaryButton710()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '7.10') && useSecondaryButton710()),
   } as VersionedReturnType<SecondaryButton, Version, '7.10'>
 }

@@ -1,6 +1,6 @@
 import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type HapticFeedbackV61 = ReturnType<typeof useHapticFeedback61>
 
@@ -58,12 +58,11 @@ export function useHapticFeedback<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
-    ...(isVersionGreaterOrEqual(version, '6.1')
-      ? useHapticFeedback61()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    isVersionAtLeast: webApp.isVersionAtLeast,
+    ...(isVersionGreaterOrEqual(version, '6.1') && useHapticFeedback61()),
   } as VersionedReturnType<HapticFeedback, Version, '6.1'>
 }

@@ -3,7 +3,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { readonly, ref } from 'vue'
 import { onGyroscopeChanged, onGyroscopeFailed, onGyroscopeStarted, onGyroscopeStopped } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
 type GyroscopeV60 = ReturnType<typeof useGyroscope60>
 type GyroscopeV80 = ReturnType<typeof useGyroscope80>
@@ -114,13 +114,12 @@ export function useGyroscope<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useGyroscope60(),
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useGyroscope80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '8.0') && useGyroscope80()),
   } as VersionedReturnType<Gyroscope, Version, '8.0'>
 }

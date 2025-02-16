@@ -9,7 +9,7 @@ import type {
 } from '../types'
 import { onPopupClosed } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify, promisifyWithNoData } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithNoData } from '../utils'
 
 type Popup62 = ReturnType<typeof usePopup62>
 
@@ -85,14 +85,13 @@ function usePopup62() {
   }
 }
 
-export function usePopup<Version extends BotApiVersion>(options?: { version?: Version }) {
+export function usePopup<Version extends BotApiVersion>(options: { version: Version }) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
-    ...(isVersionGreaterOrEqual(version, '6.2')
-      ? usePopup62()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    isVersionAtLeast: webApp.isVersionAtLeast,
+    ...(isVersionGreaterOrEqual(version, '6.2') && usePopup62()),
   } as VersionedReturnType<Popup, Version, '6.2'>
 }

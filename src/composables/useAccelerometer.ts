@@ -3,7 +3,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { readonly, ref } from 'vue'
 import { onAccelerometerChanged, onAccelerometerFailed, onAccelerometerStarted, onAccelerometerStopped } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
 type AccelerometerV60 = ReturnType<typeof useAccelerometer60>
 type AccelerometerV80 = ReturnType<typeof useAccelerometer80>
@@ -114,13 +114,12 @@ export function useAccelerometer<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useAccelerometer60(),
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useAccelerometer80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '8.0') && useAccelerometer80()),
   } as VersionedReturnType<Accelerometer, Version, '8.0'>
 }

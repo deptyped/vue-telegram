@@ -1,7 +1,7 @@
 import type { CloudStorageCallback } from '../sdk'
 import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisifyWithError } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisifyWithError } from '../utils'
 
 type CloudStorageV69 = ReturnType<typeof useCloudStorage69>
 
@@ -118,12 +118,11 @@ export function useCloudStorage<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
-    ...(isVersionGreaterOrEqual(version, '6.9')
-      ? useCloudStorage69()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    isVersionAtLeast: webApp.isVersionAtLeast,
+    ...(isVersionGreaterOrEqual(version, '6.9') && useCloudStorage69()),
   } as VersionedReturnType<CloudStorage, Version, '6.9'>
 }

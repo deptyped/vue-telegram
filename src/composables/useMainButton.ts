@@ -9,7 +9,7 @@ import type {
 import { computed, readonly, ref } from 'vue'
 import { onMainButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type MainButtonV60 = ReturnType<typeof useMainButton60>
 type MainButtonV710 = ReturnType<typeof useMainButton710>
@@ -213,13 +213,12 @@ export function useMainButton<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useMainButton60(),
-    ...(isVersionGreaterOrEqual(version, '7.10')
-      ? useMainButton710()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '7.10') && useMainButton710()),
   } as VersionedReturnType<MainButton, Version, '7.10'>
 }

@@ -2,7 +2,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { computed, readonly, ref } from 'vue'
 import { onThemeChanged } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type ThemeV60 = ReturnType<typeof useTheme60>
 type ThemeV61 = ReturnType<typeof useTheme61>
@@ -150,17 +150,16 @@ function useTheme710() {
 }
 
 export function useTheme<Version extends BotApiVersion>(
-  options?: { version?: Version },
+  options: { version: Version },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useTheme60(),
     ...(isVersionGreaterOrEqual(version, '6.1') && useTheme61()),
-    ...(isVersionGreaterOrEqual(version, '7.10')
-      ? useTheme710()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '7.10') && useTheme710()),
   } as VersionedReturnType<Theme, Version, '6.1' | '7.10'>
 }

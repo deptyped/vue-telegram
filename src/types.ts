@@ -54,11 +54,9 @@ export type VersionedReturnType<
   SuggestedVersions extends BotApiVersion,
 > =
   & Extract<Schema[BotApiVersion], { version: BotApiVersionRange<Version, LATEST_VERSION> }>
-  & (Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>> extends never
-    ? object
-    : {
-        isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is { version: BotApiVersionRange<V, LATEST_VERSION> }
-      })
+  & {
+    isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is { version: BotApiVersionRange<V, LATEST_VERSION> }
+  }
 
 /**
  * Mini Apps

@@ -3,7 +3,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { readonly, ref } from 'vue'
 import { onBiometricAuthRequested, onBiometricManagerUpdated, onBiometricTokenUpdated } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify, promisifyWithDataObject, promisifyWithNoData, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithDataObject, promisifyWithNoData, wrapFunction } from '../utils'
 
 type BiometricManagerV60 = ReturnType<typeof useBiometricManager60>
 type BiometricManagerV72 = ReturnType<typeof useBiometricManager72>
@@ -159,13 +159,12 @@ export function useBiometricManager<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useBiometricManager60(),
-    ...(isVersionGreaterOrEqual(version, '7.2')
-      ? useBiometricManager72()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '7.2') && useBiometricManager72()),
   } as VersionedReturnType<BiometricManager, Version, '7.2'>
 }

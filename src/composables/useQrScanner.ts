@@ -1,7 +1,7 @@
 import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
 import { onQrTextReceived, onScanQrPopupClosed } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual } from '../utils'
 
 type QrScannerV64 = ReturnType<typeof useQrScanner64>
 type QrScannerV77 = ReturnType<typeof useQrScanner77>
@@ -58,16 +58,15 @@ function useQrScanner77() {
 }
 
 export function useQrScanner<Version extends BotApiVersion>(
-  options?: { version?: Version },
+  options: { version: Version },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '6.4') && useQrScanner64()),
-    ...(isVersionGreaterOrEqual(version, '7.7')
-      ? useQrScanner77()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '7.7') && useQrScanner77()),
   } as VersionedReturnType<QrScanner, Version, '6.4' | '7.7'>
 }

@@ -16,3 +16,8 @@ function compareVersions(version1: string, version2: string) {
 export function isVersionGreaterOrEqual(version1: string, version2: string) {
   return compareVersions(version1, version2) >= 0
 }
+
+export function getHighestVersion(version1: string, version2: string): string {
+  const comparisonResult = compareVersions(version1, version2)
+  return comparisonResult >= 0 ? version1 : version2
+}

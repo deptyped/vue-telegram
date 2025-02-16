@@ -9,7 +9,7 @@ import type {
 import { computed, readonly, ref } from 'vue'
 import { onSettingsButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type SettingsButtonV60 = ReturnType<typeof useSettingsButton60>
 type SettingsButtonV70 = ReturnType<typeof useSettingsButton70>
@@ -96,16 +96,15 @@ function useSettingsButton70() {
 }
 
 export function useSettingsButton<Version extends BotApiVersion>(
-  options?: { version?: Version },
+  options: { version: Version },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useSettingsButton60(),
-    ...(isVersionGreaterOrEqual(version, '7.0')
-      ? useSettingsButton70()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '7.0') && useSettingsButton70()),
   } as VersionedReturnType<SettingsButton, Version, '7.0'>
 }

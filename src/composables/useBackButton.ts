@@ -2,7 +2,7 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { computed, readonly, ref } from 'vue'
 import { onBackButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
 type BackButtonV60 = ReturnType<typeof useBackButton60>
 type BackButtonV61 = ReturnType<typeof useBackButton61>
@@ -94,13 +94,12 @@ export function useBackButton<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useBackButton60(),
-    ...(isVersionGreaterOrEqual(version, '6.1')
-      ? useBackButton61()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '6.1') && useBackButton61()),
   } as VersionedReturnType<BackButton, Version, '6.1'>
 }

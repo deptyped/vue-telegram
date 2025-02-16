@@ -13,7 +13,7 @@ import type {
 import { computed, readonly, ref } from 'vue'
 import { onActivated, onContactRequested, onDeactivated, onFileDownloadRequested, onInvoiceClosed, onShareMessageFailed, onShareMessageSent, onWriteAccessRequested } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, isVersionGreaterOrEqual, promisify, wrapFunction } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, wrapFunction } from '../utils'
 
 type MiniAppV60 = ReturnType<typeof useMiniApp60>
 type MiniAppV61 = ReturnType<typeof useMiniApp61>
@@ -288,19 +288,18 @@ export function useMiniApp<Version extends BotApiVersion>(
   },
 ) {
   const { webApp } = useStore()
-  const version = options?.version ?? webApp.version
+  const version = getHighestVersion(options?.version, webApp.version)
 
   return {
     version: webApp.version,
+    isVersionAtLeast: webApp.isVersionAtLeast,
     ...useMiniApp60(),
     ...(isVersionGreaterOrEqual(version, '6.1') && useMiniApp61()),
     ...(isVersionGreaterOrEqual(version, '6.2') && useMiniApp62()),
     ...(isVersionGreaterOrEqual(version, '6.7') && useMiniApp67()),
     ...(isVersionGreaterOrEqual(version, '6.9') && useMiniApp69()),
     ...(isVersionGreaterOrEqual(version, '7.8') && useMiniApp78()),
-    ...(isVersionGreaterOrEqual(version, '8.0')
-      ? useMiniApp80()
-      : { isVersionAtLeast: webApp.isVersionAtLeast }),
+    ...(isVersionGreaterOrEqual(version, '8.0') && useMiniApp80()),
   } as VersionedReturnType<MiniApp, Version, '6.1' | '6.2' | '6.7' | '6.9' | '7.8' | '8.0'>
 }
 
