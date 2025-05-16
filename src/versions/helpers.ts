@@ -16,6 +16,7 @@ import { useMiniApp as _useMiniApp } from '../composables/useMiniApp'
 import { usePopup as _usePopup } from '../composables/usePopup'
 import { useQrScanner as _useQrScanner } from '../composables/useQrScanner'
 import { useSecondaryButton as _useSecondaryButton } from '../composables/useSecondaryButton'
+import { useSecureStorage as _useSecureStorage } from '../composables/useSecureStorage'
 import { useSettingsButton as _useSettingsButton } from '../composables/useSettingsButton'
 import { useTheme as _useTheme } from '../composables/useTheme'
 import { useViewport as _useViewport } from '../composables/useViewport'
@@ -39,6 +40,7 @@ export function createComposablesWithVersion<T extends BotApiVersion>(version: T
     usePopup: () => _usePopup({ version }),
     useQrScanner: () => _useQrScanner({ version }),
     useSecondaryButton: () => _useSecondaryButton({ version }),
+    useSecureStorage: () => _useSecureStorage({ version }),
     useSettingsButton: () => _useSettingsButton({ version }),
     useTheme: () => _useTheme({ version }),
     useViewport: () => _useViewport({ version }),

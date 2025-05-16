@@ -321,6 +321,8 @@ Improper management may lead to memory leaks or other issues.
 
 <!--@include: @/mini-apps/composables/use-secondary-button.md-->
 
+<!--@include: @/mini-apps/composables/use-secure-storage.md-->
+
 <!--@include: @/mini-apps/composables/use-settings-button.md-->
 
 <!--@include: @/mini-apps/composables/use-theme.md-->

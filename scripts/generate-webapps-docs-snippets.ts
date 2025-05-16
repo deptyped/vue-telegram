@@ -167,6 +167,13 @@ async function main() {
   for (const field of deviceStorage.fields) {
     writeFileSync(`${OUTPUT_PATH}/DeviceStorage-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
+
+  const secureStorage = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(244)'), {
+    descriptionSize: 2,
+  })
+  for (const field of secureStorage.fields) {
+    writeFileSync(`${OUTPUT_PATH}/SecureStorage-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
+  }
 }
 
 main()

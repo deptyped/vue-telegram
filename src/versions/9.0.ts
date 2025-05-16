@@ -18,6 +18,7 @@ export const {
   usePopup,
   useQrScanner,
   useSecondaryButton,
+  useSecureStorage,
   useSettingsButton,
   useTheme,
   useViewport,
