@@ -37,6 +37,8 @@ outline: [2, 3]
 | DeviceOrientation            | [useDeviceOrientation](#usedeviceorientation)                 |
 | Gyroscope                    | [useGyroscope](#usegyroscope)                                 |
 | LocationManager              | [useLocationManager](#uselocationmanager)                     |
+| DeviceStorage                | [useDeviceStorage ](#usedevicestorage)                        |
+| SecureStorage                | [useSecureStorage](#usesecurestorage)                         |
 | isVersionAtLeast             | [useMiniApp](#useminiapp)                                     |
 | setHeaderColor               | [useTheme](#usetheme)                                         |
 | setBackgroundColor           | [useTheme](#usetheme)                                         |
