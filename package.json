@@ -88,6 +88,11 @@
       "import": "./dist/8.0.js",
       "require": "./dist/8.0.cjs"
     },
+    "./9.0": {
+      "types": "./dist/versions/9.0.d.ts",
+      "import": "./dist/9.0.js",
+      "require": "./dist/9.0.cjs"
+    },
     "./latest": {
       "types": "./dist/versions/latest.d.ts",
       "import": "./dist/latest.js",
