@@ -14,9 +14,10 @@ type BOT_API_VERSIONS = [
   '7.8',
   '7.10',
   '8.0',
+  '9.0',
 ]
 
-export type LATEST_VERSION = '8.0'
+export type LATEST_VERSION = '9.0'
 
 type Reverse<T extends any[]> = T extends [infer First, ...infer Rest]
   ? [...Reverse<Rest>, First]

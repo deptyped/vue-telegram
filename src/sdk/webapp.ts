@@ -4,12 +4,14 @@ import type { BiometricManager, BiometricManagerCallback } from './biometric-man
 import type { BottomButton } from './bottom-button'
 import type { CloudStorage, CloudStorageCallback } from './cloud-storage'
 import type { DeviceOrientation, DeviceOrientationCallback } from './device-orientation'
+import type { DeviceStorage, DeviceStorageCallback } from './device-storage'
 import type { EventData, EventHandler } from './events'
 import type { Gyroscope, GyroscopeCallback } from './gyroscope'
 import type { HapticFeedback } from './haptic-feedback'
 import type { LocationManager, LocationManagerCallback } from './location-manager'
 import type { PopupParams } from './popup'
 import type { ScanQrPopupParams } from './qr-scanner'
+import type { SecureStorage, SecureStorageCallback } from './secure-storage'
 import type { SettingsButton } from './settings-button'
 import type { ThemeParams } from './theme'
 import type { ContentSafeAreaInset, SafeAreaInset } from './viewport'
@@ -45,6 +47,8 @@ export type WebApp = {
   DeviceOrientation: DeviceOrientation
   Gyroscope: Gyroscope
   LocationManager: LocationManager
+  DeviceStorage: DeviceStorage
+  SecureStorage: SecureStorage
   isVersionAtLeast: (version: string) => boolean
   setHeaderColor: (color: 'bg_color' | 'secondary_bg_color' | (string & {})) => void
   setBackgroundColor: (color: 'bg_color' | 'secondary_bg_color' | (string & {})) => void
@@ -104,6 +108,8 @@ export type WebAppCallback = {
   DeviceOrientation: DeviceOrientationCallback
   Gyroscope: GyroscopeCallback
   LocationManager: LocationManagerCallback
+  DeviceStorage: DeviceStorageCallback
+  SecureStorage: SecureStorageCallback
 }
 
 export type StoryShareParams = {

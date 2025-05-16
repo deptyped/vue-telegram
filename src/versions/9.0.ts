@@ -22,4 +22,4 @@ export const {
   useSettingsButton,
   useTheme,
   useViewport,
-} = createComposablesWithVersion('7.7')
+} = createComposablesWithVersion('9.0')

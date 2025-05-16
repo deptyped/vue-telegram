@@ -5,6 +5,7 @@ import { useBiometricManager as _useBiometricManager } from '../composables/useB
 import { useClipboard as _useClipboard } from '../composables/useClipboard'
 import { useCloudStorage as _useCloudStorage } from '../composables/useCloudStorage'
 import { useDeviceOrientation as _useDeviceOrientation } from '../composables/useDeviceOrientation'
+import { useDeviceStorage as _useDeviceStorage } from '../composables/useDeviceStorage'
 import { useEmojiStatus as _useEmojiStatus } from '../composables/useEmojiStatus'
 import { useGyroscope as _useGyroscope } from '../composables/useGyroscope'
 import { useHapticFeedback as _useHapticFeedback } from '../composables/useHapticFeedback'
@@ -15,6 +16,7 @@ import { useMiniApp as _useMiniApp } from '../composables/useMiniApp'
 import { usePopup as _usePopup } from '../composables/usePopup'
 import { useQrScanner as _useQrScanner } from '../composables/useQrScanner'
 import { useSecondaryButton as _useSecondaryButton } from '../composables/useSecondaryButton'
+import { useSecureStorage as _useSecureStorage } from '../composables/useSecureStorage'
 import { useSettingsButton as _useSettingsButton } from '../composables/useSettingsButton'
 import { useTheme as _useTheme } from '../composables/useTheme'
 import { useViewport as _useViewport } from '../composables/useViewport'
@@ -27,6 +29,7 @@ export function createComposablesWithVersion<T extends BotApiVersion>(version: T
     useClipboard: () => _useClipboard({ version }),
     useCloudStorage: () => _useCloudStorage({ version }),
     useDeviceOrientation: () => _useDeviceOrientation({ version }),
+    useDeviceStorage: () => _useDeviceStorage({ version }),
     useEmojiStatus: () => _useEmojiStatus({ version }),
     useGyroscope: () => _useGyroscope({ version }),
     useHapticFeedback: () => _useHapticFeedback({ version }),
@@ -37,6 +40,7 @@ export function createComposablesWithVersion<T extends BotApiVersion>(version: T
     usePopup: () => _usePopup({ version }),
     useQrScanner: () => _useQrScanner({ version }),
     useSecondaryButton: () => _useSecondaryButton({ version }),
+    useSecureStorage: () => _useSecureStorage({ version }),
     useSettingsButton: () => _useSettingsButton({ version }),
     useTheme: () => _useTheme({ version }),
     useViewport: () => _useViewport({ version }),

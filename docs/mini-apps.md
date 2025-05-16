@@ -37,6 +37,8 @@ outline: [2, 3]
 | DeviceOrientation            | [useDeviceOrientation](#usedeviceorientation)                 |
 | Gyroscope                    | [useGyroscope](#usegyroscope)                                 |
 | LocationManager              | [useLocationManager](#uselocationmanager)                     |
+| DeviceStorage                | [useDeviceStorage ](#usedevicestorage)                        |
+| SecureStorage                | [useSecureStorage](#usesecurestorage)                         |
 | isVersionAtLeast             | [useMiniApp](#useminiapp)                                     |
 | setHeaderColor               | [useTheme](#usetheme)                                         |
 | setBackgroundColor           | [useTheme](#usetheme)                                         |
@@ -301,6 +303,8 @@ Improper management may lead to memory leaks or other issues.
 
 <!--@include: @/mini-apps/composables/use-device-orientation.md-->
 
+<!--@include: @/mini-apps/composables/use-device-storage.md-->
+
 <!--@include: @/mini-apps/composables/use-emoji-status.md-->
 
 <!--@include: @/mini-apps/composables/use-gyroscope.md-->
@@ -318,6 +322,8 @@ Improper management may lead to memory leaks or other issues.
 <!--@include: @/mini-apps/composables/use-qr-scanner.md-->
 
 <!--@include: @/mini-apps/composables/use-secondary-button.md-->
+
+<!--@include: @/mini-apps/composables/use-secure-storage.md-->
 
 <!--@include: @/mini-apps/composables/use-settings-button.md-->
 
