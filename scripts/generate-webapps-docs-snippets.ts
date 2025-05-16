@@ -106,61 +106,66 @@ async function main() {
   const dom = await JSDOM.fromURL(DOCS_URL)
   // const dom = await JSDOM.fromFile('./output.html')
 
-  const mainSection = parseSection(dom.window.document.querySelector('#dev_page_content > h3:nth-child(137)'), {
+  const mainSection = parseSection(dom.window.document.querySelector('#dev_page_content > h3:nth-child(140)'), {
     descriptionSize: 3,
   })
   for (const field of mainSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/WebApp-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const backButtonSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(176)'))
+  const backButtonSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(179)'))
   for (const field of backButtonSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/BackButton-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const mainButtonSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(180)'))
+  const mainButtonSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(183)'))
   for (const field of mainButtonSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/MainButton-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const settingsButtonSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(184)'))
+  const settingsButtonSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(187)'))
   for (const field of settingsButtonSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/SettingsButton-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const hapticFeedbackSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(188)'))
+  const hapticFeedbackSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(191)'))
   for (const field of hapticFeedbackSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/HapticFeedback-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const cloudStorageSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(192)'))
+  const cloudStorageSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(195)'))
   for (const field of cloudStorageSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/CloudStorage-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const biometricManagerSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(196)'))
+  const biometricManagerSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(199)'))
   for (const field of biometricManagerSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/BiometricManager-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const accelerometerSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(206)'))
+  const accelerometerSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(209)'))
   for (const field of accelerometerSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/Accelerometer-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const deviceOrientationSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(214)'))
+  const deviceOrientationSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(217)'))
   for (const field of deviceOrientationSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/DeviceOrientation-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const gyroscopeSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(222)'))
+  const gyroscopeSection = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(225)'))
   for (const field of gyroscopeSection.fields) {
     writeFileSync(`${OUTPUT_PATH}/Gyroscope-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 
-  const locationManager = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(230)'))
+  const locationManager = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(233)'))
   for (const field of locationManager.fields) {
     writeFileSync(`${OUTPUT_PATH}/LocationManager-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
+  }
+
+  const deviceStorage = parseSection(dom.window.document.querySelector('#dev_page_content > h4:nth-child(240)'))
+  for (const field of deviceStorage.fields) {
+    writeFileSync(`${OUTPUT_PATH}/DeviceStorage-${normalizeFieldName(field.name)}.md`, preprocessDescription(field.description))
   }
 }
 

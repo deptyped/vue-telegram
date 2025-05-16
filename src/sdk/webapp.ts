@@ -4,6 +4,7 @@ import type { BiometricManager, BiometricManagerCallback } from './biometric-man
 import type { BottomButton } from './bottom-button'
 import type { CloudStorage, CloudStorageCallback } from './cloud-storage'
 import type { DeviceOrientation, DeviceOrientationCallback } from './device-orientation'
+import type { DeviceStorage, DeviceStorageCallback } from './device-storage'
 import type { EventData, EventHandler } from './events'
 import type { Gyroscope, GyroscopeCallback } from './gyroscope'
 import type { HapticFeedback } from './haptic-feedback'
@@ -45,6 +46,7 @@ export type WebApp = {
   DeviceOrientation: DeviceOrientation
   Gyroscope: Gyroscope
   LocationManager: LocationManager
+  DeviceStorage: DeviceStorage
   isVersionAtLeast: (version: string) => boolean
   setHeaderColor: (color: 'bg_color' | 'secondary_bg_color' | (string & {})) => void
   setBackgroundColor: (color: 'bg_color' | 'secondary_bg_color' | (string & {})) => void
@@ -104,6 +106,7 @@ export type WebAppCallback = {
   DeviceOrientation: DeviceOrientationCallback
   Gyroscope: GyroscopeCallback
   LocationManager: LocationManagerCallback
+  DeviceStorage: DeviceStorageCallback
 }
 
 export type StoryShareParams = {

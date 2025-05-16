@@ -7,6 +7,7 @@ export const {
   useClipboard,
   useCloudStorage,
   useDeviceOrientation,
+  useDeviceStorage,
   useEmojiStatus,
   useGyroscope,
   useHapticFeedback,

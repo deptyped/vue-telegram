@@ -5,6 +5,7 @@ import { useBiometricManager as _useBiometricManager } from '../composables/useB
 import { useClipboard as _useClipboard } from '../composables/useClipboard'
 import { useCloudStorage as _useCloudStorage } from '../composables/useCloudStorage'
 import { useDeviceOrientation as _useDeviceOrientation } from '../composables/useDeviceOrientation'
+import { useDeviceStorage as _useDeviceStorage } from '../composables/useDeviceStorage'
 import { useEmojiStatus as _useEmojiStatus } from '../composables/useEmojiStatus'
 import { useGyroscope as _useGyroscope } from '../composables/useGyroscope'
 import { useHapticFeedback as _useHapticFeedback } from '../composables/useHapticFeedback'
@@ -27,6 +28,7 @@ export function createComposablesWithVersion<T extends BotApiVersion>(version: T
     useClipboard: () => _useClipboard({ version }),
     useCloudStorage: () => _useCloudStorage({ version }),
     useDeviceOrientation: () => _useDeviceOrientation({ version }),
+    useDeviceStorage: () => _useDeviceStorage({ version }),
     useEmojiStatus: () => _useEmojiStatus({ version }),
     useGyroscope: () => _useGyroscope({ version }),
     useHapticFeedback: () => _useHapticFeedback({ version }),

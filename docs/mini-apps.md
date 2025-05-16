@@ -301,6 +301,8 @@ Improper management may lead to memory leaks or other issues.
 
 <!--@include: @/mini-apps/composables/use-device-orientation.md-->
 
+<!--@include: @/mini-apps/composables/use-device-storage.md-->
+
 <!--@include: @/mini-apps/composables/use-emoji-status.md-->
 
 <!--@include: @/mini-apps/composables/use-gyroscope.md-->
