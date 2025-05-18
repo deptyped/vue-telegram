@@ -17,7 +17,7 @@ const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const mainButton = useMainButton({ version: '6.0' })
+const mainButton = useMainButton('6.0')
 
 watch(
   () => props.text,

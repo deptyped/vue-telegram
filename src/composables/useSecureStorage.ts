@@ -3,25 +3,16 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithError } from '../utils'
 
-type SecureStorageV90 = ReturnType<typeof useSecureStorage90>
+type v90 = ReturnType<typeof useSecureStorage90>
 
-type SecureStorageV60to90 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'9.0'>>]: Merge<
-    Partial<SecureStorageV90>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v90>, object>
+  '9.0': Merge<Schema['6.0'], v90>
 }
 
-type SecureStorageV90toLatest = {
-  [version in BotApiVersionRange<'9.0', LATEST_VERSION>]: Merge<
-    SecureStorageV60to90['6.0'],
-    { version: version } & SecureStorageV90
-  >;
-}
-
-type SecureStorage =
-  & SecureStorageV60to90
-  & SecureStorageV90toLatest
+export type SecureStorage =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'9.0'>> })
+  | (Schema['9.0'] & { version: BotApiVersionRange<'9.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -100,17 +91,13 @@ function useSecureStorage90() {
   }
 }
 
-export function useSecureStorage<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useSecureStorage<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '9.0') && useSecureStorage90()),
-  } as VersionedReturnType<SecureStorage, Version, '9.0'>
+  } as VersionedReturnType<SecureStorage, Version, keyof Schema>
 }

@@ -4,7 +4,7 @@
     "target": "ESNext",
     "lib": ["DOM", "ESNext"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "strict": true,
     "strictNullChecks": true,

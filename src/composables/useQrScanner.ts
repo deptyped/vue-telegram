@@ -3,33 +3,19 @@ import { onQrTextReceived, onScanQrPopupClosed } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual } from '../utils'
 
-type QrScannerV64 = ReturnType<typeof useQrScanner64>
-type QrScannerV77 = ReturnType<typeof useQrScanner77>
+type v64 = ReturnType<typeof useQrScanner64>
+type v77 = ReturnType<typeof useQrScanner77>
 
-type QrScannerV60to64 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>>]: Merge<
-    & Partial<QrScannerV64>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v64 & v77>, object>
+  '6.4': Merge<Schema['6.0'], v64>
+  '7.7': Merge<Schema['6.4'], v77>
 }
 
-type QrScannerV64to77 = {
-  [version in BotApiVersionRange<'6.4', BotApiPrevVersion<'7.7'>>]: Merge<
-    QrScannerV60to64['6.0'],
-    { version: version } & QrScannerV64
-  >;
-}
-type QrScannerV77toLatest = {
-  [version in BotApiVersionRange<'7.7', LATEST_VERSION>]: Merge<
-    QrScannerV64to77['6.4'],
-    { version: version } & QrScannerV77
-  >;
-}
-
-type QrScanner =
-  & QrScannerV60to64
-  & QrScannerV64to77
-  & QrScannerV77toLatest
+export type QrScanner =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>> })
+  | (Schema['6.4'] & { version: BotApiVersionRange<'6.4', BotApiPrevVersion<'7.7'>> })
+  | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -57,16 +43,14 @@ function useQrScanner77() {
   }
 }
 
-export function useQrScanner<Version extends BotApiVersion>(
-  options: { version: Version },
-) {
+export function useQrScanner<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '6.4') && useQrScanner64()),
     ...(isVersionGreaterOrEqual(version, '7.7') && useQrScanner77()),
-  } as VersionedReturnType<QrScanner, Version, '6.4' | '7.7'>
+  } as VersionedReturnType<QrScanner, Version, keyof Schema>
 }

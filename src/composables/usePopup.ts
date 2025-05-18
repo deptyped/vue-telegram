@@ -11,25 +11,16 @@ import { onPopupClosed } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithNoData } from '../utils'
 
-type Popup62 = ReturnType<typeof usePopup62>
+type v62 = ReturnType<typeof usePopup62>
 
-type PopupV60 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'6.2'>>]: Merge<
-    Partial<Popup62>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v62>, object>
+  '6.2': Merge<Schema['6.0'], v62>
 }
 
-type PopupV62toLatest = {
-  [version in BotApiVersionRange<'6.2', LATEST_VERSION>]: Merge<
-    PopupV60['6.0'],
-    { version: version } & Popup62
-  >;
-}
-
-type Popup =
-  & PopupV60
-  & PopupV62toLatest
+export type Popup =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.2'>> })
+  | (Schema['6.2'] & { version: BotApiVersionRange<'6.2', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -85,13 +76,13 @@ function usePopup62() {
   }
 }
 
-export function usePopup<Version extends BotApiVersion>(options: { version: Version }) {
+export function usePopup<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '6.2') && usePopup62()),
-  } as VersionedReturnType<Popup, Version, '6.2'>
+  } as VersionedReturnType<Popup, Version, keyof Schema>
 }

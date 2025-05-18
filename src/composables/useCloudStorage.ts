@@ -3,25 +3,16 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisifyWithError } from '../utils'
 
-type CloudStorageV69 = ReturnType<typeof useCloudStorage69>
+type v69 = ReturnType<typeof useCloudStorage69>
 
-type CloudStorageV60to69 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'6.9'>>]: Merge<
-    Partial<CloudStorageV69>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v69>, object>
+  '6.9': Merge<Schema['6.0'], v69>
 }
 
-type CloudStorageV69toLatest = {
-  [version in BotApiVersionRange<'6.9', LATEST_VERSION>]: Merge<
-    CloudStorageV60to69['6.0'],
-    { version: version } & CloudStorageV69
-  >;
-}
-
-type CloudStorage =
-  & CloudStorageV60to69
-  & CloudStorageV69toLatest
+export type CloudStorage =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.9'>> })
+  | (Schema['6.9'] & { version: BotApiVersionRange<'6.9', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -112,17 +103,13 @@ function useCloudStorage69() {
   }
 }
 
-export function useCloudStorage<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useCloudStorage<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '6.9') && useCloudStorage69()),
-  } as VersionedReturnType<CloudStorage, Version, '6.9'>
+  } as VersionedReturnType<CloudStorage, Version, keyof Schema>
 }

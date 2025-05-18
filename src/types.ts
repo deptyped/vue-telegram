@@ -50,11 +50,11 @@ export type BotApiVersionRange<Start extends BotApiVersion, End extends BotApiVe
     : Start | BotApiVersionRange<BotApiNextVersion<Start>, End>
 
 export type VersionedReturnType<
-  Schema extends Record<BotApiVersion, object>,
+  Schema extends { version: BotApiVersion },
   Version extends BotApiVersion,
   SuggestedVersions extends BotApiVersion,
 > =
-  & Extract<Schema[BotApiVersion], { version: BotApiVersionRange<Version, LATEST_VERSION> }>
+  & Exclude<Schema, { version: Version extends '6.0' ? never : BotApiVersionRange<'6.0', BotApiPrevVersion<Version>> }>
   & {
     isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is { version: BotApiVersionRange<V, LATEST_VERSION> }
   }

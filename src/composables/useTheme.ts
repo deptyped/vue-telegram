@@ -4,35 +4,20 @@ import { onThemeChanged } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
-type ThemeV60 = ReturnType<typeof useTheme60>
-type ThemeV61 = ReturnType<typeof useTheme61>
-type ThemeV710 = ReturnType<typeof useTheme710>
+type v60 = ReturnType<typeof useTheme60>
+type v61 = ReturnType<typeof useTheme61>
+type v710 = ReturnType<typeof useTheme710>
 
-type ThemeV60to61 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>>]: Merge<
-    Partial<ThemeV61> & Partial<ThemeV710>,
-    { version: version } & ThemeV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v61 & v710>, v60>
+  '6.1': Merge<Schema['6.0'], v61>
+  '7.10': Merge<Schema['6.1'], v710>
 }
 
-type ThemeV61to710 = {
-  [version in BotApiVersionRange<'6.1', BotApiPrevVersion<'7.10'>>]: Merge<
-    ThemeV60to61['6.0'],
-    { version: version } & ThemeV61
-  >;
-}
-
-type ThemeV710toLatest = {
-  [version in BotApiVersionRange<'7.10', LATEST_VERSION>]: Merge<
-    ThemeV61to710['6.1'],
-    { version: version } & ThemeV710
-  >;
-}
-
-type Theme =
-  & ThemeV60to61
-  & ThemeV61to710
-  & ThemeV710toLatest
+export type Theme =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
+  | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'7.10'>> })
+  | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -149,11 +134,9 @@ function useTheme710() {
   }
 }
 
-export function useTheme<Version extends BotApiVersion>(
-  options: { version: Version },
-) {
+export function useTheme<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
@@ -161,5 +144,5 @@ export function useTheme<Version extends BotApiVersion>(
     ...useTheme60(),
     ...(isVersionGreaterOrEqual(version, '6.1') && useTheme61()),
     ...(isVersionGreaterOrEqual(version, '7.10') && useTheme710()),
-  } as VersionedReturnType<Theme, Version, '6.1' | '7.10'>
+  } as VersionedReturnType<Theme, Version, keyof Schema>
 }

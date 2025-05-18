@@ -6,7 +6,7 @@ import { onMainButtonClicked } from '../events'
  * @deprecated Use [`useMainButton`](https://vue-tg.deptyped.com/mini-apps.html#usemainbutton) instead
  */
 export function useWebAppMainButton() {
-  const mainButton = useMainButton({ version: '8.0' })
+  const mainButton = useMainButton('8.0')
 
   return {
     mainButtonText: mainButton.text,

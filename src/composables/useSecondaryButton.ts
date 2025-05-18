@@ -4,26 +4,17 @@ import { onSecondaryButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
-type SecondaryButtonV60 = ReturnType<typeof useSecondaryButton60>
-type SecondaryButtonV710 = ReturnType<typeof useSecondaryButton710>
+type v60 = ReturnType<typeof useSecondaryButton60>
+type v710 = ReturnType<typeof useSecondaryButton710>
 
-type SecondaryButtonV60to710 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'7.10'>>]: Merge<
-    & Partial<SecondaryButtonV710>,
-    { version: version } & SecondaryButtonV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v710>, v60>
+  '7.10': Merge<Schema['6.0'], v710>
 }
 
-type SecondaryButtonV710toLatest = {
-  [version in BotApiVersionRange<'7.10', LATEST_VERSION>]: Merge<
-    SecondaryButtonV60to710['6.0'],
-    { version: version } & SecondaryButtonV710
-  >;
-}
-
-type SecondaryButton =
-  & SecondaryButtonV60to710
-  & SecondaryButtonV710toLatest
+export type SecondaryButton =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.10'>> })
+  | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -217,16 +208,14 @@ function useSecondaryButton710() {
   }
 }
 
-export function useSecondaryButton<Version extends BotApiVersion>(
-  options: { version: Version },
-) {
+export function useSecondaryButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useSecondaryButton60(),
     ...(isVersionGreaterOrEqual(version, '7.10') && useSecondaryButton710()),
-  } as VersionedReturnType<SecondaryButton, Version, '7.10'>
+  } as VersionedReturnType<SecondaryButton, Version, keyof Schema>
 }

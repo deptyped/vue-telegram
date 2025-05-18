@@ -9,7 +9,7 @@ const props = defineProps({
   force: { type: Boolean, default: false },
 })
 
-const viewport = useViewport({ version: '6.0' })
+const viewport = useViewport('6.0')
 
 if (viewport.isVersionAtLeast('7.7')) {
   watch(

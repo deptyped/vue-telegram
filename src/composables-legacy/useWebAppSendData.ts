@@ -20,7 +20,7 @@ export function useWebAppSendData<D>(
 
   const isLoading = ref(false)
 
-  const { initData, initDataUnsafe, sendData, close } = useMiniApp({ version: '8.0' })
+  const { initData, initDataUnsafe, sendData, close } = useMiniApp('8.0')
 
   return {
     error,

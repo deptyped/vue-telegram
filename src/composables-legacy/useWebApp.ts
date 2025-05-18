@@ -30,7 +30,7 @@ export function useWebApp() {
     sendData,
     ready,
     close,
-  } = useMiniApp({ version: '8.0' })
+  } = useMiniApp('8.0')
 
   const isPlatformUnknown = isPlatform('unknown')
 

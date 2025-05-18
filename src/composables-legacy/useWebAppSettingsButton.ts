@@ -5,7 +5,7 @@ import { onSettingsButtonClicked } from '../events'
  * @deprecated Use [`useSettingsButton`](https://vue-tg.deptyped.com/mini-apps.html#usesettingsbutton) instead
  */
 export function useWebAppSettingsButton() {
-  const settingsButton = useSettingsButton({ version: '8.0' })
+  const settingsButton = useSettingsButton('8.0')
 
   return {
     isSettingsButtonVisible: settingsButton.isVisible,

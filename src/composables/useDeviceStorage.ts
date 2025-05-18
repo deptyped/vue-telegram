@@ -3,25 +3,16 @@ import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSI
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithError } from '../utils'
 
-type DeviceStorageV90 = ReturnType<typeof useDeviceStorage90>
+type v90 = ReturnType<typeof useDeviceStorage90>
 
-type DeviceStorageV60to90 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'9.0'>>]: Merge<
-    Partial<DeviceStorageV90>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v90>, object>
+  '9.0': Merge<Schema['6.0'], v90>
 }
 
-type DeviceStorageV90toLatest = {
-  [version in BotApiVersionRange<'9.0', LATEST_VERSION>]: Merge<
-    DeviceStorageV60to90['6.0'],
-    { version: version } & DeviceStorageV90
-  >;
-}
-
-type DeviceStorage =
-  & DeviceStorageV60to90
-  & DeviceStorageV90toLatest
+export type DeviceStorage =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'9.0'>> })
+  | (Schema['9.0'] & { version: BotApiVersionRange<'9.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -88,17 +79,13 @@ function useDeviceStorage90() {
   }
 }
 
-export function useDeviceStorage<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useDeviceStorage<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '9.0') && useDeviceStorage90()),
-  } as VersionedReturnType<DeviceStorage, Version, '9.0'>
+  } as VersionedReturnType<DeviceStorage, Version, keyof Schema>
 }

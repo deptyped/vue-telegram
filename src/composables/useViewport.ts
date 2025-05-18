@@ -4,36 +4,20 @@ import { onContentSafeAreaChanged, onFullscreenChanged, onFullscreenFailed, onSa
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
-type ViewportV60 = ReturnType<typeof useViewport60>
-type ViewportV77 = ReturnType<typeof useViewport77>
-type ViewportV80 = ReturnType<typeof useViewport80>
+type v60 = ReturnType<typeof useViewport60>
+type v77 = ReturnType<typeof useViewport77>
+type v80 = ReturnType<typeof useViewport80>
 
-type ViewportV60to77 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'7.7'>>]: Merge<
-    & Partial<ViewportV77>
-    & Partial<ViewportV80>,
-    { version: version } & ViewportV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v77 & v80>, v60>
+  '7.7': Merge<Schema['6.0'], v77>
+  '8.0': Merge<Schema['7.7'], v80>
 }
 
-type ViewportV77to80 = {
-  [version in BotApiVersionRange<'7.7', BotApiPrevVersion<'8.0'>>]: Merge<
-    ViewportV60to77['6.0'],
-    { version: version } & ViewportV77
-  >;
-}
-
-type ViewportV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    ViewportV77to80['7.7'],
-    { version: version } & ViewportV80
-  >;
-}
-
-type Viewport =
-  & ViewportV60to77
-  & ViewportV77to80
-  & ViewportV80toLatest
+export type Viewport =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.7'>> })
+  | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -201,11 +185,9 @@ function useViewport80() {
   }
 }
 
-export function useViewport<Version extends BotApiVersion>(
-  options: { version: Version },
-) {
+export function useViewport<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
@@ -213,5 +195,5 @@ export function useViewport<Version extends BotApiVersion>(
     ...useViewport60(),
     ...(isVersionGreaterOrEqual(version, '7.7') && useViewport77()),
     ...(isVersionGreaterOrEqual(version, '8.0') && useViewport80()),
-  } as VersionedReturnType<Viewport, Version, '7.7' | '8.0'>
+  } as VersionedReturnType<Viewport, Version, keyof Schema>
 }

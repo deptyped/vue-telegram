@@ -5,26 +5,17 @@ import { onGyroscopeChanged, onGyroscopeFailed, onGyroscopeStarted, onGyroscopeS
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
-type GyroscopeV60 = ReturnType<typeof useGyroscope60>
-type GyroscopeV80 = ReturnType<typeof useGyroscope80>
+type v60 = ReturnType<typeof useGyroscope60>
+type v80 = ReturnType<typeof useGyroscope80>
 
-type GyroscopeV60to80 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>>]: Merge<
-    Partial<GyroscopeV80>,
-    { version: version } & GyroscopeV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v80>, v60>
+  '8.0': Merge<Schema['6.0'], v80>
 }
 
-type GyroscopeV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    GyroscopeV60to80['6.0'],
-    { version: version } & GyroscopeV80
-  >;
-}
-
-type Gyroscope =
-  & GyroscopeV60to80
-  & GyroscopeV80toLatest
+export type Gyroscope =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -108,18 +99,14 @@ function useGyroscope80() {
   }
 }
 
-export function useGyroscope<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useGyroscope<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useGyroscope60(),
     ...(isVersionGreaterOrEqual(version, '8.0') && useGyroscope80()),
-  } as VersionedReturnType<Gyroscope, Version, '8.0'>
+  } as VersionedReturnType<Gyroscope, Version, keyof Schema>
 }

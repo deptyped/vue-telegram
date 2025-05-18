@@ -5,26 +5,17 @@ import { onBiometricAuthRequested, onBiometricManagerUpdated, onBiometricTokenUp
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithDataObject, promisifyWithNoData, wrapFunction } from '../utils'
 
-type BiometricManagerV60 = ReturnType<typeof useBiometricManager60>
-type BiometricManagerV72 = ReturnType<typeof useBiometricManager72>
+type v60 = ReturnType<typeof useBiometricManager60>
+type v72 = ReturnType<typeof useBiometricManager72>
 
-type BiometricManagerV60to72 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'7.2'>>]: Merge<
-    Partial<BiometricManagerV72>,
-    { version: version } & BiometricManagerV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v72>, v60>
+  '7.2': Merge<Schema['6.0'], v72>
 }
 
-type BiometricManagerV72toLatest = {
-  [version in BotApiVersionRange<'7.2', LATEST_VERSION>]: Merge<
-    BiometricManagerV60to72['6.0'],
-    { version: version } & BiometricManagerV72
-  >;
-}
-
-type BiometricManager =
-  & BiometricManagerV60to72
-  & BiometricManagerV72toLatest
+export type BiometricManager =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.2'>> })
+  | (Schema['7.2'] & { version: BotApiVersionRange<'7.2', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -153,18 +144,14 @@ function useBiometricManager72() {
   }
 }
 
-export function useBiometricManager<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useBiometricManager<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useBiometricManager60(),
     ...(isVersionGreaterOrEqual(version, '7.2') && useBiometricManager72()),
-  } as VersionedReturnType<BiometricManager, Version, '7.2'>
+  } as VersionedReturnType<BiometricManager, Version, keyof Schema>
 }

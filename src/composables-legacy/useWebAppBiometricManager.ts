@@ -18,7 +18,7 @@ export function useWebAppBiometricManager() {
     requestAccess,
     openSettings,
     updateToken,
-  } = useBiometricManager({ version: '8.0' })
+  } = useBiometricManager('8.0')
 
   return {
     isBiometricInited: isInited,

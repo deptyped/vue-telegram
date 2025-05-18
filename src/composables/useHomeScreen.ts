@@ -11,25 +11,16 @@ import { onHomeScreenAdded, onHomeScreenChecked } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
-type HomeScreenV80 = ReturnType<typeof useHomeScreen80>
+type v80 = ReturnType<typeof useHomeScreen80>
 
-type HomeScreenV60to80 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>>]: Merge<
-    Partial<HomeScreenV80>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v80>, object>
+  '8.0': Merge<Schema['6.0'], v80>
 }
 
-type HomeScreenV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    HomeScreenV60to80['6.0'],
-    { version: version } & HomeScreenV80
-  >;
-}
-
-type HomeScreen =
-  & HomeScreenV60to80
-  & HomeScreenV80toLatest
+export type HomeScreen =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -63,15 +54,13 @@ function useHomeScreen80() {
   }
 }
 
-export function useHomeScreen<
-  Version extends BotApiVersion,
->(options: { version: Version }) {
+export function useHomeScreen<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '8.0') && useHomeScreen80()),
-  } as VersionedReturnType<HomeScreen, Version, '8.0'>
+  } as VersionedReturnType<HomeScreen, Version, keyof Schema>
 }

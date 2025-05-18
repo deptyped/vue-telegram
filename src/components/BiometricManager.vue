@@ -8,7 +8,7 @@ const emit = defineEmits<{
   (eventName: 'init'): void
 }>()
 
-const biometricManager = useBiometricManager({ version: '6.0' })
+const biometricManager = useBiometricManager('6.0')
 
 if (biometricManager.isVersionAtLeast('7.2')) {
   onMounted(() => biometricManager.init(() => emit('init')))

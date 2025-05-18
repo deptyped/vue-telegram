@@ -15,78 +15,32 @@ import { onActivated, onContactRequested, onDeactivated, onFileDownloadRequested
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, wrapFunction } from '../utils'
 
-type MiniAppV60 = ReturnType<typeof useMiniApp60>
-type MiniAppV61 = ReturnType<typeof useMiniApp61>
-type MiniAppV62 = ReturnType<typeof useMiniApp62>
-type MiniAppV67 = ReturnType<typeof useMiniApp67>
-type MiniAppV69 = ReturnType<typeof useMiniApp69>
-type MiniAppV78 = ReturnType<typeof useMiniApp78>
-type MiniAppV80 = ReturnType<typeof useMiniApp80>
+type v60 = ReturnType<typeof useMiniApp60>
+type v61 = ReturnType<typeof useMiniApp61>
+type v62 = ReturnType<typeof useMiniApp62>
+type v67 = ReturnType<typeof useMiniApp67>
+type v69 = ReturnType<typeof useMiniApp69>
+type v78 = ReturnType<typeof useMiniApp78>
+type v80 = ReturnType<typeof useMiniApp80>
 
-type MiniAppV60to61 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>>]: Merge<
-    Partial<
-      & MiniAppV61
-      & MiniAppV62
-      & MiniAppV67
-      & MiniAppV69
-      & MiniAppV78
-      & MiniAppV80
-    >,
-    { version: version } & MiniAppV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v61 & v62 & v67 & v69 & v78 & v80>, v60>
+  '6.1': Merge<Schema['6.0'], v61>
+  '6.2': Merge<Schema['6.1'], v62>
+  '6.7': Merge<Schema['6.2'], v67>
+  '6.9': Merge<Schema['6.7'], v69>
+  '7.8': Merge<Schema['6.9'], v78>
+  '8.0': Merge<Schema['7.8'], v80>
 }
 
-type MiniAppV61to62 = {
-  [version in BotApiVersionRange<'6.1', BotApiPrevVersion<'6.2'>>]: Merge<
-    MiniAppV60to61['6.0'],
-    { version: version } & MiniAppV61
-  >;
-}
-
-type MiniAppV62to67 = {
-  [version in BotApiVersionRange<'6.2', BotApiPrevVersion<'6.7'>>]: Merge<
-    MiniAppV61to62['6.1'],
-    { version: version } & MiniAppV62
-  >;
-}
-
-type MiniAppV67to69 = {
-  [version in BotApiVersionRange<'6.7', BotApiPrevVersion<'6.9'>>]: Merge<
-    MiniAppV62to67['6.2'],
-    { version: version } & MiniAppV67
-  >;
-}
-
-type MiniAppV69to78 = {
-  [version in BotApiVersionRange<'6.9', BotApiPrevVersion<'7.8'>>]: Merge<
-    MiniAppV67to69['6.7'],
-    { version: version } & MiniAppV69
-  >;
-}
-
-type MiniAppV78to80 = {
-  [version in BotApiVersionRange<'7.8', BotApiPrevVersion<'8.0'>>]: Merge<
-    MiniAppV69to78['6.9'],
-    { version: version } & MiniAppV78
-  >;
-}
-
-type MiniAppV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    MiniAppV78to80['7.8'],
-    { version: version } & MiniAppV80
-  >;
-}
-
-type MiniApp =
-  & MiniAppV60to61
-  & MiniAppV61to62
-  & MiniAppV62to67
-  & MiniAppV67to69
-  & MiniAppV69to78
-  & MiniAppV78to80
-  & MiniAppV80toLatest
+export type MiniApp =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
+  | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'6.2'>> })
+  | (Schema['6.2'] & { version: BotApiVersionRange<'6.2', BotApiPrevVersion<'6.7'>> })
+  | (Schema['6.7'] & { version: BotApiVersionRange<'6.7', BotApiPrevVersion<'6.9'>> })
+  | (Schema['6.9'] & { version: BotApiVersionRange<'6.9', BotApiPrevVersion<'7.8'>> })
+  | (Schema['7.8'] & { version: BotApiVersionRange<'7.8', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -282,13 +236,9 @@ function useMiniApp80() {
   }
 }
 
-export function useMiniApp<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useMiniApp<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
@@ -300,7 +250,7 @@ export function useMiniApp<Version extends BotApiVersion>(
     ...(isVersionGreaterOrEqual(version, '6.9') && useMiniApp69()),
     ...(isVersionGreaterOrEqual(version, '7.8') && useMiniApp78()),
     ...(isVersionGreaterOrEqual(version, '8.0') && useMiniApp80()),
-  } as VersionedReturnType<MiniApp, Version, '6.1' | '6.2' | '6.7' | '6.9' | '7.8' | '8.0'>
+  } as VersionedReturnType<MiniApp, Version, keyof Schema>
 }
 
 export function isVersionAtLeast(version: BotApiVersion) {

@@ -12,7 +12,7 @@ const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const backButton = useBackButton({ version: '6.0' })
+const backButton = useBackButton('6.0')
 
 if (backButton.isVersionAtLeast('6.1')) {
   watch(

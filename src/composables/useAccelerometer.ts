@@ -5,26 +5,17 @@ import { onAccelerometerChanged, onAccelerometerFailed, onAccelerometerStarted, 
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
-type AccelerometerV60 = ReturnType<typeof useAccelerometer60>
-type AccelerometerV80 = ReturnType<typeof useAccelerometer80>
+type v60 = ReturnType<typeof useAccelerometer60>
+type v80 = ReturnType<typeof useAccelerometer80>
 
-type AccelerometerV60to80 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>>]: Merge<
-    Partial<AccelerometerV80>,
-    { version: version } & AccelerometerV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v80>, v60>
+  '8.0': Merge<Schema['6.0'], v80>
 }
 
-type AccelerometerV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    AccelerometerV60to80['6.0'],
-    { version: version } & AccelerometerV80
-  >;
-}
-
-type Accelerometer =
-  & AccelerometerV60to80
-  & AccelerometerV80toLatest
+export type Accelerometer =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -108,18 +99,14 @@ function useAccelerometer80() {
   }
 }
 
-export function useAccelerometer<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useAccelerometer<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useAccelerometer60(),
     ...(isVersionGreaterOrEqual(version, '8.0') && useAccelerometer80()),
-  } as VersionedReturnType<Accelerometer, Version, '8.0'>
+  } as VersionedReturnType<Accelerometer, Version, keyof Schema>
 }

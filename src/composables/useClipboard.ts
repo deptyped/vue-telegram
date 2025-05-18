@@ -4,25 +4,16 @@ import { onClipboardTextReceived } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
-type ClipboardV64 = ReturnType<typeof useClipboard64>
+type v64 = ReturnType<typeof useClipboard64>
 
-type ClipboardV60to64 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>>]: Merge<
-    Partial<ClipboardV64>,
-    { version: version }
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v64>, object>
+  '6.4': Merge<Schema['6.0'], v64>
 }
 
-type ClipboardV64toLatest = {
-  [version in BotApiVersionRange<'6.4', LATEST_VERSION>]: Merge<
-    ClipboardV60to64['6.0'],
-    { version: version } & ClipboardV64
-  >;
-}
-
-type Clipboard =
-  & ClipboardV60to64
-  & ClipboardV64toLatest
+export type Clipboard =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>> })
+  | (Schema['6.4'] & { version: BotApiVersionRange<'6.4', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -54,17 +45,13 @@ function useClipboard64() {
   }
 }
 
-export function useClipboard<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useClipboard<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...(isVersionGreaterOrEqual(version, '6.4') && useClipboard64()),
-  } as VersionedReturnType<Clipboard, Version, '6.4'>
+  } as VersionedReturnType<Clipboard, Version, keyof Schema>
 }

@@ -11,7 +11,7 @@ const emit = defineEmits<{
   (eventName: 'close', ok: boolean): void
 }>()
 
-const popup = usePopup({ version: '6.0' })
+const popup = usePopup('6.0')
 
 if (popup.isVersionAtLeast('6.2')) {
   onMounted(() => popup.showConfirm(props.message, ok => emit('close', ok as boolean)))

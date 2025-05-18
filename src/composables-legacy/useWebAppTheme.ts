@@ -11,7 +11,7 @@ export function useWebAppTheme() {
     themeParams,
     headerColor,
     backgroundColor,
-  } = useTheme({ version: '8.0' })
+  } = useTheme('8.0')
 
   return {
     colorScheme,

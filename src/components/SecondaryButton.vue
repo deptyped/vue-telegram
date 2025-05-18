@@ -19,7 +19,7 @@ const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const secondaryButton = useSecondaryButton({ version: '6.0' })
+const secondaryButton = useSecondaryButton('6.0')
 
 if (secondaryButton.isVersionAtLeast('7.10')) {
   watch(

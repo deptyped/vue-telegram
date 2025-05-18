@@ -12,26 +12,17 @@ import { onDeviceOrientationChanged, onDeviceOrientationFailed, onDeviceOrientat
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
-type DeviceOrientationV60 = ReturnType<typeof useDeviceOrientation60>
-type DeviceOrientationV80 = ReturnType<typeof useDeviceOrientation80>
+type v60 = ReturnType<typeof useDeviceOrientation60>
+type v80 = ReturnType<typeof useDeviceOrientation80>
 
-type DeviceOrientationV60to80 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>>]: Merge<
-    Partial<DeviceOrientationV80>,
-    { version: version } & DeviceOrientationV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v80>, v60>
+  '8.0': Merge<Schema['6.0'], v80>
 }
 
-type DeviceOrientationV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    DeviceOrientationV60to80['6.0'],
-    { version: version } & DeviceOrientationV80
-  >;
-}
-
-type DeviceOrientation =
-  & DeviceOrientationV60to80
-  & DeviceOrientationV80toLatest
+export type DeviceOrientation =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -120,18 +111,14 @@ function useDeviceOrientation80() {
   }
 }
 
-export function useDeviceOrientation<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useDeviceOrientation<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useDeviceOrientation60(),
     ...(isVersionGreaterOrEqual(version, '8.0') && useDeviceOrientation80()),
-  } as VersionedReturnType<DeviceOrientation, Version, '8.0'>
+  } as VersionedReturnType<DeviceOrientation, Version, keyof Schema>
 }

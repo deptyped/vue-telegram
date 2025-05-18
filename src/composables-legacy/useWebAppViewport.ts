@@ -11,7 +11,7 @@ export function useWebAppViewport() {
     viewportHeight,
     viewportStableHeight,
     isVerticalSwipesEnabled,
-  } = useViewport({ version: '8.0' })
+  } = useViewport('8.0')
 
   return {
     isExpanded,

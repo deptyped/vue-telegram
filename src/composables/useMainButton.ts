@@ -11,26 +11,17 @@ import { onMainButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
-type MainButtonV60 = ReturnType<typeof useMainButton60>
-type MainButtonV710 = ReturnType<typeof useMainButton710>
+type v60 = ReturnType<typeof useMainButton60>
+type v710 = ReturnType<typeof useMainButton710>
 
-type MainButtonV60to710 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'7.10'>>]: Merge<
-    Partial<MainButtonV710>,
-    { version: version } & MainButtonV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v710>, v60>
+  '7.10': Merge<Schema['6.0'], v710>
 }
 
-type MainButtonV710toLatest = {
-  [version in BotApiVersionRange<'7.10', LATEST_VERSION>]: Merge<
-    MainButtonV60to710['6.0'],
-    { version: version } & MainButtonV710
-  >;
-}
-
-type MainButton =
-  & MainButtonV60to710
-  & MainButtonV710toLatest
+export type MainButton =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.10'>> })
+  | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -207,18 +198,14 @@ function useMainButton710() {
   }
 }
 
-export function useMainButton<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useMainButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useMainButton60(),
     ...(isVersionGreaterOrEqual(version, '7.10') && useMainButton710()),
-  } as VersionedReturnType<MainButton, Version, '7.10'>
+  } as VersionedReturnType<MainButton, Version, keyof Schema>
 }

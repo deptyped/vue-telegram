@@ -12,26 +12,17 @@ import { onLocationManagerUpdated, onLocationRequested } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithNoData, wrapFunction } from '../utils'
 
-type LocationManagerV60 = ReturnType<typeof useLocationManager60>
-type LocationManagerV80 = ReturnType<typeof useLocationManager80>
+type v60 = ReturnType<typeof useLocationManager60>
+type v80 = ReturnType<typeof useLocationManager80>
 
-type LocationManagerV60to80 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>>]: Merge<
-    Partial<LocationManagerV80>,
-    { version: version } & LocationManagerV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v80>, v60>
+  '8.0': Merge<Schema['6.0'], v80>
 }
 
-type LocationManagerV80toLatest = {
-  [version in BotApiVersionRange<'8.0', LATEST_VERSION>]: Merge<
-    LocationManagerV60to80['6.0'],
-    { version: version } & LocationManagerV80
-  >;
-}
-
-type LocationManager =
-  & LocationManagerV60to80
-  & LocationManagerV80toLatest
+export type LocationManager =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -116,18 +107,14 @@ function useLocationManager80() {
   }
 }
 
-export function useLocationManager<Version extends BotApiVersion>(
-  options: {
-    version: Version
-  },
-) {
+export function useLocationManager<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useLocationManager60(),
     ...(isVersionGreaterOrEqual(version, '8.0') && useLocationManager80()),
-  } as VersionedReturnType<LocationManager, Version, '8.0'>
+  } as VersionedReturnType<LocationManager, Version, keyof Schema>
 }

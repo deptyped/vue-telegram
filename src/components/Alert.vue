@@ -14,7 +14,7 @@ const emit = defineEmits<{
   (eventName: 'close'): void
 }>()
 
-const popup = usePopup({ version: '6.0' })
+const popup = usePopup('6.0')
 
 if (popup.isVersionAtLeast('6.2')) {
   onMounted(() => {

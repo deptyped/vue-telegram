@@ -11,7 +11,6 @@ import Popup from './components/Popup.vue'
 import ScanQr from './components/ScanQr.vue'
 import SecondaryButton from './components/SecondaryButton.vue'
 import SettingsButton from './components/SettingsButton.vue'
-import { createComposablesWithVersion } from './versions/helpers'
 import DiscussionWidget from './widgets/DiscussionWidget.vue'
 import LoginWidget from './widgets/LoginWidget.vue'
 import PostWidget from './widgets/PostWidget.vue'
@@ -22,29 +21,7 @@ export { isVersionAtLeast } from './composables/useMiniApp'
 export * from './events'
 export type { LoginWidgetUser } from './types'
 
-export const {
-  useAccelerometer,
-  useBackButton,
-  useBiometricManager,
-  useClipboard,
-  useCloudStorage,
-  useDeviceOrientation,
-  useDeviceStorage,
-  useEmojiStatus,
-  useGyroscope,
-  useHapticFeedback,
-  useHomeScreen,
-  useLocationManager,
-  useMainButton,
-  useMiniApp,
-  usePopup,
-  useQrScanner,
-  useSecondaryButton,
-  useSecureStorage,
-  useSettingsButton,
-  useTheme,
-  useViewport,
-} = createComposablesWithVersion('6.0')
+export * from './versions/6.0'
 
 export {
   Alert,

@@ -12,7 +12,7 @@ const emit = defineEmits<{
   (eventName: 'click'): void
 }>()
 
-const settingsButton = useSettingsButton({ version: '6.0' })
+const settingsButton = useSettingsButton('6.0')
 
 if (settingsButton.isVersionAtLeast('7.0')) {
   watch(

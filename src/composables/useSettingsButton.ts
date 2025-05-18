@@ -11,26 +11,17 @@ import { onSettingsButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
 import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
 
-type SettingsButtonV60 = ReturnType<typeof useSettingsButton60>
-type SettingsButtonV70 = ReturnType<typeof useSettingsButton70>
+type v60 = ReturnType<typeof useSettingsButton60>
+type v70 = ReturnType<typeof useSettingsButton70>
 
-type SettingsButtonV60to70 = {
-  [version in BotApiVersionRange<'6.0', BotApiPrevVersion<'7.0'>>]: Merge<
-    & Partial<SettingsButtonV70>,
-    { version: version } & SettingsButtonV60
-  >;
+export type Schema = {
+  '6.0': Merge<Partial<v70>, v60>
+  '7.0': Merge<Schema['6.0'], v70>
 }
 
-type SettingsButtonV70toLatest = {
-  [version in BotApiVersionRange<'7.0', LATEST_VERSION>]: Merge<
-    SettingsButtonV60to70['6.0'],
-    { version: version } & SettingsButtonV70
-  >;
-}
-
-type SettingsButton =
-  & SettingsButtonV60to70
-  & SettingsButtonV70toLatest
+export type SettingsButton =
+  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.0'>> })
+  | (Schema['7.0'] & { version: BotApiVersionRange<'7.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -95,16 +86,14 @@ function useSettingsButton70() {
   }
 }
 
-export function useSettingsButton<Version extends BotApiVersion>(
-  options: { version: Version },
-) {
+export function useSettingsButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(options?.version, webApp.version)
+  const version = getHighestVersion(baseVersion, webApp.version)
 
   return {
     version: webApp.version,
     isVersionAtLeast: webApp.isVersionAtLeast,
     ...useSettingsButton60(),
     ...(isVersionGreaterOrEqual(version, '7.0') && useSettingsButton70()),
-  } as VersionedReturnType<SettingsButton, Version, '7.0'>
+  } as VersionedReturnType<SettingsButton, Version, keyof Schema>
 }
