@@ -31,7 +31,10 @@ outline: [2, 3]
 | contentSafeAreaInset         | [useViewport](#useviewport)                                   |
 | BackButton                   | [useBackButton](#usebackbutton)                               |
 | MainButton                   | [useMainButton](#usemainbutton)                               |
+| SecondaryButton              | [useSecondaryButton](#usesecondarybutton)                     |
+| SettingsButton               | [useSettingsButton](#usesettingsbutton)                       |
 | HapticFeedback               | [useHapticFeedback](#usehapticfeedback)                       |
+| CloudStorage                 | [useCloudStorage](#usecloudstorage)                           |
 | BiometricManager             | [useBiometricManager](#usebiometricmanager)                   |
 | Accelerometer                | [useAccelerometer](#useaccelerometer)                         |
 | DeviceOrientation            | [useDeviceOrientation](#usedeviceorientation)                 |
@@ -332,6 +335,25 @@ Improper management may lead to memory leaks or other issues.
 <!--@include: @/mini-apps/composables/use-viewport.md-->
 
 ## Composables (Legacy)
+
+| Deprecated                     | Current                                       |
+| ------------------------------ | --------------------------------------------- |
+| `useWebApp`                    | [`useMiniApp`](#useminiapp)                   |
+| `useWebAppBackButton`          | [`useBackButton`](#usebackbutton)             |
+| `useWebAppBiometricManager`    | [`useBiometricManager`](#usebiometricmanager) |
+| `useWebAppClipboard`           | [`useClipboard`](#useclipboard)               |
+| `useWebAppClosingConfirmation` | [`useMiniApp`](#useminiapp)                   |
+| `useWebAppCloudStorage`        | [`useCloudStorage`](#usecloudstorage)         |
+| `useWebAppHapticFeedback`      | [`useHapticFeedback`](#usehapticfeedback)     |
+| `useWebAppMainButton`          | [`useMainButton`](#usemainbutton)             |
+| `useWebAppNavigation`          | [`useMiniApp`](#useminiapp)                   |
+| `useWebAppPopup`               | [`usePopup`](#usepopup)                       |
+| `useWebAppQrScanner`           | [`useQrScanner`](#useqrscanner)               |
+| `useWebAppRequests`            | [`useMiniApp`](#useminiapp)                   |
+| `useWebAppSettingsButton`      | [`useSettingsButton`](#usesettingsbutton)     |
+| `useWebAppShare`               | [`useMiniApp`](#useminiapp)                   |
+| `useWebAppTheme`               | [`useTheme`](#usetheme)                       |
+| `useWebAppViewport`            | [`useViewport`](#useviewport)                 |
 
 <!--@include: @/mini-apps/composables-legacy/use-web-app.md-->
 

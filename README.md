@@ -35,33 +35,82 @@ To connect your Mini App to the Telegram client, place the script `telegram-web-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 ```
 
-## Documentation
-
-### Instructions
-
-- [Global Aliases](https://vue-tg.deptyped.com/installation.html#global-aliases)
-- [Using with Nuxt 3](https://vue-tg.deptyped.com/installation.html#using-with-nuxt-3)
-
-### Widgets
-
-- [Official Telegram Widgets Documentation](https://core.telegram.org/widgets)
-- [Widgets Documentation](https://vue-tg.deptyped.com/widgets.html)
-
-#### Components
-
-- [ShareWidget](https://vue-tg.deptyped.com/widgets.html#share-widget)
-- [PostWidget](https://vue-tg.deptyped.com/widgets.html#post-widget)
-- [LoginWidget](https://vue-tg.deptyped.com/widgets.html#login-widget)
-- [DiscussionWidget](https://vue-tg.deptyped.com/widgets.html#discussion-widget)
-
-### Mini Apps
-
-- [Official Telegram Mini Apps Documentation](https://core.telegram.org/bots/webapps#initializing-mini-apps)
-- [Mini Apps Documentation](https://vue-tg.deptyped.com/mini-apps.html)
+- [Documentation](https://vue-tg.deptyped.com/mini-apps.html)
 - [Field Mapping](https://vue-tg.deptyped.com/mini-apps.html#field-mapping)
 - [Event Handling](https://vue-tg.deptyped.com/mini-apps.html#event-handling)
 
-#### Components
+## Features
+
+### Type Safety
+
+In addition to static typing, the library enforces runtime feature support checks to prevent runtime errors on clients with outdated Bot API support.
+
+```ts
+const deviceStorage = useDeviceStorage()
+
+// ❌ Type error:
+// 'getItem' may not be available — DeviceStorage was introduced in Bot API 9.0
+deviceStorage.getItem('token')
+
+if (deviceStorage.isVersionAtLeast('9.0')) {
+  // ✅ Safe to use
+  deviceStorage.getItem('token')
+}
+```
+
+You can opt out of these checks or define a minimum required Bot API version, which disables warnings for features introduced up to that version. For details, see [the versioning section in the documentation](https://vue-tg.deptyped.com/mini-apps.html#version-check).
+
+### Reactivity
+
+You can react to changes using the standard Vue reactivity pattern:
+
+```ts
+const miniApp = useMiniApp()
+
+watch(miniApp.isActive, (isActive) => {
+  if (isActive)
+    startUpdating()
+  else
+    stopUpdating()
+})
+```
+
+The `isActive` field is reactive, so it can be used in `watch`, `computed`, or any other reactive context.
+
+In [the documentation](https://vue-tg.deptyped.com/mini-apps.html), all reactive fields are marked with **reactive** tag.
+
+### Async Support
+
+You can use `async`/`await` to work with methods — no need to nest callbacks.
+
+```ts
+const miniApp = useMiniApp()
+const qrScanner = useQrScanner()
+const popup = usePopup()
+
+// Old callback-style flow
+qrScanner.show({ text: 'Scan URL' }, (url) => {
+  popup.showConfirm(`Open ${url}?`, (ok) => {
+    if (ok) {
+      miniApp.openLink(url)
+    }
+  })
+})
+
+// The modern way — flat and readable
+const url = await qrScanner.show({ text: 'Scan URL' })
+const ok = await popup.showConfirm(`Open ${url}?`)
+if (ok) {
+  miniApp.openLink(url)
+}
+```
+
+Methods that support async execution are marked with **async** tag in [the documentation](https://vue-tg.deptyped.com/mini-apps.html).
+Callback-style usage is still available for compatibility.
+
+### Components
+
+Available components:
 
 - [Alert](https://vue-tg.deptyped.com/mini-apps.html#alert)
 - [BackButton](https://vue-tg.deptyped.com/mini-apps.html#backbutton)
@@ -74,6 +123,20 @@ To connect your Mini App to the Telegram client, place the script `telegram-web-
 - [ScanQr](https://vue-tg.deptyped.com/mini-apps.html#scanqr)
 - [SecondaryButton](https://vue-tg.deptyped.com/mini-apps.html#secondarybutton)
 - [SettingsButton](https://vue-tg.deptyped.com/mini-apps.html#settingsbutton)
+
+### Widgets
+
+- [Share Widget](https://vue-tg.deptyped.com/widgets#share-widget)
+- [Post Widget](https://vue-tg.deptyped.com/widgets#post-widget)
+- [Login Widget](https://vue-tg.deptyped.com/widgets#login-widget)
+- [Discussion Widget](https://vue-tg.deptyped.com/widgets#discussion-widget)
+
+## Documentation
+
+### Instructions
+
+- [Global Registration of Components](https://vue-tg.deptyped.com/installation.html#global-aliases)
+- [Using with Nuxt 3](https://vue-tg.deptyped.com/installation.html#using-with-nuxt-3)
 
 #### Mapping
 
@@ -99,7 +162,10 @@ To connect your Mini App to the Telegram client, place the script `telegram-web-
 | contentSafeAreaInset         | [useViewport](https://vue-tg.deptyped.com/mini-apps.html#useviewport)                                   |
 | BackButton                   | [useBackButton](https://vue-tg.deptyped.com/mini-apps.html#usebackbutton)                               |
 | MainButton                   | [useMainButton](https://vue-tg.deptyped.com/mini-apps.html#usemainbutton)                               |
+| SecondaryButton              | [useSecondaryButton](https://vue-tg.deptyped.com/mini-apps.html#usesecondarybutton)                     |
+| SettingsButton               | [useSettingsButton](https://vue-tg.deptyped.com/mini-apps.html#usesettingsbutton)                       |
 | HapticFeedback               | [useHapticFeedback](https://vue-tg.deptyped.com/mini-apps.html#usehapticfeedback)                       |
+| CloudStorage                 | [useCloudStorage](https://vue-tg.deptyped.com/mini-apps.html#usecloudstorage)                           |
 | BiometricManager             | [useBiometricManager](https://vue-tg.deptyped.com/mini-apps.html#usebiometricmanager)                   |
 | Accelerometer                | [useAccelerometer](https://vue-tg.deptyped.com/mini-apps.html#useaccelerometer)                         |
 | DeviceOrientation            | [useDeviceOrientation](https://vue-tg.deptyped.com/mini-apps.html#usedeviceorientation)                 |
