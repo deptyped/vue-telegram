@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useMainButton } from '../composables/useMainButton'
 
 const props = defineProps({
@@ -86,18 +86,20 @@ if (mainButton.isVersionAtLeast('7.10')) {
 mainButton.onClick(() => emit('click'))
 
 onMounted(() => {
-  if (props.progress)
-    mainButton.showProgress()
-  else
-    mainButton.hideProgress()
+  nextTick(() => {
+    if (props.progress)
+      mainButton.showProgress()
+    else
+      mainButton.hideProgress()
 
-  mainButton.setParams({
-    text: props.text,
-    text_color: props.textColor,
-    color: props.color,
-    has_shine_effect: props.hasShineEffect,
-    is_active: !props.disabled,
-    is_visible: props.visible,
+    mainButton.setParams({
+      text: props.text,
+      text_color: props.textColor,
+      color: props.color,
+      has_shine_effect: props.hasShineEffect,
+      is_active: !props.disabled,
+      is_visible: props.visible,
+    })
   })
 })
 

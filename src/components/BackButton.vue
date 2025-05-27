@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useBackButton } from '../composables/useBackButton'
 
 const props = defineProps({
@@ -27,7 +27,13 @@ if (backButton.isVersionAtLeast('6.1')) {
 
   backButton.onClick(() => emit('click'))
 
-  onMounted(() => props.visible && backButton.show())
+  onMounted(() => {
+    if (props.visible) {
+      nextTick(() => {
+        backButton.show()
+      })
+    }
+  })
 
   onUnmounted(() => backButton.hide())
 }

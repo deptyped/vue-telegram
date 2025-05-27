@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, watch } from 'vue'
 import { useSecondaryButton } from '../composables/useSecondaryButton'
 
 const props = defineProps({
@@ -94,19 +94,21 @@ if (secondaryButton.isVersionAtLeast('7.10')) {
   secondaryButton.onClick(() => emit('click'))
 
   onMounted(() => {
-    if (props.progress)
-      secondaryButton.showProgress()
-    else
-      secondaryButton.hideProgress()
+    nextTick(() => {
+      if (props.progress)
+        secondaryButton.showProgress()
+      else
+        secondaryButton.hideProgress()
 
-    secondaryButton.setParams({
-      text: props.text,
-      text_color: props.textColor,
-      color: props.color,
-      has_shine_effect: props.hasShineEffect,
-      position: props.position,
-      is_active: !props.disabled,
-      is_visible: props.visible,
+      secondaryButton.setParams({
+        text: props.text,
+        text_color: props.textColor,
+        color: props.color,
+        has_shine_effect: props.hasShineEffect,
+        position: props.position,
+        is_active: !props.disabled,
+        is_visible: props.visible,
+      })
     })
   })
 
