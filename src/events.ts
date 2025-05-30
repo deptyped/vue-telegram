@@ -1,7 +1,7 @@
 import type { EventCallback } from './sdk'
 import type { OnEventOptions, OnEventWithOptions } from './types'
-import { onMounted, onUnmounted } from 'vue'
 import { getWebApp } from './sdk'
+import { tryOnMounted, tryOnUnmounted } from './utils/lifecycle'
 
 export const onEvent: OnEventWithOptions<OnEventOptions> = (
   eventType,
@@ -20,8 +20,8 @@ export const onEvent: OnEventWithOptions<OnEventOptions> = (
     on()
   }
   else {
-    onMounted(on)
-    onUnmounted(off)
+    tryOnMounted(on)
+    tryOnUnmounted(off)
   }
 
   return {
