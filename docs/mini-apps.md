@@ -280,6 +280,8 @@ Improper management may lead to memory leaks or other issues.
 
 <!--@include: @/mini-apps/components/expanded-viewport.md-->
 
+<!--@include: @/mini-apps/components/fullscreen-viewport.md-->
+
 <!--@include: @/mini-apps/components/main-button.md-->
 
 <!--@include: @/mini-apps/components/popup.md-->

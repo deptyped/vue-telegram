@@ -1,7 +1,7 @@
 ## `vue-tg` - Telegram integration for Vue
 
 [![docs](https://img.shields.io/badge/Documentation-gray?style=flat)](https://vue-tg.deptyped.com/)
-[![version](https://img.shields.io/badge/Bot%20API-9.0-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#november-17-2024)
+[![version](https://img.shields.io/badge/Bot%20API-9.0-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#april-11-2025)
 [![downloads](https://img.shields.io/npm/dm/vue-tg?label=Downloads&logo=npm&style=flat&color=478be6)](https://www.npmjs.com/package/vue-tg)
 
 A lightweight package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
@@ -43,7 +43,7 @@ To connect your Mini App to the Telegram client, place the script `telegram-web-
 
 ### Type Safety
 
-In addition to static typing, the library enforces runtime feature support checks to prevent runtime errors on clients with outdated Bot API support.
+In addition to static typing, the library enforces runtime feature support checks to prevent errors on clients with outdated Bot API support.
 
 ```ts
 const deviceStorage = useDeviceStorage()
@@ -118,6 +118,7 @@ Available components:
 - [ClosingConfirmation](https://vue-tg.deptyped.com/mini-apps.html#closingconfirmation)
 - [Confirm](https://vue-tg.deptyped.com/mini-apps.html#confirm)
 - [ExpandedViewport](https://vue-tg.deptyped.com/mini-apps.html#expandedviewport)
+- [FullscreenViewport](https://vue-tg.deptyped.com/mini-apps.html#fullscreenviewport)
 - [MainButton](https://vue-tg.deptyped.com/mini-apps.html#mainbutton)
 - [Popup](https://vue-tg.deptyped.com/mini-apps.html#popup)
 - [ScanQr](https://vue-tg.deptyped.com/mini-apps.html#scanqr)

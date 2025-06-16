@@ -6,6 +6,7 @@ import BiometricManager from './components/BiometricManager.vue'
 import ClosingConfirmation from './components/ClosingConfirmation.vue'
 import Confirm from './components/Confirm.vue'
 import ExpandedViewport from './components/ExpandedViewport.vue'
+import FullscreenViewport from './components/FullscreenViewport.vue'
 import MainButton from './components/MainButton.vue'
 import Popup from './components/Popup.vue'
 import ScanQr from './components/ScanQr.vue'
@@ -31,6 +32,7 @@ export {
   Confirm,
   DiscussionWidget,
   ExpandedViewport,
+  FullscreenViewport,
   LoginWidget,
   MainButton,
   Popup,
@@ -49,6 +51,7 @@ const plugin = {
     Vue.component('TgClosingConfirmation', ClosingConfirmation)
     Vue.component('TgConfirm', Confirm)
     Vue.component('TgExpandedViewport', ExpandedViewport)
+    Vue.component('TgFullscreenViewport', FullscreenViewport)
     Vue.component('TgMainButton', MainButton)
     Vue.component('TgPopup', Popup)
     Vue.component('TgScanQr', ScanQr)
@@ -69,6 +72,7 @@ declare module '@vue/runtime-core' {
     TgClosingConfirmation: typeof ClosingConfirmation
     TgConfirm: typeof Confirm
     TgExpandedViewport: typeof ExpandedViewport
+    TgFullscreenViewport: typeof FullscreenViewport
     TgMainButton: typeof MainButton
     TgPopup: typeof Popup
     TgScanQr: typeof ScanQr

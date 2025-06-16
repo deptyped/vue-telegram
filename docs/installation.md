@@ -61,6 +61,7 @@ import { Alert } from 'vue-tg'
 | [ClosingConfirmation](/mini-apps#closingconfirmation) | `tg-closing-confirmation` |
 | [Confirm](/mini-apps#confirm)                         | `tg-confirm`              |
 | [ExpandedViewport](/mini-apps#expandedviewport)       | `tg-expanded-viewport`    |
+| [FullscreenViewport](/mini-apps#fullscreenviewport)   | `tg-fullscreen-viewport`  |
 | [MainButton](/mini-apps#mainbutton)                   | `tg-main-button`          |
 | [Popup](/mini-apps#Popup)                             | `tg-popup`                |
 | [ScanQr](/mini-apps#scanqr)                           | `tg-scan-qr`              |
