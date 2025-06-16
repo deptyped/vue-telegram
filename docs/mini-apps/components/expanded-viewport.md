@@ -1,6 +1,6 @@
 ### ExpandedViewport
 
-A component that expands the Mini App to the maximum available height when is rendered.
+A component that expands the Mini App to the maximum available height and disable vertical swipes when is rendered.
 
 ```vue
 <script lang="ts" setup>
