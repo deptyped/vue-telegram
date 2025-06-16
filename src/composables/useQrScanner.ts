@@ -1,7 +1,8 @@
+import type { ScanQrPopupParams, WebAppCallback } from '../sdk'
 import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
 import { onQrTextReceived, onScanQrPopupClosed } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual } from '../utils'
+import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
 
 type v64 = ReturnType<typeof useQrScanner64>
 type v77 = ReturnType<typeof useQrScanner77>
@@ -30,8 +31,19 @@ function useQrScanner64() {
     webApp,
   } = useStore()
 
+  const showScanQrPopupAsync = promisify(webApp.showScanQrPopup)
+
+  function showScanQrPopup(params: ScanQrPopupParams): ReturnType<typeof showScanQrPopupAsync>
+  function showScanQrPopup(params: ScanQrPopupParams, callback?: WebAppCallback['showScanQrPopup']): void
+  function showScanQrPopup(params: ScanQrPopupParams, callback?: WebAppCallback['showScanQrPopup']): ReturnType<typeof showScanQrPopupAsync> | void {
+    if (callback)
+      webApp.showScanQrPopup(params, callback)
+    else
+      return showScanQrPopupAsync(params)
+  }
+
   return {
-    show: webApp.showScanQrPopup,
+    show: showScanQrPopup,
     close: webApp.closeScanQrPopup,
     onScan: onQrTextReceived,
   }
