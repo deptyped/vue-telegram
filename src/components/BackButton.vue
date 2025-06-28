@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useBackButton } from '../composables/useBackButton'
 
 const props = defineProps({
@@ -35,6 +35,6 @@ if (backButton.isVersionAtLeast('6.1')) {
     }
   })
 
-  onUnmounted(() => backButton.hide())
+  onBeforeUnmount(() => backButton.hide())
 }
 </script>

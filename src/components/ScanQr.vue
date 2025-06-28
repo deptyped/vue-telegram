@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { useQrScanner } from '../composables/useQrScanner'
 
 const props = defineProps({
@@ -23,7 +23,7 @@ if (qrScanner.isVersionAtLeast('6.4')) {
     )
   })
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     qrScanner.close()
   })
 }

@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, watch } from 'vue'
+import { onBeforeUnmount, onMounted, watch } from 'vue'
 import { onViewportChanged } from '..'
 import { useViewport } from '../composables/useViewport'
 
@@ -15,7 +15,7 @@ if (viewport.isVersionAtLeast('7.7')) {
   onMounted(() => {
     viewport.isVerticalSwipesEnabled.value = false
   })
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     viewport.isVerticalSwipesEnabled.value = true
   })
 }

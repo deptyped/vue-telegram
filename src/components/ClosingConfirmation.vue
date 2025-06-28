@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onBeforeUnmount, onMounted } from 'vue'
 import { useMiniApp } from '../composables/useMiniApp'
 
 const miniApp = useMiniApp('6.0')
@@ -11,7 +11,7 @@ if (miniApp.isVersionAtLeast('6.2')) {
     miniApp.isClosingConfirmationEnabled.value = true
   })
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     miniApp.isClosingConfirmationEnabled.value = false
   })
 }

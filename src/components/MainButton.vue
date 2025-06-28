@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useMainButton } from '../composables/useMainButton'
 
 const props = defineProps({
@@ -103,7 +103,7 @@ onMounted(() => {
   })
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   mainButton.hideProgress()
   mainButton.hide()
 })

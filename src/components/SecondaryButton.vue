@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { nextTick, onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useSecondaryButton } from '../composables/useSecondaryButton'
 
 const props = defineProps({
@@ -112,7 +112,7 @@ if (secondaryButton.isVersionAtLeast('7.10')) {
     })
   })
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     secondaryButton.hideProgress()
     secondaryButton.hide()
   })

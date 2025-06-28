@@ -1,7 +1,7 @@
 <template></template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, onUnmounted, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useSettingsButton } from '../composables/useSettingsButton'
 
 const props = defineProps({
@@ -35,7 +35,7 @@ if (settingsButton.isVersionAtLeast('7.0')) {
     }
   })
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     settingsButton.hide()
   })
 }
