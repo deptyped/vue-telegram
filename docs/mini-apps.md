@@ -68,6 +68,7 @@ outline: [2, 3]
 | setEmojiStatus               | [useEmojiStatus](#useemojistatus)                             |
 | requestEmojiStatusAccess     | [useEmojiStatus](#useemojistatus)                             |
 | downloadFile                 | [useMiniApp](#useminiapp)                                     |
+| hideKeyboard                 | [useMiniApp](#useminiapp)                                     |
 | showPopup                    | [usePopup](#usepopup)                                         |
 | showAlert                    | [usePopup](#usepopup)                                         |
 | showConfirm                  | [usePopup](#usepopup)                                         |

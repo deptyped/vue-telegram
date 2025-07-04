@@ -22,15 +22,17 @@ type v67 = ReturnType<typeof useMiniApp67>
 type v69 = ReturnType<typeof useMiniApp69>
 type v78 = ReturnType<typeof useMiniApp78>
 type v80 = ReturnType<typeof useMiniApp80>
+type v91 = ReturnType<typeof useMiniApp91>
 
 export type Schema = {
-  '6.0': Merge<Partial<v61 & v62 & v67 & v69 & v78 & v80>, v60>
+  '6.0': Merge<Partial<v61 & v62 & v67 & v69 & v78 & v80 & v91>, v60>
   '6.1': Merge<Schema['6.0'], v61>
   '6.2': Merge<Schema['6.1'], v62>
   '6.7': Merge<Schema['6.2'], v67>
   '6.9': Merge<Schema['6.7'], v69>
   '7.8': Merge<Schema['6.9'], v78>
   '8.0': Merge<Schema['7.8'], v80>
+  '9.1': Merge<Schema['8.0'], v91>
 }
 
 export type MiniApp =
@@ -40,7 +42,8 @@ export type MiniApp =
   | (Schema['6.7'] & { version: BotApiVersionRange<'6.7', BotApiPrevVersion<'6.9'>> })
   | (Schema['6.9'] & { version: BotApiVersionRange<'6.9', BotApiPrevVersion<'7.8'>> })
   | (Schema['7.8'] & { version: BotApiVersionRange<'7.8', BotApiPrevVersion<'8.0'>> })
-  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', BotApiPrevVersion<'9.1'>> })
+  | (Schema['9.1'] & { version: BotApiVersionRange<'9.1', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -236,6 +239,14 @@ function useMiniApp80() {
   }
 }
 
+function useMiniApp91() {
+  const { webApp } = useStore()
+
+  return {
+    hideKeyboard: webApp.hideKeyboard,
+  }
+}
+
 export function useMiniApp<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
   const version = getHighestVersion(baseVersion, webApp.version)
@@ -250,6 +261,7 @@ export function useMiniApp<Version extends BotApiVersion>(baseVersion: Version) 
     ...(isVersionGreaterOrEqual(version, '6.9') && useMiniApp69()),
     ...(isVersionGreaterOrEqual(version, '7.8') && useMiniApp78()),
     ...(isVersionGreaterOrEqual(version, '8.0') && useMiniApp80()),
+    ...(isVersionGreaterOrEqual(version, '9.1') && useMiniApp91()),
   } as VersionedReturnType<MiniApp, Version, keyof Schema>
 }
 

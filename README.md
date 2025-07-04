@@ -1,7 +1,7 @@
 ## `vue-tg` - Telegram integration for Vue
 
 [![docs](https://img.shields.io/badge/Documentation-gray?style=flat)](https://vue-tg.deptyped.com/)
-[![version](https://img.shields.io/badge/Bot%20API-9.0-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#april-11-2025)
+[![version](https://img.shields.io/badge/Bot%20API-9.1-478be6?logo=telegram&style=flat)](https://core.telegram.org/bots/webapps#july-3-2025)
 [![downloads](https://img.shields.io/npm/dm/vue-tg?label=Downloads&logo=npm&style=flat&color=478be6)](https://www.npmjs.com/package/vue-tg)
 
 A lightweight package for seamless integration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) and [Telegram Widgets](https://core.telegram.org/widgets) features.
@@ -200,6 +200,7 @@ Available components:
 | setEmojiStatus               | [useEmojiStatus](https://vue-tg.deptyped.com/mini-apps.html#useemojistatus)                             |
 | requestEmojiStatusAccess     | [useEmojiStatus](https://vue-tg.deptyped.com/mini-apps.html#useemojistatus)                             |
 | downloadFile                 | [useMiniApp](https://vue-tg.deptyped.com/mini-apps.html#useminiapp)                                     |
+| hideKeyboard                 | [useMiniApp](https://vue-tg.deptyped.com/mini-apps.html#useminiapp)                                     |
 | showPopup                    | [usePopup](https://vue-tg.deptyped.com/mini-apps.html#usepopup)                                         |
 | showAlert                    | [usePopup](https://vue-tg.deptyped.com/mini-apps.html#usepopup)                                         |
 | showConfirm                  | [usePopup](https://vue-tg.deptyped.com/mini-apps.html#usepopup)                                         |

@@ -29,6 +29,7 @@ export default defineConfig({
         resolve(__dirname, 'src/versions/7.10.ts'),
         resolve(__dirname, 'src/versions/8.0.ts'),
         resolve(__dirname, 'src/versions/9.0.ts'),
+        resolve(__dirname, 'src/versions/9.1.ts'),
         resolve(__dirname, 'src/versions/latest.ts'),
       ],
       name: pkg.name,

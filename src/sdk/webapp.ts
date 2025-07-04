@@ -75,6 +75,7 @@ export type WebApp = {
   setEmojiStatus: (custom_emoji_id: string, params?: EmojiStatusParams, callback?: WebAppCallback['setEmojiStatus']) => void
   requestEmojiStatusAccess: (callback?: WebAppCallback['requestEmojiStatusAccess']) => void
   downloadFile: (params: DownloadFileParams, callback?: WebAppCallback['downloadFile']) => void
+  hideKeyboard: () => void
   showPopup: (params: PopupParams, callback?: WebAppCallback['showPopup']) => void
   showAlert: (message: string, callback?: WebAppCallback['showAlert']) => void
   showConfirm: (message: string, callback?: WebAppCallback['showConfirm']) => void
