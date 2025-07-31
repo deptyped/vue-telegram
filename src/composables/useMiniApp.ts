@@ -280,6 +280,7 @@ function isPlatform(
     | 'tdesktop'
     | 'weba'
     | 'webk'
+    | 'web' // webk
     | 'unigram',
 ) {
   return getWebApp().platform === name
