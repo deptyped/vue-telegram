@@ -26,7 +26,7 @@ const popup = usePopup()
 Install package:
 
 ```bash
-npm i vue-tg@beta
+npm i vue-tg
 ```
 
 To connect your Mini App to the Telegram client, place the script `telegram-web-app.js` in the `<head>` tag before any other scripts, using this code:
