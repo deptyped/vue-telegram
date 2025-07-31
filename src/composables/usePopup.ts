@@ -18,9 +18,9 @@ export type Schema = {
   '6.2': Merge<Schema['6.0'], v62>
 }
 
-export type Popup =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.2'>> })
-  | (Schema['6.2'] & { version: BotApiVersionRange<'6.2', LATEST_VERSION> })
+export type Popup
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.2'>> })
+    | (Schema['6.2'] & { version: BotApiVersionRange<'6.2', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

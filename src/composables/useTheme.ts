@@ -14,10 +14,10 @@ export type Schema = {
   '7.10': Merge<Schema['6.1'], v710>
 }
 
-export type Theme =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
-  | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'7.10'>> })
-  | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
+export type Theme
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
+    | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'7.10'>> })
+    | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

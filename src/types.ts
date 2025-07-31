@@ -30,8 +30,8 @@ export type Merge<T, U> = Omit<T, keyof U> & U
 
 export type BotApiVersion = BOT_API_VERSIONS[number]
 
-type VersionMap<T extends readonly BotApiVersion[], R = object> =
-  T extends readonly [infer First extends BotApiVersion, infer Second extends BotApiVersion, ...infer Rest extends BotApiVersion[]]
+type VersionMap<T extends readonly BotApiVersion[], R = object>
+  = T extends readonly [infer First extends BotApiVersion, infer Second extends BotApiVersion, ...infer Rest extends BotApiVersion[]]
     ? VersionMap<[Second, ...Rest], R & { [K in First]: Second }>
     : R
 
@@ -45,8 +45,8 @@ export type BotApiPrevVersion<V extends BotApiVersion> = V extends keyof BotApiP
   ? BotApiPrevVersionMap[V]
   : never
 
-export type BotApiVersionRange<Start extends BotApiVersion, End extends BotApiVersion> =
-  Equals<Start, End> extends true
+export type BotApiVersionRange<Start extends BotApiVersion, End extends BotApiVersion>
+  = Equals<Start, End> extends true
     ? Start
     : Start | BotApiVersionRange<BotApiNextVersion<Start>, End>
 
@@ -54,11 +54,11 @@ export type VersionedReturnType<
   Schema extends { version: BotApiVersion },
   Version extends BotApiVersion,
   SuggestedVersions extends BotApiVersion,
-> =
-  & Omit<Exclude<Schema, { version: Version extends '6.0' ? never : BotApiVersionRange<'6.0', BotApiPrevVersion<Version>> }>, 'isVersionAtLeast'>
-  & {
-    isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is VersionedReturnType<Schema, V, SuggestedVersions>
-  }
+>
+  = & Omit<Exclude<Schema, { version: Version extends '6.0' ? never : BotApiVersionRange<'6.0', BotApiPrevVersion<Version>> }>, 'isVersionAtLeast'>
+    & {
+      isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is VersionedReturnType<Schema, V, SuggestedVersions>
+    }
 
 /**
  * Mini Apps
@@ -89,6 +89,6 @@ export type OnEventWithOptions<O> = {
  * Widgets
  */
 
-export type LoginWidgetUser =
-  & Pick<WebAppUser, 'id' | 'first_name' | 'last_name' | 'username' | 'photo_url'>
-  & Pick<WebAppInitData, 'auth_date' | 'hash'>
+export type LoginWidgetUser
+  = & Pick<WebAppUser, 'id' | 'first_name' | 'last_name' | 'username' | 'photo_url'>
+    & Pick<WebAppInitData, 'auth_date' | 'hash'>

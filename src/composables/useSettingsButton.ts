@@ -19,9 +19,9 @@ export type Schema = {
   '7.0': Merge<Schema['6.0'], v70>
 }
 
-export type SettingsButton =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.0'>> })
-  | (Schema['7.0'] & { version: BotApiVersionRange<'7.0', LATEST_VERSION> })
+export type SettingsButton
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.0'>> })
+    | (Schema['7.0'] & { version: BotApiVersionRange<'7.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

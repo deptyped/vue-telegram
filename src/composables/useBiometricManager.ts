@@ -13,9 +13,9 @@ export type Schema = {
   '7.2': Merge<Schema['6.0'], v72>
 }
 
-export type BiometricManager =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.2'>> })
-  | (Schema['7.2'] & { version: BotApiVersionRange<'7.2', LATEST_VERSION> })
+export type BiometricManager
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.2'>> })
+    | (Schema['7.2'] & { version: BotApiVersionRange<'7.2', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

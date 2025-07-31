@@ -13,10 +13,10 @@ export type Schema = {
   '7.7': Merge<Schema['6.4'], v77>
 }
 
-export type QrScanner =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>> })
-  | (Schema['6.4'] & { version: BotApiVersionRange<'6.4', BotApiPrevVersion<'7.7'>> })
-  | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', LATEST_VERSION> })
+export type QrScanner
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>> })
+    | (Schema['6.4'] & { version: BotApiVersionRange<'6.4', BotApiPrevVersion<'7.7'>> })
+    | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

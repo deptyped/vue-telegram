@@ -10,9 +10,9 @@ export type Schema = {
   '9.0': Merge<Schema['6.0'], v90>
 }
 
-export type SecureStorage =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'9.0'>> })
-  | (Schema['9.0'] & { version: BotApiVersionRange<'9.0', LATEST_VERSION> })
+export type SecureStorage
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'9.0'>> })
+    | (Schema['9.0'] & { version: BotApiVersionRange<'9.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

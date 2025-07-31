@@ -35,15 +35,15 @@ export type Schema = {
   '9.1': Merge<Schema['8.0'], v91>
 }
 
-export type MiniApp =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
-  | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'6.2'>> })
-  | (Schema['6.2'] & { version: BotApiVersionRange<'6.2', BotApiPrevVersion<'6.7'>> })
-  | (Schema['6.7'] & { version: BotApiVersionRange<'6.7', BotApiPrevVersion<'6.9'>> })
-  | (Schema['6.9'] & { version: BotApiVersionRange<'6.9', BotApiPrevVersion<'7.8'>> })
-  | (Schema['7.8'] & { version: BotApiVersionRange<'7.8', BotApiPrevVersion<'8.0'>> })
-  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', BotApiPrevVersion<'9.1'>> })
-  | (Schema['9.1'] & { version: BotApiVersionRange<'9.1', LATEST_VERSION> })
+export type MiniApp
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
+    | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'6.2'>> })
+    | (Schema['6.2'] & { version: BotApiVersionRange<'6.2', BotApiPrevVersion<'6.7'>> })
+    | (Schema['6.7'] & { version: BotApiVersionRange<'6.7', BotApiPrevVersion<'6.9'>> })
+    | (Schema['6.9'] & { version: BotApiVersionRange<'6.9', BotApiPrevVersion<'7.8'>> })
+    | (Schema['7.8'] & { version: BotApiVersionRange<'7.8', BotApiPrevVersion<'8.0'>> })
+    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', BotApiPrevVersion<'9.1'>> })
+    | (Schema['9.1'] & { version: BotApiVersionRange<'9.1', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

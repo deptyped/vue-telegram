@@ -20,9 +20,9 @@ export type Schema = {
   '8.0': Merge<Schema['6.0'], v80>
 }
 
-export type LocationManager =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
-  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+export type LocationManager
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
+    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

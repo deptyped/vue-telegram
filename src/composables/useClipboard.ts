@@ -11,9 +11,9 @@ export type Schema = {
   '6.4': Merge<Schema['6.0'], v64>
 }
 
-export type Clipboard =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>> })
-  | (Schema['6.4'] & { version: BotApiVersionRange<'6.4', LATEST_VERSION> })
+export type Clipboard
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.4'>> })
+    | (Schema['6.4'] & { version: BotApiVersionRange<'6.4', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

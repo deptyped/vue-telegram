@@ -14,10 +14,10 @@ export type Schema = {
   '8.0': Merge<Schema['7.7'], v80>
 }
 
-export type Viewport =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.7'>> })
-  | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', BotApiPrevVersion<'8.0'>> })
-  | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+export type Viewport
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.7'>> })
+    | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', BotApiPrevVersion<'8.0'>> })
+    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()

@@ -9,9 +9,9 @@ export type Schema = {
   '6.1': Merge<Schema['6.0'], v61>
 }
 
-export type HapticFeedback =
-  | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
-  | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', LATEST_VERSION> })
+export type HapticFeedback
+  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
+    | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', LATEST_VERSION> })
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
