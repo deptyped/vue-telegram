@@ -25,8 +25,8 @@ const miniApp = useMiniApp()
 | `onShareMessageSent`           | <Badge type="tip" text="Bot API 8.0+" /> A method that sets event handler. An alias for <code>onShareMessageSent</code>.           |
 | `onShareMessageFail`           | <Badge type="tip" text="Bot API 8.0+" /> A method that sets event handler. An alias for <code>shareMessageFailed</code>.           |
 | `downloadFile`                 | <!--@include: @/generated/WebApp-downloadFile.md --><br/><Badge type="info" text="⭐️ async" />                                      |
-| `hideKeyboard`                 | <!--@include: @/generated/WebApp-hideKeyboard.md -->                                                                               |
 | `onFileDownloadRequest`        | <Badge type="tip" text="Bot API 8.0+" /> A method that sets event handler. An alias for <code>onFileDownloadRequested</code>.      |
+| `hideKeyboard`                 | <!--@include: @/generated/WebApp-hideKeyboard.md -->                                                                               |
 | `requestWriteAccess`           | <!--@include: @/generated/WebApp-requestWriteAccess.md --><br/><Badge type="info" text="⭐️ async" />                                |
 | `onWriteAccessRequest`         | <Badge type="tip" text="Bot API 6.9+" /> A method that sets event handler. An alias for <code>onWriteAccessRequested</code>.       |
 | `requestContact`               | <!--@include: @/generated/WebApp-requestContact.md --><br/><Badge type="info" text="⭐️ async" />                                    |
