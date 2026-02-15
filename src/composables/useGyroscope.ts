@@ -86,6 +86,8 @@ function useGyroscope80() {
       return stopAsync()
   }
 
+  onGyroscopeStarted(updateState)
+  onGyroscopeStopped(updateState)
   onGyroscopeChanged(updateState)
   onGyroscopeFailed(updateState)
 

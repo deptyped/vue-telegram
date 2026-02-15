@@ -98,6 +98,8 @@ function useDeviceOrientation80() {
       return stopAsync()
   }
 
+  onDeviceOrientationStarted(updateState)
+  onDeviceOrientationStopped(updateState)
   onDeviceOrientationChanged(updateState)
   onDeviceOrientationFailed(updateState)
 

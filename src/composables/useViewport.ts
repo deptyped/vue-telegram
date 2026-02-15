@@ -155,6 +155,11 @@ function useViewport80() {
     },
   })
 
+  onSafeAreaChanged(updateState)
+  onContentSafeAreaChanged(updateState)
+  onFullscreenChanged(updateState)
+  onFullscreenFailed(updateState)
+
   return {
     isFullscreen: computed({
       get() {

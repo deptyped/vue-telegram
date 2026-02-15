@@ -86,6 +86,8 @@ function useAccelerometer80() {
       return stopAsync()
   }
 
+  onAccelerometerStarted(updateState)
+  onAccelerometerStopped(updateState)
   onAccelerometerChanged(updateState)
   onAccelerometerFailed(updateState)
 
