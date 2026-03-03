@@ -1,27 +1,22 @@
-import type {
-  BotApiPrevVersion,
-  BotApiVersion,
-  BotApiVersionRange,
-  LATEST_VERSION,
-  Merge,
-  VersionedReturnType,
-} from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { computed, readonly, ref } from 'vue'
 import { onMainButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, wrapFunction } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useMainButton60>
 type v710 = ReturnType<typeof useMainButton710>
+type AllFeatures = v710
 
 export type Schema = {
-  '6.0': Merge<Partial<v710>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '7.10': Merge<Schema['6.0'], v710>
 }
 
 export type MainButton
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.10'>> })
-    | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '7.10'>
+    | SinceLatest<Schema, '7.10'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -200,12 +195,12 @@ function useMainButton710() {
 
 export function useMainButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useMainButton60(),
-    ...(isVersionGreaterOrEqual(version, '7.10') && useMainButton710()),
-  } as VersionedReturnType<MainButton, Version, keyof Schema>
+  return createVersionedComposable<MainButton, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useMainButton60,
+    [
+      { since: '7.10', use: useMainButton710 },
+    ],
+  )
 }

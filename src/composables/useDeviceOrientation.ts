@@ -1,28 +1,23 @@
 import type { DeviceOrientationCallback, DeviceOrientationStartParams } from '../sdk'
-import type {
-  BotApiPrevVersion,
-  BotApiVersion,
-  BotApiVersionRange,
-  LATEST_VERSION,
-  Merge,
-  VersionedReturnType,
-} from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { readonly, ref } from 'vue'
 import { onDeviceOrientationChanged, onDeviceOrientationFailed, onDeviceOrientationStarted, onDeviceOrientationStopped } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
+import { createCallbackOrPromiseMethod, defineStore, promisify } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useDeviceOrientation60>
 type v80 = ReturnType<typeof useDeviceOrientation80>
+type AllFeatures = v80
 
 export type Schema = {
-  '6.0': Merge<Partial<v80>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '8.0': Merge<Schema['6.0'], v80>
 }
 
 export type DeviceOrientation
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
-    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '8.0'>
+    | SinceLatest<Schema, '8.0'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -76,27 +71,14 @@ function useDeviceOrientation80() {
     updateState,
   } = useStore()
 
-  const startAsync = promisify(webApp.DeviceOrientation.start)
-
-  function start(params: DeviceOrientationStartParams): ReturnType<typeof startAsync>
-  function start(params: DeviceOrientationStartParams, callback?: DeviceOrientationCallback['start']): void
-  function start(params: DeviceOrientationStartParams, callback?: DeviceOrientationCallback['start']): ReturnType<typeof startAsync> | void {
-    if (callback)
-      webApp.DeviceOrientation.start(params, callback)
-    else
-      return startAsync(params)
-  }
-
-  const stopAsync = promisify(webApp.DeviceOrientation.stop)
-
-  function stop(): ReturnType<typeof stopAsync>
-  function stop(callback?: DeviceOrientationCallback['stop']): void
-  function stop(callback?: DeviceOrientationCallback['stop']): ReturnType<typeof stopAsync> | void {
-    if (callback)
-      webApp.DeviceOrientation.stop(callback)
-    else
-      return stopAsync()
-  }
+  const start = createCallbackOrPromiseMethod(
+    (params: DeviceOrientationStartParams, callback: DeviceOrientationCallback['start']) => webApp.DeviceOrientation.start(params, callback),
+    promisify,
+  )
+  const stop = createCallbackOrPromiseMethod(
+    (callback: DeviceOrientationCallback['stop']) => webApp.DeviceOrientation.stop(callback),
+    promisify,
+  )
 
   onDeviceOrientationStarted(updateState)
   onDeviceOrientationStopped(updateState)
@@ -115,12 +97,12 @@ function useDeviceOrientation80() {
 
 export function useDeviceOrientation<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useDeviceOrientation60(),
-    ...(isVersionGreaterOrEqual(version, '8.0') && useDeviceOrientation80()),
-  } as VersionedReturnType<DeviceOrientation, Version, keyof Schema>
+  return createVersionedComposable<DeviceOrientation, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useDeviceOrientation60,
+    [
+      { since: '8.0', use: useDeviceOrientation80 },
+    ],
+  )
 }

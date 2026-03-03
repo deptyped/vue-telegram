@@ -1,21 +1,23 @@
 import type { AccelerometerCallback, AccelerometerStartParams } from '../sdk'
-import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { readonly, ref } from 'vue'
 import { onAccelerometerChanged, onAccelerometerFailed, onAccelerometerStarted, onAccelerometerStopped } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
+import { createCallbackOrPromiseMethod, defineStore, promisify } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useAccelerometer60>
 type v80 = ReturnType<typeof useAccelerometer80>
+type AllFeatures = v80
 
 export type Schema = {
-  '6.0': Merge<Partial<v80>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '8.0': Merge<Schema['6.0'], v80>
 }
 
 export type Accelerometer
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
-    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '8.0'>
+    | SinceLatest<Schema, '8.0'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -64,27 +66,14 @@ function useAccelerometer80() {
     updateState,
   } = useStore()
 
-  const startAsync = promisify(webApp.Accelerometer.start)
-
-  function start(params: AccelerometerStartParams): ReturnType<typeof startAsync>
-  function start(params: AccelerometerStartParams, callback?: AccelerometerCallback['start']): void
-  function start(params: AccelerometerStartParams, callback?: AccelerometerCallback['start']): ReturnType<typeof startAsync> | void {
-    if (callback)
-      webApp.Accelerometer.start(params, callback)
-    else
-      return startAsync(params)
-  }
-
-  const stopAsync = promisify(webApp.Accelerometer.stop)
-
-  function stop(): ReturnType<typeof stopAsync>
-  function stop(callback?: AccelerometerCallback['stop']): void
-  function stop(callback?: AccelerometerCallback['stop']): ReturnType<typeof stopAsync> | void {
-    if (callback)
-      webApp.Accelerometer.stop(callback)
-    else
-      return stopAsync()
-  }
+  const start = createCallbackOrPromiseMethod(
+    (params: AccelerometerStartParams, callback: AccelerometerCallback['start']) => webApp.Accelerometer.start(params, callback),
+    promisify,
+  )
+  const stop = createCallbackOrPromiseMethod(
+    (callback: AccelerometerCallback['stop']) => webApp.Accelerometer.stop(callback),
+    promisify,
+  )
 
   onAccelerometerStarted(updateState)
   onAccelerometerStopped(updateState)
@@ -103,12 +92,12 @@ function useAccelerometer80() {
 
 export function useAccelerometer<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useAccelerometer60(),
-    ...(isVersionGreaterOrEqual(version, '8.0') && useAccelerometer80()),
-  } as VersionedReturnType<Accelerometer, Version, keyof Schema>
+  return createVersionedComposable<Accelerometer, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useAccelerometer60,
+    [
+      { since: '8.0', use: useAccelerometer80 },
+    ],
+  )
 }

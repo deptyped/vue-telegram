@@ -1,23 +1,25 @@
-import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { computed, readonly, ref } from 'vue'
 import { onContentSafeAreaChanged, onFullscreenChanged, onFullscreenFailed, onSafeAreaChanged, onViewportChanged } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, wrapFunction } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useViewport60>
 type v77 = ReturnType<typeof useViewport77>
 type v80 = ReturnType<typeof useViewport80>
+type AllFeatures = v77 & v80
 
 export type Schema = {
-  '6.0': Merge<Partial<v77 & v80>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '7.7': Merge<Schema['6.0'], v77>
   '8.0': Merge<Schema['7.7'], v80>
 }
 
 export type Viewport
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.7'>> })
-    | (Schema['7.7'] & { version: BotApiVersionRange<'7.7', BotApiPrevVersion<'8.0'>> })
-    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '7.7'>
+    | SinceUntil<Schema, '7.7', '8.0'>
+    | SinceLatest<Schema, '8.0'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -72,7 +74,6 @@ function useViewport60() {
     safeAreaInset,
     contentSafeAreaInset,
   } = useStore()
-
   onViewportChanged(updateState)
 
   return {
@@ -192,13 +193,13 @@ function useViewport80() {
 
 export function useViewport<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useViewport60(),
-    ...(isVersionGreaterOrEqual(version, '7.7') && useViewport77()),
-    ...(isVersionGreaterOrEqual(version, '8.0') && useViewport80()),
-  } as VersionedReturnType<Viewport, Version, keyof Schema>
+  return createVersionedComposable<Viewport, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useViewport60,
+    [
+      { since: '7.7', use: useViewport77 },
+      { since: '8.0', use: useViewport80 },
+    ],
+  )
 }

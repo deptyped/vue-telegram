@@ -20,13 +20,17 @@ type BOT_API_VERSIONS = [
 
 export type LATEST_VERSION = '9.1'
 
-type Reverse<T extends any[]> = T extends [infer First, ...infer Rest]
+// Reverses a tuple so previous-version map can be derived from next-version logic.
+type Reverse<T extends unknown[]> = T extends [infer First, ...infer Rest]
   ? [...Reverse<Rest>, First]
   : []
 
+// Compile-time equality check used to terminate recursive ranges.
 type Equals<X, Y> = X extends Y ? (Y extends X ? true : false) : false
 
 export type Merge<T, U> = Omit<T, keyof U> & U
+// Base schema shape: current base feature set + optional future feature members.
+export type SchemaBase<AllFeatures, Base extends object = object> = Merge<Partial<AllFeatures>, Base>
 
 export type BotApiVersion = BOT_API_VERSIONS[number]
 
@@ -50,15 +54,55 @@ export type BotApiVersionRange<Start extends BotApiVersion, End extends BotApiVe
     ? Start
     : Start | BotApiVersionRange<BotApiNextVersion<Start>, End>
 
+// Narrows a versioned union by minimum requested version.
+type FilterSchemaByMinVersion<Schema, MinVersion extends BotApiVersion>
+  = Schema extends { version: infer V }
+    ? V extends BotApiVersionRange<MinVersion, LATEST_VERSION>
+      ? Schema
+      : never
+    : Schema
+
 export type VersionedReturnType<
-  Schema extends { version: BotApiVersion },
+  Schema,
   Version extends BotApiVersion,
   SuggestedVersions extends BotApiVersion,
->
-  = & Omit<Exclude<Schema, { version: Version extends '6.0' ? never : BotApiVersionRange<'6.0', BotApiPrevVersion<Version>> }>, 'isVersionAtLeast'>
-    & {
-      isVersionAtLeast: <V extends Exclude<SuggestedVersions, BotApiVersionRange<'6.0', Version>>>(version: V) => this is VersionedReturnType<Schema, V, SuggestedVersions>
-    }
+> = Omit<FilterSchemaByMinVersion<Schema, Version>, 'isVersionAtLeast'> & {
+  // Runtime version guard that also refines the compile-time type.
+  isVersionAtLeast: <V extends SuggestedVersions>(
+    version: V
+  ) => this is VersionedReturnType<Schema, V, SuggestedVersions>
+}
+
+// Converts ordered schema milestones into version-ranged union members.
+export type VersionedSchemaUnion<
+  TSchema extends Record<string, object>,
+  TVersions extends readonly BotApiVersion[],
+> = TVersions extends readonly [
+  infer Current extends keyof TSchema & BotApiVersion,
+  infer Next extends BotApiVersion,
+  ...infer Rest extends BotApiVersion[],
+]
+  ? | (TSchema[Current] & { version: BotApiVersionRange<Current, BotApiPrevVersion<Next>> })
+  | VersionedSchemaUnion<TSchema, [Next, ...Rest]>
+  : TVersions extends readonly [infer Last extends keyof TSchema & BotApiVersion]
+    ? (TSchema[Last] & { version: BotApiVersionRange<Last, LATEST_VERSION> })
+    : never
+
+export type SinceUntil<
+  TSchema extends Record<string, object>,
+  Since extends keyof TSchema & BotApiVersion,
+  Until extends BotApiVersion,
+> = TSchema[Since] & {
+  version: BotApiVersionRange<Since, BotApiPrevVersion<Until>>
+}
+
+// Version slice from `Since` up to latest known API version.
+export type SinceLatest<
+  TSchema extends Record<string, object>,
+  Since extends keyof TSchema & BotApiVersion,
+> = TSchema[Since] & {
+  version: BotApiVersionRange<Since, LATEST_VERSION>
+}
 
 /**
  * Mini Apps

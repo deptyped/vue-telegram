@@ -1,21 +1,23 @@
 import type { BiometricAuthenticateParams, BiometricManagerCallback, BiometricRequestAccessParams } from '../sdk'
-import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { readonly, ref } from 'vue'
 import { onBiometricAuthRequested, onBiometricManagerUpdated, onBiometricTokenUpdated } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithDataObject, promisifyWithNoData, wrapFunction } from '../utils'
+import { createCallbackOrPromiseMethod, defineStore, promisify, promisifyWithDataObject, promisifyWithNoData, wrapFunction } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useBiometricManager60>
 type v72 = ReturnType<typeof useBiometricManager72>
+type AllFeatures = v72
 
 export type Schema = {
-  '6.0': Merge<Partial<v72>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '7.2': Merge<Schema['6.0'], v72>
 }
 
 export type BiometricManager
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'7.2'>> })
-    | (Schema['7.2'] & { version: BotApiVersionRange<'7.2', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '7.2'>
+    | SinceLatest<Schema, '7.2'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -79,52 +81,33 @@ function useBiometricManager72() {
     updateState,
   } = useStore()
 
-  const initAsync = promisifyWithNoData(webApp.BiometricManager.init)
+  const init = createCallbackOrPromiseMethod(
+    (callback: BiometricManagerCallback['init']) => webApp.BiometricManager.init(callback),
+    promisifyWithNoData,
+  )
+  const requestAccess = createCallbackOrPromiseMethod(
+    (params: BiometricRequestAccessParams, callback: BiometricManagerCallback['requestAccess']) =>
+      webApp.BiometricManager.requestAccess(params, callback),
+    promisify,
+  )
 
-  function init(): ReturnType<typeof initAsync>
-  function init(callback?: BiometricManagerCallback['init']): void
-  function init(callback?: BiometricManagerCallback['init']): ReturnType<typeof initAsync> | void {
-    if (callback)
-      webApp.BiometricManager.init(callback)
-    else
-      return initAsync()
-  }
-
-  const requestAccessAsync = promisify(webApp.BiometricManager.requestAccess)
-
-  function requestAccess(params: BiometricRequestAccessParams): ReturnType<typeof requestAccessAsync>
-  function requestAccess(params: BiometricRequestAccessParams, callback?: BiometricManagerCallback['requestAccess']): void
-  function requestAccess(params: BiometricRequestAccessParams, callback?: BiometricManagerCallback['requestAccess']): ReturnType<typeof requestAccessAsync> | void {
-    if (callback)
-      webApp.BiometricManager.requestAccess(params, callback)
-    else
-      return requestAccessAsync(params)
-  }
-
-  const authenticateAsync = promisifyWithDataObject(
-    webApp.BiometricManager.authenticate,
+  const promisifyAuthenticate = (
+    method: (params: BiometricAuthenticateParams, callback: BiometricManagerCallback['authenticate']) => void,
+  ) => promisifyWithDataObject(
+    method,
     (isAuthenticated: boolean, token?: string) => ({ isAuthenticated, token }),
   )
 
-  function authenticate(params: BiometricAuthenticateParams): ReturnType<typeof authenticateAsync>
-  function authenticate(params: BiometricAuthenticateParams, callback?: BiometricManagerCallback['authenticate']): void
-  function authenticate(params: BiometricAuthenticateParams, callback?: BiometricManagerCallback['authenticate']): ReturnType<typeof authenticateAsync> | void {
-    if (callback)
-      webApp.BiometricManager.authenticate(params, callback)
-    else
-      return authenticateAsync(params)
-  }
-
-  const updateBiometricTokenAsync = promisify(webApp.BiometricManager.updateBiometricToken)
-
-  function updateBiometricToken(token: string,): ReturnType<typeof updateBiometricTokenAsync>
-  function updateBiometricToken(token: string, callback?: BiometricManagerCallback['updateBiometricToken']): void
-  function updateBiometricToken(token: string, callback?: BiometricManagerCallback['updateBiometricToken']): ReturnType<typeof updateBiometricTokenAsync> | void {
-    if (callback)
-      webApp.BiometricManager.updateBiometricToken(token, callback)
-    else
-      return updateBiometricTokenAsync(token)
-  }
+  const authenticate = createCallbackOrPromiseMethod(
+    (params: BiometricAuthenticateParams, callback: BiometricManagerCallback['authenticate']) =>
+      webApp.BiometricManager.authenticate(params, callback),
+    promisifyAuthenticate,
+  )
+  const updateBiometricToken = createCallbackOrPromiseMethod(
+    (token: string, callback: BiometricManagerCallback['updateBiometricToken']) =>
+      webApp.BiometricManager.updateBiometricToken(token, callback),
+    promisify,
+  )
 
   onBiometricManagerUpdated(updateState)
   onBiometricAuthRequested(updateState)
@@ -146,12 +129,12 @@ function useBiometricManager72() {
 
 export function useBiometricManager<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useBiometricManager60(),
-    ...(isVersionGreaterOrEqual(version, '7.2') && useBiometricManager72()),
-  } as VersionedReturnType<BiometricManager, Version, keyof Schema>
+  return createVersionedComposable<BiometricManager, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useBiometricManager60,
+    [
+      { since: '7.2', use: useBiometricManager72 },
+    ],
+  )
 }

@@ -1,23 +1,25 @@
-import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { computed, readonly, ref } from 'vue'
 import { onThemeChanged } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, wrapFunction } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useTheme60>
 type v61 = ReturnType<typeof useTheme61>
 type v710 = ReturnType<typeof useTheme710>
+type AllFeatures = v61 & v710
 
 export type Schema = {
-  '6.0': Merge<Partial<v61 & v710>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '6.1': Merge<Schema['6.0'], v61>
   '7.10': Merge<Schema['6.1'], v710>
 }
 
 export type Theme
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
-    | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', BotApiPrevVersion<'7.10'>> })
-    | (Schema['7.10'] & { version: BotApiVersionRange<'7.10', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '6.1'>
+    | SinceUntil<Schema, '6.1', '7.10'>
+    | SinceLatest<Schema, '7.10'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -57,7 +59,6 @@ function useTheme60() {
     bottomBarColor,
     updateState,
   } = useStore()
-
   onThemeChanged(updateState)
 
   return {
@@ -136,13 +137,13 @@ function useTheme710() {
 
 export function useTheme<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useTheme60(),
-    ...(isVersionGreaterOrEqual(version, '6.1') && useTheme61()),
-    ...(isVersionGreaterOrEqual(version, '7.10') && useTheme710()),
-  } as VersionedReturnType<Theme, Version, keyof Schema>
+  return createVersionedComposable<Theme, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useTheme60,
+    [
+      { since: '6.1', use: useTheme61 },
+      { since: '7.10', use: useTheme710 },
+    ],
+  )
 }

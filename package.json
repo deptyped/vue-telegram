@@ -123,7 +123,7 @@
     "lint:fix": "eslint . --fix",
     "release": "npm run build && npm pack",
     "test": "vitest",
-    "typecheck": "vue-tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "docs:dev": "npm run build && npm run generate:webapps-snippets && vitepress dev docs",
     "docs:build": "npm run build && npm run generate:webapps-snippets && vitepress build docs",
     "docs:preview": "npm run build && npm run generate:webapps-snippets && vitepress preview docs",

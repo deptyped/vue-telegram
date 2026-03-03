@@ -1,28 +1,23 @@
 import type { LocationManagerCallback } from '../sdk'
-import type {
-  BotApiPrevVersion,
-  BotApiVersion,
-  BotApiVersionRange,
-  LATEST_VERSION,
-  Merge,
-  VersionedReturnType,
-} from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { readonly, ref } from 'vue'
 import { onLocationManagerUpdated, onLocationRequested } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify, promisifyWithNoData, wrapFunction } from '../utils'
+import { createCallbackOrPromiseMethod, defineStore, promisify, promisifyWithNoData, wrapFunction } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useLocationManager60>
 type v80 = ReturnType<typeof useLocationManager80>
+type AllFeatures = v80
 
 export type Schema = {
-  '6.0': Merge<Partial<v80>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '8.0': Merge<Schema['6.0'], v80>
 }
 
 export type LocationManager
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
-    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '8.0'>
+    | SinceLatest<Schema, '8.0'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -71,27 +66,14 @@ function useLocationManager80() {
     updateState,
   } = useStore()
 
-  const initAsync = promisifyWithNoData(webApp.LocationManager.init)
-
-  function init(): ReturnType<typeof initAsync>
-  function init(callback?: LocationManagerCallback['init']): void
-  function init(callback?: LocationManagerCallback['init']): ReturnType<typeof initAsync> | void {
-    if (callback)
-      webApp.LocationManager.init(callback)
-    else
-      return initAsync()
-  }
-
-  const getLocationAsync = promisify(webApp.LocationManager.getLocation)
-
-  function getLocation(): ReturnType<typeof getLocationAsync>
-  function getLocation(callback?: LocationManagerCallback['getLocation']): void
-  function getLocation(callback?: LocationManagerCallback['getLocation']): ReturnType<typeof getLocationAsync> | void {
-    if (callback)
-      webApp.LocationManager.getLocation(callback)
-    else
-      return getLocationAsync()
-  }
+  const init = createCallbackOrPromiseMethod(
+    (callback: LocationManagerCallback['init']) => webApp.LocationManager.init(callback),
+    promisifyWithNoData,
+  )
+  const getLocation = createCallbackOrPromiseMethod(
+    (callback: LocationManagerCallback['getLocation']) => webApp.LocationManager.getLocation(callback),
+    promisify,
+  )
 
   onLocationManagerUpdated(updateState)
   onLocationRequested(updateState)
@@ -109,12 +91,12 @@ function useLocationManager80() {
 
 export function useLocationManager<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useLocationManager60(),
-    ...(isVersionGreaterOrEqual(version, '8.0') && useLocationManager80()),
-  } as VersionedReturnType<LocationManager, Version, keyof Schema>
+  return createVersionedComposable<LocationManager, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useLocationManager60,
+    [
+      { since: '8.0', use: useLocationManager80 },
+    ],
+  )
 }

@@ -1,21 +1,23 @@
 import type { GyroscopeCallback, GyroscopeStartParams } from '../sdk'
-import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { readonly, ref } from 'vue'
 import { onGyroscopeChanged, onGyroscopeFailed, onGyroscopeStarted, onGyroscopeStopped } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, promisify } from '../utils'
+import { createCallbackOrPromiseMethod, defineStore, promisify } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useGyroscope60>
 type v80 = ReturnType<typeof useGyroscope80>
+type AllFeatures = v80
 
 export type Schema = {
-  '6.0': Merge<Partial<v80>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '8.0': Merge<Schema['6.0'], v80>
 }
 
 export type Gyroscope
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'8.0'>> })
-    | (Schema['8.0'] & { version: BotApiVersionRange<'8.0', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '8.0'>
+    | SinceLatest<Schema, '8.0'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -64,27 +66,15 @@ function useGyroscope80() {
     updateState,
   } = useStore()
 
-  const startAsync = promisify(webApp.Gyroscope.start)
+  const start = createCallbackOrPromiseMethod(
+    (params: GyroscopeStartParams, callback: GyroscopeCallback['start']) => webApp.Gyroscope.start(params, callback),
+    promisify,
+  )
 
-  function start(params: GyroscopeStartParams): ReturnType<typeof startAsync>
-  function start(params: GyroscopeStartParams, callback?: GyroscopeCallback['start']): void
-  function start(params: GyroscopeStartParams, callback?: GyroscopeCallback['start']): ReturnType<typeof startAsync> | void {
-    if (callback)
-      webApp.Gyroscope.start(params, callback)
-    else
-      return startAsync(params)
-  }
-
-  const stopAsync = promisify(webApp.Gyroscope.stop)
-
-  function stop(): ReturnType<typeof stopAsync>
-  function stop(callback?: GyroscopeCallback['stop']): void
-  function stop(callback?: GyroscopeCallback['stop']): ReturnType<typeof stopAsync> | void {
-    if (callback)
-      webApp.Gyroscope.stop(callback)
-    else
-      return stopAsync()
-  }
+  const stop = createCallbackOrPromiseMethod(
+    (callback: GyroscopeCallback['stop']) => webApp.Gyroscope.stop(callback),
+    promisify,
+  )
 
   onGyroscopeStarted(updateState)
   onGyroscopeStopped(updateState)
@@ -103,12 +93,12 @@ function useGyroscope80() {
 
 export function useGyroscope<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useGyroscope60(),
-    ...(isVersionGreaterOrEqual(version, '8.0') && useGyroscope80()),
-  } as VersionedReturnType<Gyroscope, Version, keyof Schema>
+  return createVersionedComposable<Gyroscope, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useGyroscope60,
+    [
+      { since: '8.0', use: useGyroscope80 },
+    ],
+  )
 }

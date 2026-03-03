@@ -1,20 +1,22 @@
-import type { BotApiPrevVersion, BotApiVersion, BotApiVersionRange, LATEST_VERSION, Merge, VersionedReturnType } from '../types'
+import type { BotApiVersion, Merge, SchemaBase, SinceLatest, SinceUntil } from '../types'
 import { computed, readonly, ref } from 'vue'
 import { onBackButtonClicked } from '../events'
 import { getWebApp } from '../sdk'
-import { defineStore, getHighestVersion, isVersionGreaterOrEqual, wrapFunction } from '../utils'
+import { defineStore, wrapFunction } from '../utils'
+import { createVersionedComposable } from './factories/createVersionedComposable'
 
 type v60 = ReturnType<typeof useBackButton60>
 type v61 = ReturnType<typeof useBackButton61>
+type AllFeatures = v61
 
 export type Schema = {
-  '6.0': Merge<Partial<v61>, v60>
+  '6.0': SchemaBase<AllFeatures, v60>
   '6.1': Merge<Schema['6.0'], v61>
 }
 
 export type BackButton
-  = | (Schema['6.0'] & { version: BotApiVersionRange<'6.0', BotApiPrevVersion<'6.1'>> })
-    | (Schema['6.1'] & { version: BotApiVersionRange<'6.1', LATEST_VERSION> })
+  = | SinceUntil<Schema, '6.0', '6.1'>
+    | SinceLatest<Schema, '6.1'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -81,12 +83,12 @@ function useBackButton61() {
 
 export function useBackButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
-  const version = getHighestVersion(baseVersion, webApp.version)
-
-  return {
-    version: webApp.version,
-    isVersionAtLeast: webApp.isVersionAtLeast,
-    ...useBackButton60(),
-    ...(isVersionGreaterOrEqual(version, '6.1') && useBackButton61()),
-  } as VersionedReturnType<BackButton, Version, keyof Schema>
+  return createVersionedComposable<BackButton, Version, keyof Schema>(
+    baseVersion,
+    webApp,
+    useBackButton60,
+    [
+      { since: '6.1', use: useBackButton61 },
+    ],
+  )
 }

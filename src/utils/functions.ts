@@ -1,10 +1,11 @@
-interface HookObject<TArgs extends any[], TResult> {
+interface HookObject<TArgs extends unknown[], TResult> {
   before?: (args: TArgs) => void
   after?: (args: TArgs, result: TResult) => void
 }
 
+/** Adds optional before/after hooks around a function call. */
 export function wrapFunction<
-  TFunction extends (...args: any[]) => any,
+  TFunction extends (...args: never[]) => unknown,
   TOmitReturn extends boolean = false,
 >(
   fn: TFunction,
@@ -13,24 +14,25 @@ export function wrapFunction<
     omitReturn?: TOmitReturn
   },
 ): (...args: Parameters<TFunction>) => TOmitReturn extends true ? void : ReturnType<TFunction> {
-  return (...args: Parameters<TFunction>) => {
+  return ((...args: Parameters<TFunction>) => {
     const { hooks, omitReturn } = options || {}
     if (hooks?.before)
       hooks.before(args)
 
-    const result = fn(...args)
+    const result = fn(...args) as ReturnType<TFunction>
 
     if (hooks?.after)
       hooks.after(args, result)
 
     if (!omitReturn)
       return result
-  }
+  }) as (...args: Parameters<TFunction>) => TOmitReturn extends true ? void : ReturnType<TFunction>
 }
 
 type Callback<T> = (data: T) => void
 
-export function promisify<T, A extends any[]>(
+/** Promisifies callback-last functions with a single data result. */
+export function promisify<T, A extends unknown[]>(
   func: (...args: [...A, Callback<T>]) => void,
 ): (...args: A) => Promise<T> {
   return (...args: A) =>
@@ -39,7 +41,8 @@ export function promisify<T, A extends any[]>(
 
 type CallbackWithNoData = () => void
 
-export function promisifyWithNoData<A extends any[]>(
+/** Promisifies callback-last functions where callback has no payload. */
+export function promisifyWithNoData<A extends unknown[]>(
   func: (...args: [...A, CallbackWithNoData]) => void,
 ): (...args: A) => Promise<void> {
   return (...args: A) =>
@@ -48,7 +51,8 @@ export function promisifyWithNoData<A extends any[]>(
 
 type CallbackWithError<T> = (err: string | null, data: T | null) => void
 
-export function promisifyWithError<T, A extends any[]>(
+/** Promisifies `(err, data)` callbacks and rejects when `err` is present. */
+export function promisifyWithError<T, A extends unknown[]>(
   func: (...args: [...A, CallbackWithError<T>]) => void,
 ): (...args: A) => Promise<T> {
   return (...args: A) =>
@@ -57,12 +61,13 @@ export function promisifyWithError<T, A extends any[]>(
     )
 }
 
-type CallbackWithMultipleData<T extends any[]> = (...data: T) => void
+type CallbackWithMultipleData<T extends unknown[]> = (...data: T) => void
 
+/** Promisifies multi-argument callbacks by mapping args into one object. */
 export function promisifyWithDataObject<
-  T extends any[],
-  R extends Record<string, any>,
-  A extends any[],
+  T extends unknown[],
+  R extends Record<string, unknown>,
+  A extends unknown[],
 >(
   func: (...args: [...A, CallbackWithMultipleData<T>]) => void,
   mapToObject: (...data: T) => R,
@@ -71,4 +76,38 @@ export function promisifyWithDataObject<
     new Promise<R>(resolve =>
       func(...args, (...data: T) => resolve(mapToObject(...data))),
     )
+}
+
+export function createCallbackOrPromiseMethod<
+  TArgs extends unknown[],
+  TCallbackArgs extends unknown[],
+  TResult,
+>(
+  method: (...args: [...TArgs, (...args: TCallbackArgs) => void]) => void,
+  promisifyMethod: (
+    method: (...args: [...TArgs, (...args: TCallbackArgs) => void]) => void,
+  ) => (...args: TArgs) => TResult,
+) {
+  /** Preserves dual API: promise form and callback form. */
+  const asyncMethod = promisifyMethod(method)
+
+  type TCallback = (...args: TCallbackArgs) => void
+  type OverloadedMethod = {
+    (...args: TArgs): TResult
+    (...args: [...TArgs, callback?: TCallback]): void
+  }
+
+  const wrapped = (...rawArgs: [...TArgs] | [...TArgs, TCallback?]): TResult | void => {
+    const maybeCallback = rawArgs[rawArgs.length - 1]
+    if (typeof maybeCallback === 'function') {
+      const args = rawArgs.slice(0, -1) as unknown as TArgs
+      const callback = maybeCallback as TCallback
+      method(...args, callback)
+      return
+    }
+
+    return asyncMethod(...(rawArgs as unknown as TArgs))
+  }
+
+  return wrapped as OverloadedMethod
 }
