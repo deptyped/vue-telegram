@@ -16,9 +16,10 @@ type BOT_API_VERSIONS = [
   '8.0',
   '9.0',
   '9.1',
+  '9.5',
 ]
 
-export type LATEST_VERSION = '9.1'
+export type LATEST_VERSION = '9.5'
 
 // Reverses a tuple so previous-version map can be derived from next-version logic.
 type Reverse<T extends unknown[]> = T extends [infer First, ...infer Rest]

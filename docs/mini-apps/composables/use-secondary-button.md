@@ -16,6 +16,7 @@ const secondaryButton = useSecondaryButton()
 | `isProgressVisible` | <!--@include: @/generated/MainButton-isProgressVisible.md --><br/><Badge type="info" text="⚡️ reactive" /> |
 | `hasShineEffect`    | <!--@include: @/generated/MainButton-hasShineEffect.md --><br/><Badge type="info" text="⚡️ reactive" />    |
 | `position`          | <!--@include: @/generated/MainButton-position.md --><br/><Badge type="info" text="⚡️ reactive" />          |
+| `iconCustomEmojiId` | <!--@include: @/generated/MainButton-iconCustomEmojiId.md --><br/><Badge type="info" text="⚡️ reactive" /> |
 | `show`              | <Badge type="tip" text="Bot API 7.10+" /> <!--@include: @/generated/MainButton-show.md -->                |
 | `hide`              | <Badge type="tip" text="Bot API 7.10+" /> <!--@include: @/generated/MainButton-hide.md -->                |
 | `enable`            | <Badge type="tip" text="Bot API 7.10+" /> <!--@include: @/generated/MainButton-enable.md -->              |

@@ -99,7 +99,7 @@ function preprocessDescription(description: string) {
   return description
 }
 
-const OFFSET = 143
+const OFFSET = 146
 
 async function main() {
   if (!existsSync(OUTPUT_PATH))

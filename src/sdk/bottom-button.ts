@@ -10,6 +10,7 @@ export type BottomButton = {
   hasShineEffect: boolean
   position?: 'left' | 'right' | 'top' | 'bottom'
   readonly isProgressVisible: boolean
+  iconCustomEmojiId?: string
   setText: (text: string) => BottomButton
   onClick: (callback: EventCallback['mainButtonClicked']) => BottomButton
   offClick: (callback: EventCallback['mainButtonClicked']) => BottomButton
@@ -27,5 +28,6 @@ export type BottomButton = {
     position?: 'left' | 'right' | 'top' | 'bottom'
     is_active?: boolean
     is_visible?: boolean
+    icon_custom_emoji_id?: string
   }) => BottomButton
 }

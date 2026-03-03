@@ -15,6 +15,7 @@ const mainButton = useMainButton()
 | `isActive`          | <!--@include: @/generated/MainButton-isActive.md --><br/><Badge type="info" text="⚡️ reactive" />          |
 | `isProgressVisible` | <!--@include: @/generated/MainButton-isProgressVisible.md --><br/><Badge type="info" text="⚡️ reactive" /> |
 | `hasShineEffect`    | <!--@include: @/generated/MainButton-hasShineEffect.md --><br/><Badge type="info" text="⚡️ reactive" />    |
+| `iconCustomEmojiId` | <!--@include: @/generated/MainButton-iconCustomEmojiId.md --><br/><Badge type="info" text="⚡️ reactive" /> |
 | `show`              | <!--@include: @/generated/MainButton-show.md -->                                                          |
 | `hide`              | <!--@include: @/generated/MainButton-hide.md -->                                                          |
 | `enable`            | <!--@include: @/generated/MainButton-enable.md -->                                                        |

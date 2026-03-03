@@ -12,6 +12,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   progress: { type: Boolean, default: false },
   hasShineEffect: { type: Boolean, default: false },
+  iconCustomEmojiId: { type: String },
 })
 const emit = defineEmits<{
   (eventName: 'click'): void
@@ -83,6 +84,15 @@ if (mainButton.isVersionAtLeast('7.10')) {
   )
 }
 
+if (mainButton.isVersionAtLeast('9.5')) {
+  watch(
+    () => props.iconCustomEmojiId,
+    (iconCustomEmojiId) => {
+      mainButton.iconCustomEmojiId.value = iconCustomEmojiId
+    },
+  )
+}
+
 mainButton.onClick(() => emit('click'))
 
 onMounted(() => {
@@ -99,6 +109,7 @@ onMounted(() => {
       has_shine_effect: props.hasShineEffect,
       is_active: !props.disabled,
       is_visible: props.visible,
+      icon_custom_emoji_id: props.iconCustomEmojiId,
     })
   })
 })

@@ -98,6 +98,11 @@
       "import": "./dist/9.1.js",
       "require": "./dist/9.1.cjs"
     },
+    "./9.5": {
+      "types": "./dist/versions/9.5.d.ts",
+      "import": "./dist/9.5.js",
+      "require": "./dist/9.5.cjs"
+    },
     "./latest": {
       "types": "./dist/versions/latest.d.ts",
       "import": "./dist/latest.js",

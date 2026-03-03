@@ -7,16 +7,19 @@ import { createVersionedComposable } from './factories/createVersionedComposable
 
 type v60 = ReturnType<typeof useSecondaryButton60>
 type v710 = ReturnType<typeof useSecondaryButton710>
-type AllFeatures = v710
+type v95 = ReturnType<typeof useSecondaryButton95>
+type AllFeatures = v710 & v95
 
 export type Schema = {
   '6.0': SchemaBase<AllFeatures, v60>
   '7.10': Merge<Schema['6.0'], v710>
+  '9.5': Merge<Schema['7.10'], v95>
 }
 
 export type SecondaryButton
   = | SinceUntil<Schema, '6.0', '7.10'>
-    | SinceLatest<Schema, '7.10'>
+    | SinceUntil<Schema, '7.10', '9.5'>
+    | SinceLatest<Schema, '9.5'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -28,6 +31,7 @@ const useStore = defineStore(() => {
   const isProgressVisible = ref(webApp.SecondaryButton.isProgressVisible)
   const hasShineEffect = ref(webApp.SecondaryButton.hasShineEffect)
   const position = ref(webApp.SecondaryButton.position)
+  const iconCustomEmojiId = ref(webApp.SecondaryButton.iconCustomEmojiId)
 
   const updateState = () => {
     text.value = webApp.SecondaryButton.text
@@ -38,6 +42,7 @@ const useStore = defineStore(() => {
     isProgressVisible.value = webApp.SecondaryButton.isProgressVisible
     hasShineEffect.value = webApp.SecondaryButton.hasShineEffect
     position.value = webApp.SecondaryButton.position
+    iconCustomEmojiId.value = webApp.SecondaryButton.iconCustomEmojiId
   }
 
   return {
@@ -51,6 +56,7 @@ const useStore = defineStore(() => {
     isProgressVisible,
     hasShineEffect,
     position,
+    iconCustomEmojiId,
   }
 })
 
@@ -64,6 +70,7 @@ function useSecondaryButton60() {
     isProgressVisible,
     hasShineEffect,
     position,
+    iconCustomEmojiId,
   } = useStore()
 
   return {
@@ -75,6 +82,7 @@ function useSecondaryButton60() {
     isProgressVisible: readonly(isProgressVisible),
     hasShineEffect: readonly(hasShineEffect),
     position: readonly(position),
+    iconCustomEmojiId: readonly(iconCustomEmojiId),
   }
 }
 
@@ -210,6 +218,32 @@ function useSecondaryButton710() {
   }
 }
 
+function useSecondaryButton95() {
+  const {
+    webApp,
+    updateState,
+    iconCustomEmojiId,
+  } = useStore()
+
+  const setParams = wrapFunction(webApp.SecondaryButton.setParams, {
+    hooks: {
+      after: updateState,
+    },
+    omitReturn: true,
+  })
+
+  return {
+    iconCustomEmojiId: computed({
+      get() {
+        return iconCustomEmojiId.value
+      },
+      set(iconCustomEmojiId) {
+        setParams({ icon_custom_emoji_id: iconCustomEmojiId })
+      },
+    }),
+  }
+}
+
 export function useSecondaryButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
   return createVersionedComposable<SecondaryButton, Version, keyof Schema>(
@@ -218,6 +252,7 @@ export function useSecondaryButton<Version extends BotApiVersion>(baseVersion: V
     useSecondaryButton60,
     [
       { since: '7.10', use: useSecondaryButton710 },
+      { since: '9.5', use: useSecondaryButton95 },
     ],
   )
 }

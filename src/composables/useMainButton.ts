@@ -7,16 +7,19 @@ import { createVersionedComposable } from './factories/createVersionedComposable
 
 type v60 = ReturnType<typeof useMainButton60>
 type v710 = ReturnType<typeof useMainButton710>
-type AllFeatures = v710
+type v95 = ReturnType<typeof useMainButton95>
+type AllFeatures = v710 & v95
 
 export type Schema = {
   '6.0': SchemaBase<AllFeatures, v60>
   '7.10': Merge<Schema['6.0'], v710>
+  '9.5': Merge<Schema['7.10'], v95>
 }
 
 export type MainButton
   = | SinceUntil<Schema, '6.0', '7.10'>
-    | SinceLatest<Schema, '7.10'>
+    | SinceUntil<Schema, '7.10', '9.5'>
+    | SinceLatest<Schema, '9.5'>
 
 const useStore = defineStore(() => {
   const webApp = getWebApp()
@@ -27,6 +30,7 @@ const useStore = defineStore(() => {
   const isActive = ref(webApp.MainButton.isActive)
   const isProgressVisible = ref(webApp.MainButton.isProgressVisible)
   const hasShineEffect = ref(webApp.MainButton.hasShineEffect)
+  const iconCustomEmojiId = ref(webApp.MainButton.iconCustomEmojiId)
 
   const updateState = () => {
     text.value = webApp.MainButton.text
@@ -36,6 +40,7 @@ const useStore = defineStore(() => {
     isActive.value = webApp.MainButton.isActive
     isProgressVisible.value = webApp.MainButton.isProgressVisible
     hasShineEffect.value = webApp.MainButton.hasShineEffect
+    iconCustomEmojiId.value = webApp.MainButton.iconCustomEmojiId
   }
 
   return {
@@ -48,6 +53,7 @@ const useStore = defineStore(() => {
     isActive,
     isProgressVisible,
     hasShineEffect,
+    iconCustomEmojiId,
   }
 })
 
@@ -62,6 +68,7 @@ function useMainButton60() {
     isActive,
     isProgressVisible,
     hasShineEffect,
+    iconCustomEmojiId,
   } = useStore()
 
   const showProgress = wrapFunction(webApp.MainButton.showProgress, {
@@ -92,6 +99,7 @@ function useMainButton60() {
         setParams({ text })
       },
     }),
+    iconCustomEmojiId: readonly(iconCustomEmojiId),
     color: computed({
       get() {
         return color.value
@@ -193,6 +201,32 @@ function useMainButton710() {
   }
 }
 
+function useMainButton95() {
+  const {
+    webApp,
+    updateState,
+    iconCustomEmojiId,
+  } = useStore()
+
+  const setParams = wrapFunction(webApp.MainButton.setParams, {
+    hooks: {
+      after: updateState,
+    },
+    omitReturn: true,
+  })
+
+  return {
+    iconCustomEmojiId: computed({
+      get() {
+        return iconCustomEmojiId.value
+      },
+      set(iconCustomEmojiId) {
+        setParams({ icon_custom_emoji_id: iconCustomEmojiId })
+      },
+    }),
+  }
+}
+
 export function useMainButton<Version extends BotApiVersion>(baseVersion: Version) {
   const { webApp } = useStore()
   return createVersionedComposable<MainButton, Version, keyof Schema>(
@@ -201,6 +235,7 @@ export function useMainButton<Version extends BotApiVersion>(baseVersion: Versio
     useMainButton60,
     [
       { since: '7.10', use: useMainButton710 },
+      { since: '9.5', use: useMainButton95 },
     ],
   )
 }
